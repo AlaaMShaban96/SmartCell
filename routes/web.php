@@ -14,4 +14,6 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', HomeController::class);
+Route::get('/', [HomeController::class,'index']);
+Route::get('/redirect', [HomeController::class,'redirectToProvider']);
+Route::get('/callback', [HomeController::class,'handleProviderCallback']);
