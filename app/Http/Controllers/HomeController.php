@@ -13,7 +13,17 @@ class HomeController extends Controller
 
     protected $db;
     public function __construct() {
-        $this->db = app('firebase.firestore')->database();
+        try {
+            $this->db = app('firebase.firestore')->database();
+            $snapshot = $this->db->collection('Stores')->document('1')->snapshot();
+            // config(['sheet.sheet_id'=>$snapshot->data()['SA1']['s_id']]);
+            config(['sheet.sheet_id'=>'13yIzeYkaacCdcFICbPGWlf3jVH1-aoWeG-9rdr70FMA']);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+       
+
+
     }
 
     // public function __invoke(Request $request)
@@ -46,7 +56,14 @@ class HomeController extends Controller
     // }
         public function index()
         {
-            return view('Dashbord.index');
+            try {
+                $orderState=Order::orderState();
+            } catch (\Throwable $th) {
+                dd('index function ',$th);
+            }
+        
+
+            return view('Dashbord.index',compact('orderState'));
         }
 
     /**

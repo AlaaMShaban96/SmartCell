@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Model;
 use Revolution\Google\Sheets\Facades\Sheets;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +10,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Order extends Model
 {
     use HasFactory;
-
+    static $delivered ;
+    static $recovery ;
+    static $wasCanceled ;
+    static $connecting ;
+    static $personalReceipt ;
     
     protected $fillable = [
         'الاسم',
@@ -57,22 +62,26 @@ class Order extends Model
     {
         $column = Sheets::spreadsheet(config('sheet.sheet_id'))
         ->sheet('Orders')->majorDimension('COLUMNS')->range('AQ1:AQ')->all();
-
-        $filtered = array_filter( $column[0], function ($value) use($search) {
-            return $value == $search ;
+        
+        $filtered = array_filter(  $column[0], function ($value) use($search) {
+            
+            return  $value == $search;
         });
+    //    dd('on function search',$filtered);
         return  $filtered ;
     }
     static public function SelectRows($search)
     {
         $rows = Sheets::sheet('Orders')->range('')->majorDimension('')->get();
         $header = $rows->pull(0);
+        
+      
         $row= array();
             foreach ( $search as $key => $value) {
                 
-                array_push($row,$rows[$key+1]);
+                array_push($row,$rows[$key]);
             }
-
+            // dd('on function SelectRows', $row);   
         return 
         Sheets::collection($header,$row)
         // Sheets::collection(Self::$data,$row)
@@ -106,4 +115,70 @@ class Order extends Model
        
 
     }
+    static public function orderState()
+    {
+       
+        $orderState= array();
+        $column = Sheets::spreadsheet(config('sheet.sheet_id'))
+        ->sheet('Orders')->majorDimension('COLUMNS')->range('AQ1:AQ')->all();
+        
+       $delivered = array_filter( $column[0], function ($value)  {
+            return $value == "تم التوصيل";
+        });
+       
+        $recovery = array_filter( $column[0], function ($value) {
+            return $value == "استرجاع";
+        });
+        
+       $wasCanceled = array_filter( $column[0], function ($value)  {
+            return $value == "تم الالغاء";
+        });
+        
+        $connecting = array_filter( $column[0], function ($value)  {
+            return $value == "قيد التوصيل";
+        });
+        
+        $personalReceipt = array_filter( $column[0], function ($value)  {
+            return $value == "استلام شخصي";
+        }); 
+
+        array_push($orderState,[
+            'count'=>count($delivered),
+            'prameter'=>'delivered',
+            'name'=>"تم التوصيل",
+            'colorCardIcon'=>"card-header-success",
+            'icon'=>"image/dashbord/orderState/fromshop.png",
+        ]);
+        array_push($orderState,[
+            'count'=>count($recovery),
+            'prameter'=>'recovery',
+            'name'=>"استرجاع",
+            'colorCardIcon'=>"card-header-info",
+            'icon'=>"image/dashbord/orderState/fromshop.png",
+        ]);
+        array_push($orderState,[
+            'count'=>count($wasCanceled),
+            'prameter'=>'wasCanceled',
+            'name'=>"تم الالغاء",
+            'colorCardIcon'=>"card-header-warning",
+            'icon'=>"image/dashbord/orderState/fromshop.png",
+        ]);
+        array_push($orderState,[
+            'count'=>count($connecting),
+            'prameter'=>'connecting',
+            'name'=>"قيد التوصيل",
+            'colorCardIcon'=>"card-header-warning",
+            'icon'=>"image/dashbord/orderState/fromshop.png",
+        ]);
+        array_push($orderState,[
+            'count'=>count($personalReceipt),
+            'prameter'=>'personalReceipt',
+            'name'=>"استلام شخصي",
+            'colorCardIcon'=>"card-header-warning",
+            'icon'=>"image/dashbord/orderState/fromshop.png",
+        ]);
+     
+        return $orderState;
+    }
+
 }

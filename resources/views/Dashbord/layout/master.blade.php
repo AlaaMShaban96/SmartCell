@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="rtl" >
 
 <head>
   <title>Hello, world!</title>
@@ -9,9 +9,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   @include('Dashbord.layout.include.style')
   @yield('style')
+
+  
 </head>
  
-<body>
+<body dir="rtl">
   <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white">
       <div class="logo">
@@ -22,7 +24,7 @@
           Creative Tim
         </a>
       </div>
-      <div class="sidebar-wrapper">
+      <div class="sidebar-wrapper"> 
         <ul class="nav">
           <li class="nav-item active  ">
             <a class="nav-link" href="#0">

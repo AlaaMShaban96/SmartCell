@@ -1,78 +1,59 @@
 @extends('Dashbord/layout/master')
+@section('style')
+<style>
+    .img-icons{
+        width: 100%;
+    }
+    .card-icon{
+        width: 36%;
+    }
+</style>
+    
+@endsection
 @section('content')
 
 <div class="content">
     <div class="container-fluid">
       <div class="row">
+        @foreach ($orderState as $order)
         <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">content_copy</i>
-              </div>
-              <p class="card-category">Used Space</p>
-              <h3 class="card-title">49/50
-                <small>GB</small>
-              </h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="material-icons text-danger">warning</i>
-                <a href="javascript:;">Get More Space...</a>
-              </div>
-            </div>
+            <a href='{{url("order/".$order["name"]."/show")}}'>
+                <div class="card card-stats">
+                <div class="card-header card-header-icon {{$order['colorCardIcon']}}">
+                    <div class="card-icon">
+                        <img class="img-icons" src='{{asset($order["icon"])}}' alt="" srcset="">
+                    {{-- <i class="material-icons">{{$order['icon']}}</i> --}}
+                    </div>
+                    <p class="card-category">{{$order['name']}}</p>
+                    <h3 class="card-title">{{$order['count']}}
+                    </h3>
+                </div>
+                </div>
+            </a>
           </div>
-        </div>
+        @endforeach
+
+
         <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-success card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">store</i>
+          <a href='{{url("order/1/show")}}'>
+              <div class="card card-stats">
+              <div class="card-header card-header-icon card-header-warning">
+                  <div class="card-icon">
+                      <img class="img-icons" src='{{asset('image/dashbord/orderState/fromshop.png')}}' alt="" srcset="">
+                  {{-- <i class="material-icons">{{$order['icon']}}</i> --}}
+                  </div>
+                  <p class="card-category">علاء</p>
+                  <h3 class="card-title">155
+                  </h3>
               </div>
-              <p class="card-category">Revenue</p>
-              <h3 class="card-title">$34,245</h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="material-icons">date_range</i> Last 24 Hours
               </div>
-            </div>
-          </div>
+          </a>
         </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-danger card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">info_outline</i>
-              </div>
-              <p class="card-category">Fixed Issues</p>
-              <h3 class="card-title">75</h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="material-icons">local_offer</i> Tracked from Github
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-info card-header-icon">
-              <div class="card-icon">
-                <i class="fa fa-twitter"></i>
-              </div>
-              <p class="card-category">Followers</p>
-              <h3 class="card-title">+245</h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="material-icons">update</i> Just Updated
-              </div>
-            </div>
-          </div>
-        </div>
+
+
+
       </div>
-      <div class="row">
+      {{-- <div class="row">
         <div class="col-md-4">
           <div class="card card-chart">
             <div class="card-header card-header-success">
@@ -122,7 +103,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> --}}
    
     </div>
   </div>

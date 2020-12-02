@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,7 @@ use App\Http\Controllers\HomeController;
 |
 */
 
+Route::get('order/{id}/show', [OrderController::class,'show']);
 Route::get('/', [HomeController::class,'index']);
 Route::get('/redirect', [HomeController::class,'redirectToProvider']);
 Route::get('/callback', [HomeController::class,'handleProviderCallback']);
