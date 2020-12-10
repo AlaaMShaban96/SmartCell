@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
+use Carbon\Carbon;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -96,6 +99,31 @@ class OrderController extends Controller
     {
         //
     }
+    public function printPDF($id)
+    {
+       
+
+    // $order= Order::find($id);
+    // $date = Carbon::parse($order['تاريخ الانشاء'], 'UTC');
+    // $order['تاريخ الانشاء']=$date->isoFormat('MMM Do YY'); 
+    // dd($order['تاريخ الانشاء']);
+    $data=[];
+        // $data['orderNumber']=$order['رقم الطلبية'];
+        // $data['created_at']=$order['تاريخ الانشاء'];
+        // $data['city']=$order['المدينة'];
+        // $data['area']=$order['المنطقة'];
+        // $data['name']=$order['الاسم'];
+        // $data['profile']=$order['بروفايل'];
+        // $data['phone']=$order['رقم الهاتف'];
+        // $data['total']=$order['اجمالي سعر الطلبية'];
+        // return view('pdf.test',$data); 
+        // $pdf = PDF::loadeView('pdf.test');
+
+        // // return $pdf->download('event_qrcode.pdf');
+        // return $pdf->stream('document.pdf');
+        $pdf = PDF::loadView('pdf.test');
+		return $pdf->stream('document.pdf');
+    }
 
     public function paginate($items, $perPage = 10, $page = null, $options = [])
 
@@ -109,11 +137,5 @@ class OrderController extends Controller
           
 
     }
-    private function getOrderCollection($data)
-    {
-        dd($data);
-        $user= new Order();
-       return $user->newCollection($data);
 
-    }
 }

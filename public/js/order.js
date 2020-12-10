@@ -1,8 +1,11 @@
 
 $('#show-order').on('show.bs.modal', function (event) {
+  var hostName = window.location.origin;
+  console.log($(event.relatedTarget).data('number'));
+  document.getElementById('link-print').href=hostName+"/pdf/"+$(event.relatedTarget).data('number');
+  
     var name = $(event.relatedTarget).data('name');
     var table=document.getElementById('table');
-    // $("#table").find("tr:gt(0)").remove();
     $("#table").empty();
     var profile = $(event.relatedTarget).data('profile');
     if (profile!="") {
@@ -35,6 +38,11 @@ $('#show-order').on('show.bs.modal', function (event) {
         $("#text-show").css('display','block');
         $("#text").text(text);
       }
+    var bill = $(event.relatedTarget).data('bill');
+        $("#bill").text(bill+" د");
+    var delivery = $(event.relatedTarget).data('delivery');
+        $("#delivery").text(delivery+" د");
+      
 
     var tblBody = document.createElement("tbody");
     for (let index = 0; index < 10; index++) {
@@ -59,15 +67,11 @@ $('#show-order').on('show.bs.modal', function (event) {
       tr.appendChild(price);
       table.appendChild(tr);
 
-      // tblBody.appendChild(tr);
-      console.log($(event.relatedTarget).data('product['+index+']'));
       }     
     
       
       
     }
-   
-    // table.appendChild(tblBody);
-    console.log(tblBody);
+  
 
   });

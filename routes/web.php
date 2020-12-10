@@ -15,6 +15,7 @@ use App\Http\Controllers\OrderController;
 |
 */
 
+Route::get('/pdf/{id}', [OrderController::class,'printPDF']);
 Route::get('order/{id}/show', [OrderController::class,'show']);
 Route::get('/', [HomeController::class,'index']);
 Route::get('/redirect', [HomeController::class,'redirectToProvider']);

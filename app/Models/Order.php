@@ -58,6 +58,15 @@ class Order extends Model
     ];
 
 
+    static public function find($id)
+    {
+       
+        $rows = Sheets::spreadsheet(config('sheet.sheet_id'))->sheet('Orders')->range('A'.$id.':AV'.$id)->majorDimension('ROWS')->get();
+        $header = Sheets::range('A1:AV1')->get();
+        $row= Sheets::collection($header->toArray()[0],$rows)
+        ->all();
+        return  $row[0]->toArray() ;
+    }
     static public function Search($search)
     {
         $column = Sheets::spreadsheet(config('sheet.sheet_id'))
@@ -67,7 +76,6 @@ class Order extends Model
             
             return  $value == $search;
         });
-    //    dd('on function search',$filtered);
         return  $filtered ;
     }
     static public function SelectRows($search)

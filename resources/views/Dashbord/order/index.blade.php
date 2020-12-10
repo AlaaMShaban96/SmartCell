@@ -51,7 +51,7 @@
 
                      data-product[3]="{{$order['المنتج 4']}}"
                     data-pisces[3]="{{$order['عدد قطع المنتج 4']}}"
-                    data-price[3]="{{$order['سعر المنتج رقم 4']}}" 
+                    data-price[3]="{{$order['سعر المنتج 4']}}" 
                     
 
                     data-product[4]="{{$order['المنتج 5']}}"
@@ -82,6 +82,11 @@
                     data-product[9]="{{$order['المنتج 10']}}"
                     data-pisces[9]="{{$order['عدد قطع المنتج 10']}}"
                     data-price[9]="{{$order['سعر المنتج 10']}}"
+                    data-price[9]="{{$order['سعر المنتج 10']}}"
+                    data-bill="{{$order['اجمالي سعر الطلبية']}}"
+                    data-delivery="{{$order['سعر التوصيل']}}"
+                    data-total="{{$order['اجمالي الفتورة']}}"
+                    data-number="{{$order['رقم الطلبية']}}"
                     
                     class="btn btn-success" data-toggle="modal" data-target="#show-order">
                      عرض 
@@ -119,6 +124,11 @@
                 
                 <div class="col">
                   <table>
+                    <tr style="text-align: right; ">
+                      <td>
+                        <img src="{{asset('image/dashbord/logo/logo.jpg')}}" alt="" srcset="">
+                      </td>
+                    </tr>
                     <tr id="profile-show" style="display: none;">
                       <td >
                         <icons-image _ngcontent-hys-c22=""
@@ -162,6 +172,7 @@
             
                   </table>
                 </div>
+               
               
               </div>
               <div class="row">
@@ -177,13 +188,19 @@
                 </table>
               </div>
               <div class="row">
+                <h3>المجموع :  <span class="badge badge-success" id="bill">New</span></h3>
+              </div>
+              <div class="row">
+                <h3> سعر التوصيل : <span class="badge badge-secondary" id="delivery"></span></h3>
+
               </div>
             </div>
             
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button> --}}
             <button type="button" class="btn btn-primary">تعديل</button>
+            <a id="link-print" href="" class="btn btn-info">طباعة</a>
           </div>
         </div>
       </div>
