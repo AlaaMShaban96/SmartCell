@@ -9,11 +9,11 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
-        "carlos-meneses/laravel-mpdf": "^2.1",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "google/cloud-firestore": "^1.18",
-        "guzzlehttp/guzzle": "^7.0.1",
+        "guzzlehttp/guzzle": "~6.0",
+        "intervention/image": "^2.5",
         "kreait/laravel-firebase": "^3.0",
         "laravel/framework": "^8.12",
         "laravel/socialite": "^5.1",

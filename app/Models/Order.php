@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Session;
 use Revolution\Google\Sheets\Facades\Sheets;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -61,15 +62,26 @@ class Order extends Model
     static public function find($id)
     {
        
-        $rows = Sheets::spreadsheet(config('sheet.sheet_id'))->sheet('Orders')->range('A'.$id.':AV'.$id)->majorDimension('ROWS')->get();
+        $rows = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('A'.$id.':AV'.$id)->majorDimension('ROWS')->get();
         $header = Sheets::range('A1:AV1')->get();
-        $row= Sheets::collection($header->toArray()[0],$rows)
-        ->all();
+        $row= Sheets::collection($header->toArray()[0],$rows)->all();
         return  $row[0]->toArray() ;
+    }
+    static public function orederUpdate($id,$request)
+    {
+
+        $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('A'.$id.':AV'.$id)->majorDimension('ROWS')->all();
+        $data[0][44]=$request->userEmail;
+        $data[0][42]=$request->orderStatus;
+        $data[0][39]=$request->userName;
+        Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->
+        range('A'.$id)->update([$data[0]]);
+       return true ;
+
     }
     static public function Search($search)
     {
-        $column = Sheets::spreadsheet(config('sheet.sheet_id'))
+        $column = Sheets::spreadsheet(Session::get('sheet_id'))
         ->sheet('Orders')->majorDimension('COLUMNS')->range('AQ1:AQ')->all();
         
         $filtered = array_filter(  $column[0], function ($value) use($search) {
@@ -99,8 +111,8 @@ class Order extends Model
     {
         try {
             dd($order->toArray());
-            // Sheets::spreadsheet(config('sheet.sheet_id'))->sheet('Orders')->append($order->toArray());
-            Sheets::spreadsheet(config('sheet.sheet_id'))->sheet('Orders')->append([['الاسم'=>'3', 'رقم الهاتف'=>'name3']]);
+            // Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->append($order->toArray());
+            Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->append([['الاسم'=>'3', 'رقم الهاتف'=>'name3']]);
             return true;
         } catch (\Throwable $th) {
             return $th;
@@ -112,7 +124,7 @@ class Order extends Model
     {
         try {
             $data=array_values($order->toArray());
-            Sheets::spreadsheet(config('sheet.sheet_id'))
+            Sheets::spreadsheet(Session::get('sheet_id'))
             ->sheet('Orders')
             ->range('A'.$order['رقم الطلبية'])
             ->update([$data]);
@@ -127,7 +139,9 @@ class Order extends Model
     {
        
         $orderState= array();
-        $column = Sheets::spreadsheet(config('sheet.sheet_id'))
+        // dd(Session::get('sheet_id'));
+        // $column = Sheets::spreadsheet(Session::get('sheet_id'))
+        $column = Sheets::spreadsheet(Session::get('sheet_id'))
         ->sheet('Orders')->majorDimension('COLUMNS')->range('AQ1:AQ')->all();
         
        $delivered = array_filter( $column[0], function ($value)  {

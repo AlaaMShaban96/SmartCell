@@ -71,6 +71,7 @@ return [
         //     "client_x509_cert_url"=> env("client_x509_cert_url"),
         //   ],
         'file' => storage_path('credentials.json'),
+        // 'file' => storage_path('credentials.json'),
         // 'file' => env('GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION', ''),
     ],
 

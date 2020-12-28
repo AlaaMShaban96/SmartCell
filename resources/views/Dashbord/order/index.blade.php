@@ -1,8 +1,6 @@
 @extends('Dashbord/layout/master')
 @section('style')
-{{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"> --}}
 
-{{-- <link href="assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet"> --}}
 <style>
 
 </style>
@@ -10,7 +8,18 @@
 @endsection
 @section('content')
 
+    @if(Session::has('message'))
+    <div class="alert {{ Session::get('alert-class') }} text-center">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <i class="material-icons">close</i>
+      </button>
+      <p class="h4" >{{ Session::get('message') }}</p> 
+    </div>
+    @endif
+
     <div class="container-fluid " >
+    
+
       <div class="row">
         @foreach ($orders as $order)
             <div class="col-lg-3 col-md-6 col-sm-6">
@@ -49,9 +58,9 @@
                     data-price[2]="{{$order['سعر المنتج 3']}}"
                     
 
-                     data-product[3]="{{$order['المنتج 4']}}"
+                     {{-- data-product[3]="{{$order['المنتج 4']}}"
                     data-pisces[3]="{{$order['عدد قطع المنتج 4']}}"
-                    data-price[3]="{{$order['سعر المنتج 4']}}" 
+                    data-price[3]="{{$order['سعر المنتج 4']}}"  --}}
                     
 
                     data-product[4]="{{$order['المنتج 5']}}"
@@ -102,7 +111,7 @@
 
       </div>
     </div>
-    {{ $orders->links() }}
+    {{-- {{ $orders->links() }} --}}
 
 
 
@@ -199,7 +208,9 @@
           </div>
           <div class="modal-footer">
             {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button> --}}
-            <button type="button" class="btn btn-primary">تعديل</button>
+            
+            <a id="link-edit" href="" class="btn btn-primary">تعديل</a>
+
             <a id="link-print" href="" class="btn btn-info">طباعة</a>
           </div>
         </div>
@@ -211,5 +222,6 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
 <script src="{{asset('js/order.js')}}"></script>
 @endsection

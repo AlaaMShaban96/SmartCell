@@ -17,7 +17,7 @@
       <div class="row">
         @foreach ($orderState as $order)
         <div class="col-lg-3 col-md-6 col-sm-6">
-            <a href='{{url("order/".$order["name"]."/show")}}'>
+            <a href='{{url("order/".$order["name"])}}'>
                 <div class="card card-stats">
                 <div class="card-header card-header-icon {{$order['colorCardIcon']}}">
                     <div class="card-icon">
@@ -34,21 +34,7 @@
         @endforeach
 
 
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <a href='{{url("order/1/show")}}'>
-              <div class="card card-stats">
-              <div class="card-header card-header-icon card-header-warning">
-                  <div class="card-icon">
-                      <img class="img-icons" src='{{asset('image/dashbord/orderState/fromshop.png')}}' alt="" srcset="">
-                  {{-- <i class="material-icons">{{$order['icon']}}</i> --}}
-                  </div>
-                  <p class="card-category">علاء</p>
-                  <h3 class="card-title">155
-                  </h3>
-              </div>
-              </div>
-          </a>
-        </div>
+       
 
 
 

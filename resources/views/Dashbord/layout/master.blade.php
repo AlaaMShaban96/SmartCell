@@ -17,19 +17,26 @@
   <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white">
       <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-          CT
-        </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
-        </a>
+        <img width="22%" src="https://images.theconversation.com/files/93616/original/image-20150902-6700-t2axrz.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1000&fit=clip" alt="" srcset="">
       </div>
       <div class="sidebar-wrapper"> 
         <ul class="nav">
           <li class="nav-item active  ">
-            <a class="nav-link" href="#0">
+            <a class="nav-link" href="{{url('/')}}">
               <i class="material-icons">dashboard</i>
-              <p>Dashboard</p>
+              <p>لوحة التحكم</p>
+            </a>
+          </li>
+          <li class="nav-item   ">
+            <a class="nav-link" href="{{url('/item')}}">
+              <i class="material-icons">dashboard</i>
+              <p>المنتجات</p>
+            </a>
+          </li>
+          <li class="nav-item   ">
+            <a class="nav-link" href="#">
+              <i class="material-icons">dashboard</i>
+              <p>المستخمين</p>
             </a>
           </li>
           <!-- your sidebar here -->
@@ -41,7 +48,7 @@
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">Dashboard</a>
+            <p class="navbar-brand">{{Session::get('store_name').$link}}</p>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -115,7 +122,7 @@
             <ul>
               <li>
                 <a href="https://www.creative-tim.com">
-                  Creative Tim
+                  Smart Cell
                 </a>
               </li>
             </ul>

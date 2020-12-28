@@ -13,7 +13,8 @@
           <!-- Tabs Titles -->
           <h2 class="active"> Login </h2>
           <!-- Login Form -->
-          <form action="{{url('/redirect')}}" method="GET">
+          <form action="{{url('/login')}}" method="post">
+            @csrf
             {{-- <input type="text" id="login" class="fadeIn second" name="login" placeholder="login"> --}}
             {{-- <input type="text" id="password" class="fadeIn third" name="login" placeholder="password"> --}}
             <input type="submit" class="fadeIn fourth" value="Login Vie Google">

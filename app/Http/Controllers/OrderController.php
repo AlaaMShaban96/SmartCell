@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -17,14 +18,7 @@ class OrderController extends Controller
 
     protected $db;
     public function __construct() {
-        try {
-            $this->db = app('firebase.firestore')->database();
-            $snapshot = $this->db->collection('Stores')->document('1')->snapshot();
-            // config(['sheet.sheet_id'=>$snapshot->data()['SA1']['s_id']]);
-            config(['sheet.sheet_id'=>'13yIzeYkaacCdcFICbPGWlf3jVH1-aoWeG-9rdr70FMA']);
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
+      
        
 
     }
@@ -67,13 +61,13 @@ class OrderController extends Controller
      */
     public function show($search , Request $request)
     {
-        // $orders="";
        $data= Order::Search($search);
       
-       $order= Order::SelectRows($data);
-       $orders= $this->paginate($order);
-       $orders->setPath($request->url());
-       return view('Dashbord.order.index',compact('orders'));
+       $orders= Order::SelectRows($data);
+    //    $orders= $this->paginate($order);
+    //    $orders->setPath($request->url());
+    $link="/".$search;
+       return view('Dashbord.order.index',compact('orders','link'));
      
     }
 
@@ -85,8 +79,36 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        //
-    
+        $order= Order::find($id);
+        $date = Carbon::parse($order['تاريخ الانشاء'], 'UTC');
+        $order['تاريخ الانشاء']=$date->isoFormat('MMM DD YY'); 
+        $link="/".$order['حالة الطلبية']."/".$order['رقم الطلبية'];
+        return view('Dashbord.order.edit',compact('order','link'));
+
+    }
+    public function update($id,Request $request)
+    {
+        $request->userEmail=$request->userEmail==''?Session::get('email'):$request->userEmail;
+        $request->userName=$request->userName==''?Session::get('name'):$request->userName;
+        $db=app('firebase.firestore')->database();
+
+        $request->userName= $db->collection('users')->document($request->userEmail)->snapshot()->data()['name'];
+        
+        if(Order::orederUpdate($id,$request)){
+
+            Session::flash('message', 'تم التعديل بنجاح'); 
+            Session::flash('alert-class', 'alert-success'); 
+
+        }else {
+            Session::flash('message', 'فشلت عملية التعديل'); 
+            Session::flash('alert-class', 'alert-danger'); 
+        }
+        // dd($request->state);
+       
+        return redirect('/order/'.$request->state);
+        return redirect()->back();
+        return view('Dashbord.order.edit',compact('order'));
+
     }
 
     /**
@@ -116,7 +138,7 @@ class OrderController extends Controller
         // $data['profile']=$order['بروفايل'];
         // $data['phone']=$order['رقم الهاتف'];
         // $data['total']=$order['اجمالي سعر الطلبية'];
-        // return view('pdf.test',$data); 
+        return view('pdf.test'); 
         // $pdf = PDF::loadeView('pdf.test');
 
         // // return $pdf->download('event_qrcode.pdf');

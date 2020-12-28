@@ -3,6 +3,8 @@ $('#show-order').on('show.bs.modal', function (event) {
   var hostName = window.location.origin;
   console.log($(event.relatedTarget).data('number'));
   document.getElementById('link-print').href=hostName+"/pdf/"+$(event.relatedTarget).data('number');
+  document.getElementById('link-edit').href=hostName+"/pdf/"+$(event.relatedTarget).data('number');
+  document.getElementById('link-edit').href=hostName+"/order/"+$(event.relatedTarget).data('number')+"/edit";
   
     var name = $(event.relatedTarget).data('name');
     var table=document.getElementById('table');

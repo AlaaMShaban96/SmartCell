@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 use Revolution\Google\Sheets\Facades\Sheets;
 
@@ -17,7 +18,7 @@ class HomeController extends Controller
             $this->db = app('firebase.firestore')->database();
             $snapshot = $this->db->collection('Stores')->document('1')->snapshot();
             // config(['sheet.sheet_id'=>$snapshot->data()['SA1']['s_id']]);
-            config(['sheet.sheet_id'=>'13yIzeYkaacCdcFICbPGWlf3jVH1-aoWeG-9rdr70FMA']);
+            // config(['sheet.sheet_id'=>'13yIzeYkaacCdcFICbPGWlf3jVH1-aoWeG-9rdr70FMA']);
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -54,17 +55,18 @@ class HomeController extends Controller
 
     //     return view('welcome')->with(compact('posts'));
     // }
-        public function index()
-        {
-            try {
-                $orderState=Order::orderState();
-            } catch (\Throwable $th) {
-                dd('index function ',$th);
-            }
-        
-
-            return view('Dashbord.index',compact('orderState'));
+    public function index()
+    {
+        try {
+            $orderState=Order::orderState();
+        } catch (\Throwable $th) {
+            dd('index function error',$th);
         }
+        $link="";
+    
+
+        return view('Dashbord.index',compact('orderState','link'));
+    }
 
     /**
      * Redirect the user to the Google authentication page.
@@ -74,6 +76,14 @@ class HomeController extends Controller
     public function redirectToProvider()
     {
         return Socialite::driver('google')->redirect();
+    }
+    public function loginShow()
+    {
+        return view('login');
+    }
+    public function login()
+    {
+        return redirect('/redirect');
     }
     public function handleProviderCallback(Request $request)
     {
@@ -85,61 +95,74 @@ class HomeController extends Controller
             
            if ($this->selectUser($user['id_token'],$user)) {
               
-              return view('Dashbord.index');
-          }else {
-              Session::flash('message', "This Email is Not Found ");
-              return view('login');
-              
-          }
+                return redirect('/');
+
+            //   return view('Dashbord.index');
+            }else {
+                Session::flash('message', "This Email is Not Found ");
+                return view('login');
+                
+            }
             
-          } catch (\Exception $e) {
-              return 'status'. $e;
-          }
+        } catch (\Exception $e) {
+            return 'status'. $e;
+        }
     }
 
     private function selectUser( $idToken,$userTest)
     {
-      
-  
-      
+
         $user= app('firebase.auth')->signInWithGoogleIdToken($idToken);
 
-        $snapshot = $this->db->collection('Stores')->document('1')->snapshot();
-
-        $private_key1 =  str_replace("\\n","\n",$snapshot->data()['SA1']['private_key']);
-        $private_key =  str_replace("\n","",$snapshot->data()['SA1']['private_key']);
-
-            config(['sheet.sheet_id'=>$snapshot->data()['SA1']['s_id']]);
-
-            // dd(config('google.service'));
-
-            $filtered = Order::Search('تم التوصيل');
-
-            $values = Order::SelectRows($filtered);
- 
-            $orders= array();
-            foreach ($values as $key => $value) {
-                $order=$this->getOrderCollection($value);
-                array_push($orders,$order);
-            }
-
-        $orders[0]['الاسم']="شمشش";
-        $orders[0]['بروفايل']="Alaa M Shaban 22";
-        dd(  Order::updateOrder($orders[0]));
-
         $snapshot = $this->db->collection('users')->document($user->data()['email'])->snapshot();
+
         if ($snapshot->exists()) {
-            $store_name=$this->db->collection('stores')->document($snapshot->data()['store_id'])->snapshot()->data()['name'];
-            Session::put('name', $snapshot->data()['name']);
-            Session::put('rule', $snapshot->data()['rule']);
-            Session::put('email',$user->data()['email']);
-            Session::put('store_name',$store_name);
-            Session::put('store_id', $snapshot->data()['store_id']);
-            return true;
-            
+
+                $store=$this->db->collection('Stores')->document($snapshot->data()['store_id'])->snapshot();
+               
+                if ($store->exists()) {
+                        Session::put('name', $snapshot->data()['name']);
+                        Session::put('role', $snapshot->data()['role']);
+                        Session::put('email',$user->data()['email']);
+                        Session::put('store_id', $snapshot->data()['store_id']);
+                        Session::put('store_name', $store->data()['name']);
+                        Session::put('store_users', $store->data()['users']);
+                        // Session::put('sheet_id', $store->data()['SA1']['s_id']);
+                        Session::put('sheet_id', '1ag225UN7QfaqV-cHbmJPmWssvwso7STmcPBYyW7BMb0');
+
+                        $this->setGoogleSheetCredentials($store);
+                   
+                        return true;
+
+                } else {
+
+                    return false;
+                }
+
         }else {
             return false;
         }
+
+        
+            
+
+        //     dd(config('google.service'));
+
+        //     $filtered = Order::Search('تم التوصيل');
+
+        //     $values = Order::SelectRows($filtered);
+
+        //     $orders= array();
+        //     foreach ($values as $key => $value) {
+        //         $order=$this->getOrderCollection($value);
+        //         array_push($orders,$order);
+        //     }
+
+        // $orders[0]['الاسم']="شمشش";
+        // $orders[0]['بروفايل']="Alaa M Shaban 22";
+        // dd(  Order::updateOrder($orders[0]));
+
+        
     }
 
     private function getOrderCollection($data)
@@ -156,6 +179,33 @@ class HomeController extends Controller
         } catch (\Throwable $th) {
             return false;
         }
+    }
+    private function setGoogleSheetCredentials( $store)
+    {
+        $jsonString = file_get_contents(storage_path('credentials.json'));
+            
+        $data = json_decode($jsonString, true);
+
+
+
+        $data= [
+        "type" =>$store->data()['SA1']["type"],
+        "project_id" =>$store->data()['SA1']["project_id"],
+        "private_key_id" =>$store->data()['SA1']["private_key_id"],
+        "private_key" =>$store->data()['SA1']["private_key"],
+        "client_email" =>$store->data()['SA1']["client_email"],
+        "client_id" =>$store->data()['SA1']["client_id"],
+        "auth_uri" =>$store->data()['SA1']["auth_uri"],
+        "token_uri" =>$store->data()['SA1']["token_uri"],
+        "auth_provider_x509_cert_url" =>$store->data()['SA1']["auth_provider_x509_cert_url"],
+        "client_x509_cert_url" =>$store->data()['SA1']["client_x509_cert_url"],
+        ];
+        // Write File
+
+        $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
+
+        file_put_contents(storage_path('credentials.json'), stripslashes($newJsonString));
+
     }
 
 }
