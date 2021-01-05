@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ItemUpdateRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,23 +25,19 @@ class ItemUpdateRequest extends FormRequest
     {
         return [
             // 'title' => 'required|unique:posts|max:255',
-            'titel' => 'required',
             'name' => 'required',
-            'price' => 'required',
             'detals' => 'max:80',
             // 'show' => 'required',
-            // 'image' => 'required',
+            'image' => 'required',
             // 'keyWords' => 'required',
         ];
     }
     public function messages()
     {
         return [
-            'titel.required' => 'يجب اختيار تصنيف المنتج',
-            'detals.max' => 'وصف المنتج يجب لا يتجاوز 80  حرف',
-            'show.required' => 'تحديد حالة المنتج',
-            // 'image.required' => 'يجب تحميل الصورة',
-            'keyWords.required' => 'يجب اضافة الكلمات المفتاحية',
+            'detals.max' => 'وصف التصنيف يجب لا يتجاوز 80  حرف',
+            'name.required' => 'يجب ادخال اسم التصنيف',
+            'image.required' => 'يجب تحميل الصورة',
         ];
     }
 }

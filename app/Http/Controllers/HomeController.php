@@ -83,6 +83,7 @@ class HomeController extends Controller
     }
     public function login()
     {
+        
         return redirect('/redirect');
     }
     public function handleProviderCallback(Request $request)
@@ -90,7 +91,6 @@ class HomeController extends Controller
 
         try{
       
-
             $user = Socialite::with('google')->getAccessTokenResponse($request->code);
             
            if ($this->selectUser($user['id_token'],$user)) {

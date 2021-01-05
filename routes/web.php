@@ -26,6 +26,8 @@ Route::put('/order/{id}', [OrderController::class,'update']);
 Route::get('/item', [ItemController::class,'index']);
 Route::get('/item/{id}', [ItemController::class,'show']);
 Route::get('/item/{id}/edit', [ItemController::class,'edit']);
+Route::post('/item', [ItemController::class,'store']);
+Route::post('/category', [ItemController::class,'storeCategory']);
 Route::put('/item/{id}', [ItemController::class,'update']);
 
 

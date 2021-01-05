@@ -8,6 +8,15 @@
 @endsection
 @section('content')
 
+@if ($errors->any())
+@foreach ($errors->all() as $error)
+ <div class="alert alert-danger mt-1 alert-validation-msg" role="alert">
+      <i class="feather icon-info mr-1 align-middle"></i>
+      <span>{{ $error }}</span>
+  </div>
+@endforeach
+@endif
+
     @if(Session::has('message'))
     <div class="alert {{ Session::get('alert-class') }} text-center">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">

@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Item;
 use GuzzleHttp\Client;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
-use App\Http\Requests\ItemUpdateRequest;
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\ItemUpdateRequest;
 
 class ItemController extends Controller
 {
@@ -22,8 +24,7 @@ class ItemController extends Controller
     {
        
         $items=Item::allItems();
-        // dd();
-        setcookie("items", serialize($items) );
+        // dd($categories);
         // dd($items);
         $link="/منتجات";
         return view('Dashbord.item.index',compact('items','link'));
@@ -45,9 +46,54 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(ItemUpdateRequest $request)
+    {   
+        $data=$request->all();
+        
+        $data['image']="";
+        if ($request->has('image')) {
+            $data['image']=$this->compress($request);
+        }
+        
+
+        try {
+            Item::createItems( $data);
+        } catch (\Throwable $th) {
+            Session::flash('message', $th.'فشلت عملية الاضافة'); 
+            Session::flash('alert-class', 'alert-danger'); 
+            return ;
+        }
+        Session::flash('message', 'تم اضافة المنتج  بنجاح'); 
+        Session::flash('alert-class', 'alert-success'); 
+        return redirect()->back();
+       
+
+        
+    }
+    public function storeCategory(CategoryRequest $request)
+    {   
+        $data=$request->all();
+        // dd( $request->all());
+        $data['image']="";
+        $data['category']="yes";
+        if ($request->has('image')) {
+            $data['image']=$this->compress($request);
+        }
+        
+
+        try {
+            Category::createCategory( $data);
+        } catch (\Throwable $th) {
+            Session::flash('message', $th.'فشلت عملية الاضافة'); 
+            Session::flash('alert-class', 'alert-danger'); 
+            return ;
+        }
+        Session::flash('message', 'تم اضافة المنتج  بنجاح'); 
+        Session::flash('alert-class', 'alert-success'); 
+        return redirect()->back();
+       
+
+        
     }
 
     /**
@@ -81,18 +127,23 @@ class ItemController extends Controller
      */
     public function update(ItemUpdateRequest $request, $id)
     {
-            $data=$request->all();
-            $data['image']="";
-            if ($request->has('image')) {
-                $data['image']=$this->compress($request);
-            }
-            
-            dd(Item::itemUpdate($id,$data));
+        // dd($request->all());
+        $data=$request->all();
+        $data['image']="";
+        if ($request->has('image')) {
+            $data['image']=$this->compress($request);
+        }
+        try {
+            Item::itemUpdate($id,$data);
+        } catch (\Throwable $th) {
+            Session::flash('message', $th.'فشلت عملية التعديل'); 
+            Session::flash('alert-class', 'alert-danger'); 
+            return ;
+        }
+        Session::flash('message', 'تم التعديل بنجاح'); 
+        Session::flash('alert-class', 'alert-success'); 
+        return redirect()->back();
         
-       
-
-
-    
     }
 
     /**
