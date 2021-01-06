@@ -59,13 +59,14 @@ class HomeController extends Controller
     {
         try {
             $orderState=Order::orderState();
+            $todayOrder=Order::todayOrder();
         } catch (\Throwable $th) {
             dd('index function error',$th);
         }
         $link="";
     
 
-        return view('Dashbord.index',compact('orderState','link'));
+        return view('Dashbord.index',compact('orderState','link','todayOrder'));
     }
 
     /**

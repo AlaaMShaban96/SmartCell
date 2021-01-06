@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Session;
@@ -66,6 +67,34 @@ class Order extends Model
         $header = Sheets::range('A1:AV1')->get();
         $row= Sheets::collection($header->toArray()[0],$rows)->all();
         return  $row[0]->toArray() ;
+    }
+    static public function todayOrder()
+    {
+        $column = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->majorDimension('')->range('')->all();
+        $data=[];
+       
+       
+        foreach ($column as $key => $value) {
+            if ($key != 0) {
+
+                $date = Carbon::parse($value[40]);
+                // $date = Carbon::parse($value[40]);
+                $now  = Carbon::now();
+        
+                $diff = $date->diffInDays($now);
+                
+                if ($diff==0) {
+                    array_push($data,$value);
+                }
+            }
+           
+            
+        }
+        // $data =array_filter( $column[40] , function ($value)  {
+        //     return $value;
+        //     // return $value == "2020-09-29T11:00:58+02:00";
+        // });
+        return  $data;
     }
     static public function orederUpdate($id,$request)
     {
@@ -169,35 +198,40 @@ class Order extends Model
             'prameter'=>'delivered',
             'name'=>"تم التوصيل",
             'colorCardIcon'=>"card-header-success",
-            'icon'=>"image/dashbord/orderState/fromshop.png",
+            // 'icon'=>"image/dashbord/orderState/fromshop.png",
+            'icon'=>"images/Component 3 – 1.svg",
         ]);
         array_push($orderState,[
             'count'=>count($recovery),
             'prameter'=>'recovery',
             'name'=>"استرجاع",
             'colorCardIcon'=>"card-header-info",
-            'icon'=>"image/dashbord/orderState/fromshop.png",
+            'icon'=>"images/recovary icon.svg",
+            // 'icon'=>"image/dashbord/orderState/fromshop.png",
         ]);
         array_push($orderState,[
             'count'=>count($wasCanceled),
             'prameter'=>'wasCanceled',
             'name'=>"تم الالغاء",
             'colorCardIcon'=>"card-header-warning",
-            'icon'=>"image/dashbord/orderState/fromshop.png",
+            'icon'=>"images/Component 4 – 1.svg",
+            // 'icon'=>"image/dashbord/orderState/fromshop.png",
         ]);
         array_push($orderState,[
             'count'=>count($connecting),
             'prameter'=>'connecting',
             'name'=>"قيد التوصيل",
             'colorCardIcon'=>"card-header-warning",
-            'icon'=>"image/dashbord/orderState/fromshop.png",
+            'icon'=>"images/Component 2 – 1.svg",
+            // 'icon'=>"image/dashbord/orderState/fromshop.png",
         ]);
         array_push($orderState,[
             'count'=>count($personalReceipt),
             'prameter'=>'personalReceipt',
             'name'=>"استلام شخصي",
             'colorCardIcon'=>"card-header-warning",
-            'icon'=>"image/dashbord/orderState/fromshop.png",
+            'icon'=>"images/from shop.svg",
+            // 'icon'=>"image/dashbord/orderState/fromshop.png",
         ]);
      
         return $orderState;
