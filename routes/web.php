@@ -19,9 +19,12 @@ Route::get('/', [HomeController::class,'index']);
 
 Route::get('/pdf/{id}', [OrderController::class,'printPDF']);
 
+Route::get('/order', [OrderController::class,'index']);
 Route::get('/order/{id}', [OrderController::class,'show']);
 Route::get('/order/{id}/edit', [OrderController::class,'edit']);
 Route::put('/order/{id}', [OrderController::class,'update']);
+Route::get('/order/{status}/{id}', [OrderController::class,'chengeStatusItem']);
+Route::post('/order/send-to-user/{id}', [OrderController::class,'sendToUser']);
 
 Route::get('/item', [ItemController::class,'index']);
 Route::get('/item/{id}', [ItemController::class,'show']);
@@ -29,6 +32,7 @@ Route::get('/item/{id}/edit', [ItemController::class,'edit']);
 Route::post('/item', [ItemController::class,'store']);
 Route::post('/category', [ItemController::class,'storeCategory']);
 Route::put('/item/{id}', [ItemController::class,'update']);
+
 
 
 

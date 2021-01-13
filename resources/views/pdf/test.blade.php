@@ -115,15 +115,15 @@
                     <table>
                         <tr>
                             <td class="title">
-                                {{-- <img src="https://www.sparksuite.com/images/logo.png" style="width:100%; max-width:300px;"> --}}
-                                <img src="{{asset('image/dashbord/logo/logo.jpg')}}" alt="" srcset="">
+                                <img src="https://firebasestorage.googleapis.com/v0/b/smartcell-acff1.appspot.com/o/Engraving%2Ficon?alt=media&token=5c363e4b-38e8-4ba8-955d-3574b0e9abae" style="width:100%; max-width:64px;">
+                                <img src="{{asset('image2/dashbord/logo/logo.jpg')}}" alt="" srcset="">
                                 {{-- <div id="qrcode" style="display: block ruby;"></div> --}}
 
                             </td>
                             
                             <td>
-                                {{-- رقم الفاتورة : {{$orderNumber}}<br>
-                                تاريخ :  {{$created_at}}<br> --}}
+                                رقم الفاتورة : {{$order['رقم الطلبية']}}<br>
+                                تاريخ :  {{$order['تاريخ الانشاء']}}<br>
                             </td>
                         </tr>
                     </table>
@@ -136,14 +136,14 @@
                     <table>
                         <tr>
                             <td>
-                                {{-- {{$city}}<br>
-                                {{$area}}<br> --}}
+                               المدينة :  {{$order['المدينة']}}<br>
+                               المنطقة : {{$order['المنطقة']}}<br>
                             </td>
                             
                             <td>
-                                {{-- {{$name}}<br>
-                                {{$profile}}<br>
-                               {{$phone}}<br> --}}
+                                الاسم :  {{$order['الاسم']}}<br>
+                                بروفايل :   {{$order['بروفايل']}}<br>
+                                رقم الهاتف :  {{$order['رقم الهاتف']}}<br>
                                 
                             </td>
                         </tr>
@@ -169,15 +169,32 @@
                 </td>
             </tr>
          
-            {{-- <tr class="item">
-                <td>
+          
+               @for ($i = 1; $i < 10; $i++)
+                   @if ($order['المنتج '.$i] != "")
+                    <tr class="item">
+                        <td>
+                        {{$order['المنتج '.$i]}}
+                        </td>
+                        
+                        <td>
+                        {{$order['عدد قطع المنتج '.$i]}}
+                        </td>
+                        
+                        <td>
+                            {{$order['سعر المنتج '.$i]}}
+                        </td>
+                    </tr> 
+                   @endif
+               @endfor
+                {{-- <td>
                     Website design
                 </td>
                 
                 <td>
                     $300.00
-                </td>
-            </tr> --}}
+                </td> --}}
+         
          
             
             
@@ -191,8 +208,8 @@
                 المجموع :
                 </td>   
                 <td>
-                    {{-- دينار   {{$total}} --}}
-                    دينار   500
+                    دينار   {{$order['اجمالي الفتورة']}}
+                   
                 </td>
             </tr>
         </table>

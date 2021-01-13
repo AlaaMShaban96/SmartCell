@@ -156,6 +156,7 @@ class ItemController extends Controller
     {
         //
     }
+  
     private function compress(Request $request)
     {
         $photo =  $request->file('image');

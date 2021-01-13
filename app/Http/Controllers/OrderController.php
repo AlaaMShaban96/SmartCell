@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use PDF;
+
 use Carbon\Carbon;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -18,8 +18,14 @@ class OrderController extends Controller
 
     protected $db;
     public function __construct() {
-      
+        try {
+            $this->db = app('firebase.firestore')->database();
+     
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
        
+
 
     }
     /**
@@ -29,7 +35,10 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders=Order::allOrder();
+        $orderState=Order::orderState();
+        $todayOrder=Order::todayOrder();
+        return view('Dashbord.order.index',compact('orders','orderState','todayOrder'));
     }
 
     /**
@@ -39,7 +48,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+       
     }
 
     /**
@@ -50,7 +59,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+     
     }
 
     /**
@@ -64,9 +73,9 @@ class OrderController extends Controller
        $data= Order::Search($search);
       
        $orders= Order::SelectRows($data);
-    //    $orders= $this->paginate($order);
-    //    $orders->setPath($request->url());
-    $link="/".$search;
+        //    $orders= $this->paginate($order);
+        //    $orders->setPath($request->url());
+        $link="/".$search;
        return view('Dashbord.order.index',compact('orders','link'));
      
     }
@@ -125,11 +134,11 @@ class OrderController extends Controller
     {
        
 
-    // $order= Order::find($id);
-    // $date = Carbon::parse($order['تاريخ الانشاء'], 'UTC');
-    // $order['تاريخ الانشاء']=$date->isoFormat('MMM Do YY'); 
-    // dd($order['تاريخ الانشاء']);
-    $data=[];
+        $order= Order::find($id);
+        $date = Carbon::parse($order['تاريخ الانشاء'], 'UTC');
+        $order['تاريخ الانشاء']=$date->isoFormat('MMM Do YY'); 
+        // dd($order);
+        $data=[];
         // $data['orderNumber']=$order['رقم الطلبية'];
         // $data['created_at']=$order['تاريخ الانشاء'];
         // $data['city']=$order['المدينة'];
@@ -138,15 +147,41 @@ class OrderController extends Controller
         // $data['profile']=$order['بروفايل'];
         // $data['phone']=$order['رقم الهاتف'];
         // $data['total']=$order['اجمالي سعر الطلبية'];
-        return view('pdf.test'); 
+        return view('pdf.test',compact('order')); 
         // $pdf = PDF::loadeView('pdf.test');
 
         // // return $pdf->download('event_qrcode.pdf');
         // return $pdf->stream('document.pdf');
-        $pdf = PDF::loadView('pdf.test');
+        $pdf = PDF::loadView('pdf.test' ,compact('order'));
 		return $pdf->stream('document.pdf');
     }
+    public function chengeStatusItem( $status, $id)
+    {
+        if(Order::chengeStatusItem($status, $id)){
 
+            Session::flash('message', 'تم التعديل بنجاح'); 
+            Session::flash('alert-class', 'alert-success'); 
+
+        }else {
+            Session::flash('message', 'فشلت عملية التعديل'); 
+            Session::flash('alert-class', 'alert-danger'); 
+        }
+        return redirect()->back();
+    }
+    public function sendToUser(Request $request,  $id)
+    {
+        $name = $this->db->collection('users')->document($request->email)->snapshot()['name'];
+        if(Order::sendToUser($id,$name,$request->email)){
+
+            Session::flash('message', 'تم التعديل بنجاح'); 
+            Session::flash('alert-class', 'alert-success'); 
+
+        }else {
+            Session::flash('message', 'فشلت عملية التعديل'); 
+            Session::flash('alert-class', 'alert-danger'); 
+        }
+        return redirect()->back();
+    }
     public function paginate($items, $perPage = 10, $page = null, $options = [])
 
     {

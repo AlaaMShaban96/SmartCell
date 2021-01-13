@@ -70,7 +70,25 @@ class Item extends Model
     }
     static public function itemUpdate($id,$request)
     {
+  
+        $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Shop')->range('A'.$id.':k'.$id)->majorDimension('ROWS')->all();       
+        $data[0][0]=$request['titel'];
+        $data[0][2]=$data[0][3]=='yes'?"":$request['price'];
+        $data[0][4]=$request['detals'];
+        $data[0][5]=isset($request['keyWords'])?$request['keyWords']:"";
+        $data[0][6]=isset($request['image'])?$data[0][6]:$request['image'];
+        $data[0][7]= isset($request['show'])?'TRUE':'FALSE';
+        $data[0][8]=isset($request['qyantity'])?(FLOAT)$request['qyantity']:(FLOAT)$data[0][8];
+        $data[0][9]=$data[0][9];
+        $data[0][10]=$request['info'];
+        Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Shop')->
+        range('A'.$id)->update([$data[0]]);
+       return true ;
 
+    }
+    static public function chengeStatusItem($status, $id)
+    {
+  
         $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Shop')->range('A'.$id.':k'.$id)->majorDimension('ROWS')->all();       
         $data[0][0]=$request['titel'];
         $data[0][2]=$data[0][3]=='yes'?"":$request['price'];

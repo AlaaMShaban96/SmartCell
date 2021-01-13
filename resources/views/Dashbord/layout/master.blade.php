@@ -165,7 +165,7 @@
                         <a href="{{url('/')}}"><i class="menu-icon fa fa-laptop"></i>الرئيسية</a>
                     </li>
                     <li>
-                        <a href="{{url('/')}}"> <i class="menu-icon fa fa-book"></i>الطلبيات</a>
+                        <a href="{{url('/order')}}"> <i class="menu-icon fa fa-book"></i>الطلبيات</a>
                     </li>
                     <li>
                         <a href="{{url('/item')}}"> <i class="menu-icon fa fa-qrcode"></i>المنتجات</a>

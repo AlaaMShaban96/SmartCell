@@ -16,13 +16,13 @@
 	
 	<div class="limiter">
 		<div class="container-login100">
-			<div class="login100-more" style="background-image: url({{asset('image/1.png')}});">
+			<div class="login100-more" style="background-image: url({{asset('image2/1.png')}});">
 			
 			</div>
 
-			<div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50" style=" background-image: url({{asset('image/bg.png')}});">
+			<div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50" style=" background-image: url({{asset('image2/bg.png')}});">
 				<div class="row " style="margin-top: 20%; ">
-					<img src="{{asset('image/logo.png')}}" class="img-fluaid" style="width: 50%; margin-left: 27%;">
+					<img src="{{asset('image2/logo.png')}}" class="img-fluaid" style="width: 50%; margin-left: 27%;">
 
 				</div>
 				<form action="{{url('/login')}}" method="post">

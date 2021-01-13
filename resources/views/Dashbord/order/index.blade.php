@@ -1,14 +1,33 @@
 @extends('Dashbord/layout/master')
 @section('style')
-
 <style>
+  #modal-content{
+      width: 30%;
+  }
+  @media only screen and (max-width: 600px) {
 
+      #modal-content{
+      width: 90%;
+  }
+ }
+ .buttonEdit{
+    padding-left: 0px;
+    margin-left: 25%;
+    margin-right: 24%;
+    border-width: 2px;
+    /* background-color: aqua; */
+    border-radius: 20px;
+    width: 90%;
+    margin-bottom: 20px;
+    margin-left: 5%;
+
+ }
 </style>
     
 @endsection
 @section('content')
 
-@if ($errors->any())
+ @if ($errors->any())
 @foreach ($errors->all() as $error)
  <div class="alert alert-danger mt-1 alert-validation-msg" role="alert">
       <i class="feather icon-info mr-1 align-middle"></i>
@@ -20,12 +39,12 @@
     @if(Session::has('message'))
     <div class="alert {{ Session::get('alert-class') }} text-center">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <i class="material-icons">close</i>
+        <i class="material-icons">x</i>
       </button>
       <p class="h4" >{{ Session::get('message') }}</p> 
     </div>
     @endif
-
+{{--
     <div class="container-fluid " >
     
 
@@ -67,9 +86,6 @@
                     data-price[2]="{{$order['سعر المنتج 3']}}"
                     
 
-                     {{-- data-product[3]="{{$order['المنتج 4']}}"
-                    data-pisces[3]="{{$order['عدد قطع المنتج 4']}}"
-                    data-price[3]="{{$order['سعر المنتج 4']}}"  --}}
                     
 
                     data-product[4]="{{$order['المنتج 5']}}"
@@ -120,10 +136,7 @@
 
       </div>
     </div>
-    {{-- {{ $orders->links() }} --}}
-
-
-
+  
 
     <!-- Modal -->
     <div class="modal fade" id="show-order" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="show-order" aria-hidden="true">
@@ -216,7 +229,6 @@
             
           </div>
           <div class="modal-footer">
-            {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button> --}}
             
             <a id="link-edit" href="" class="btn btn-primary">تعديل</a>
 
@@ -224,13 +236,357 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
+
+
+
+    <div class="content">
+      <!-- Animated -->
+      <div class="animated fadeIn">
+          <!-- Widgets  -->
+          <div class="row">
+  
+  
+  
+              @foreach ($orderState as $order)
+                  <div class="col-lg-3 col-md-6">
+                      <div class="card">
+                          <div class="card-body">
+                              <a href="#" onclick="showOrderStatus('{{$order['name']}}')">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-1">
+                                        <img style="width: 50%;" src="{{asset($order["icon"])}}">
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib" >
+                                            <div class="stat-text"><span class="count">{{$order['count']}}</span></div>
+                                            <div class="stat-heading">{{$order['name']}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+              @endforeach
+      
+          </div>
+          <!-- /Widgets -->
+          <!--  Traffic  -->
+          <div class="row">
+              <div class="col-lg-12">  
+              </div><!-- /# column -->
+          </div>
+          <!--  /Traffic -->
+          <div class="clearfix"></div>
+          <!-- Orders -->
+          <div class="orders">
+              <div class="row">
+                  <div class="col-xl-12">
+                      <div class="card">
+                          <div class="card-body">
+                              <h4 class="box-title">طلبيات   </h4>
+                          </div>
+                          <div class="card-body--">
+                              <div class="table-stats order-table ov-h">
+                                  <table class="table ">
+                                      <thead>
+                                          <tr>
+                                              <th class="serial">رقم الفاتورة</th>
+                                              <th>اجمالي سعر الطلبية</th>
+                                              <th>الحالة</th>
+                                              <th>بواسطة</th>
+                                              <th></th>
+                                          </tr>
+                                      </thead>
+                                      <tbody id="tbodyOrders">
+                                       
+                                      </tbody>
+                                  </table>
+                              </div> <!-- /.table-stats -->
+                          </div>
+                      </div> <!-- /.card -->
+                  </div>  <!-- /.col-lg-8 -->
+  
+                  
+  
+          
+      <!-- /#add-category -->
+                  </div>
+      <!-- .animated -->
+          </div>
+      <!-- .animated -->
+      </div>
+  </div>
+  <div class="header-left">
+      <div id="myModal2" class="modal">
+          <div class="modal-content" id="modal-content" >
+              {{-- <span class="close">&times;</span> --}}
+              <div class="row">
+  
+                  <div class="col-12 text-center" style="border-bottom-width: 1px;border-bottom-style: solid;padding-bottom: 2%;">
+                      <span id="orderStatus"> قيد التوصيل</span>
+                  </div>
+                  <div class="col-12 text-center" style="padding: 2%;">
+                      <span id="orderDate"> 10-9-2020</span>
+                      
+                  </div>
+                  <div class="col-12 text-center" >
+                      <div style="border: dashed;padding-left: 0px;margin-left: 37%;margin-right: 37%; border-width: 2px;">
+                          
+                          # <span id="orderId"> 10</span>
+                      </div>
+                  </div>
+                  
+                  <div class="col-12 text-right">
+                      <ul style="list-style: none;margin-right: 2%;">
+                          <li >
+                                  <span id="tname"> علاء محمد</span>
+                  
+                          </li>
+                          <li >
+                                  <span id="tprofilename"> AlaaMShaban </span>
+                          </li>
+                          <li >
+                                  <span id="tnumber"> 0927780208</span>
+                          </li>
+                          <li >
+                                  <span id="tloction"> طرابلس ابوسليم</span>
+                          </li>
+                          <li >
+                                  <span id="tnote"> لايوجد ملاحظات</span>
+                          </li>
+                          <li >
+                                  <span id="tdelivery"> لا احد</span>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="col-12 text-center" >
+                      <table class="table">
+                          <thead class="table-dark">
+                              <td>السعر</td>
+                              <td>العدد</td>
+                              <td>المنتج</td>
+                          </thead>
+                          <tbody id="tbody">
+                              <tr>
+                                  <td>( ‫الاسود‬ ‫اللون130 LYD ) ‫ايفون‬ ‫ساعة‬</td>
+                                  <td>1</td>
+                                  <td>300</td>
+                              </tr>
+                              <tr>
+                                  <td>( ‫الاسود‬ ‫اللون130 LYD ) ‫ايفون‬ ‫ساعة‬</td>
+                                  <td>1</td>
+                                  <td>300</td>
+                              </tr>
+                              <tr>
+                                  <td>( ‫الاسود‬ ‫اللون130 LYD ) ‫ايفون‬ ‫ساعة‬</td>
+                                  <td>1</td>
+                                  <td>300</td>
+                              </tr>
+                              
+                          </tbody>
+                          </table>
+                          
+                  </div> 
+                  <div class="col-12 text-center mb-5" >
+                      <div style="padding-left: 0px;margin-left: 25%;margin-right: 24%; border-width: 2px;text-decoration-style: inherit; font-weight: bold;font-size: 21px;">
+                          
+                          المجموع  <span id="orderTotal">50 </span> دل 
+                      </div>
+                  </div>  
+                      <div class="col-4 text-center " >
+                        <a id="printId1" href="{{url('/status/"حنوصلها"')}}">
+                          <div class="buttonEdit badge-primary">
+                          حنوصلها 
+                          </div>
+                        </a>
+                      </div>           
+                      <div class="col-4 text-center " >
+                        <a id="printId2" href="{{url('/status/"تم التوصيل"')}}">
+                          <div class="buttonEdit badge-success">
+                          تم التوصيل 
+                          </div>
+                        </a>
+                      </div>           
+                      <div class="col-4 text-center  " >
+                        <a id="printId3" href="{{url('/status/"الغاء"')}}">
+                          <div class="buttonEdit badge-danger" >
+                          الغاء 
+                          </div>
+                        </a>
+                      </div>           
+                      <div class="col-4 text-center " >
+                        <a id="printId4" href="{{url('/status/"استرجاع"')}}">
+                          <div class="buttonEdit badge-warning">
+                          استرجاع 
+                          </div>
+                        </a>
+                      </div>           
+                      <div class="col-4 text-center " >
+                        <a id="printId5" href="{{url('/status/"استلام شخصي"')}}">
+                          <div class="buttonEdit badge-secondary">
+                          استلام شخصي 
+                          </div>
+                        </a>
+                      </div>           
+                      <div class="col-4 text-center " >
+                        {{-- <a id="printId6" href="{{url('/status/"الي المندوبين"')}}"> --}}
+                          <div onclick="setFormUrl()" class="buttonEdit badge-info" data-toggle="collapse" data-target="#demo">
+                            تحويل الي
+                          </div>
+                        {{-- </a> --}}
+                      </div>           
+                      <div class="col-12 text-center " >
+                        <div id="demo" class="collapse"  >
+                            <form id="formSendToUser" action="" method="post">
+                                @csrf
+                                <select name="email" id="">  
+                                 @foreach (Session::get('store_users') as $user)
+                                     <option value="{{$user}}">{{$user}}</option>
+                                 @endforeach
+                                </select>
+                                <button type="submit" type="button" class="btn btn-success">ارسال</button>
+                            </form>
+                        </div>  
+                      </div>  
+                          
+              </div>
+          </div>
+      </div>
+  </div>
+ 
 @endsection
 @section('script')
+<script src="{{asset('assets/js/date.js')}}"></script>
+<script>
+  var app = @json($orders,JSON_PRETTY_PRINT);
 
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  function showOredr(id) {
+      var modal = document.getElementById("myModal2");
+      
+      // Get the button that opens the modal
+      var btn = document.getElementById("myBtn"+id);
+      
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[3];
+      
+      // When the user clicks the button, open the modal 
+      btn.onclick = function() {
 
-<script src="{{asset('js/order.js')}}"></script>
+        modal.style.display = "block";
+
+      }
+
+      window.onclick = function(event) {
+          if (event.target == modal) {
+              modal.style.display = "none";
+          }
+      } 
+      order(id);
+  }
+  function order(id) {
+    var hostName = window.location.origin;
+      var row=[];
+      app.forEach(element => {
+       if (element[47]==id) {
+          return row= element;  
+       }    
+      
+      });
+      document.getElementById('printId1').href =hostName+'/order/"قيد التوصيل"/'+id;
+      document.getElementById('printId2').href =hostName+'/order/"تم التوصيل"/'+id;
+      document.getElementById('printId3').href =hostName+'/order/"تم الالغاء"/'+id;
+      document.getElementById('printId4').href =hostName+'/order/"استرجاع"/'+id;
+      document.getElementById('printId5').href =hostName+'/order/"استلام شخصي"/'+id;
+      document.getElementById('tname').innerHTML=row[0];
+      document.getElementById('tprofilename').innerHTML=row[1];
+      document.getElementById('tnumber').innerHTML=row[2];
+      document.getElementById('tloction').innerHTML=row[33]+','+row[34];
+      document.getElementById('tnote').innerHTML=row[35];
+      document.getElementById('tdelivery').innerHTML=row[39];
+      document.getElementById('orderDate').innerHTML=dateFormat(row[40], "dd-m-yy")
+      document.getElementById('orderId').innerHTML=row[47];
+      document.getElementById('orderStatus').innerHTML=row[42];
+      document.getElementById('orderTotal').innerHTML=row[36];
+      document.getElementById('tbody').innerHTML="";
+ 
+      var tbody= document.getElementById('tbody');
+      for (let index = 3 ; index <= 30; index=index+3 ) {
+          if (row[index] != "") {
+              var tr=document.createElement('tr');
+
+              var prodact=document.createElement('td');
+              var  txtprodact=document.createTextNode(""+row[index]);
+              prodact.append(txtprodact);
+              var price=document.createElement('td');
+              var  txtprice=document.createTextNode(""+row[index+1]);
+              price.append(txtprice);
+              var count=document.createElement('td');
+              var  txtcount=document.createTextNode(""+row[index+2]);
+              count.append(txtcount);
+              tr.append(price);
+              tr.append(count);
+              tr.append(prodact);
+              tbody.append(tr);
+          }
+          
+      }
+
+
+  }
+  function showOrderStatus(status) {
+
+    document.getElementById('tbodyOrders').innerHTML="";
+    var tbodyOrders= document.getElementById('tbodyOrders');
+    var state= status;
+     app.forEach(element => {
+        if (element[42] == state) {
+              var tr=document.createElement('tr');
+
+              var id=document.createElement('td');
+              var  txtId=document.createTextNode(""+element[47]);
+              id.append(txtId);
+              var totle=document.createElement('td');
+              var  txtTotle=document.createTextNode(""+element[36]);
+              totle.append(txtTotle);
+              var status=document.createElement('td');
+              var  txtStatus=document.createTextNode(""+element[42]);
+              status.append(txtStatus);
+              var delivry=document.createElement('td');
+              var  txtdelivry=document.createTextNode(""+element[39]);
+              delivry.append(txtdelivry);
+            
+              var model=document.createElement('td');
+              var show=document.createElement('button');
+              var  txtshow=document.createTextNode("عرض");
+              show.addEventListener("click", function() { 
+                showOredr(element[47]);
+                }); 
+              show.setAttribute('id','myBtn'+element[47]);
+              show.setAttribute('style','border: none; background-color: white;color: #10858b;');
+              show.append(txtshow);
+              model.append(show);
+            
+              tr.append(id);
+              tr.append(totle);
+              tr.append(status);
+              tr.append(delivry);
+              tr.append(model);
+              tbodyOrders.append(tr);
+              
+          }
+      });
+      
+    
+  }
+  function setFormUrl() {
+    var hostName = window.location.origin;
+    var form = document.getElementById('formSendToUser');
+    var id = document.getElementById('orderId').innerText;
+    form.action=hostName+'/order/send-to-user/'+id;
+  }
+
+</script>
 @endsection

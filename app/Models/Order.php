@@ -63,7 +63,7 @@ class Order extends Model
     static public function find($id)
     {
        
-        $rows = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('A'.$id.':AV'.$id)->majorDimension('ROWS')->get();
+        $rows = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('A'.($id-1).':AV'.($id-1))->majorDimension('ROWS')->get();
         $header = Sheets::range('A1:AV1')->get();
         $row= Sheets::collection($header->toArray()[0],$rows)->all();
         return  $row[0]->toArray() ;
@@ -83,7 +83,7 @@ class Order extends Model
         
                 $diff = $date->diffInDays($now);
                 
-                if ($diff==0) {
+                if ($value[40]=='2020-09-29T11:00:58+02:00') {
                     array_push($data,$value);
                 }
             }
@@ -108,6 +108,26 @@ class Order extends Model
        return true ;
 
     }
+    static public function chengeStatusItem($status, $id)
+    {
+        // dd(trim($status, '"'));
+        $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('A'.$id.':AV'.$id)->majorDimension('ROWS')->all();
+        $data[0][42]=trim($status, '"');
+        Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->
+        range('A'.$id)->update([$data[0]]);
+       return true ;
+
+    }
+    static public function sendToUser($id,$name,$email)
+    {
+        $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('A'.$id.':AV'.$id)->majorDimension('ROWS')->all();
+        $data[0][39]=trim($name, '"');
+        $data[0][44]=trim($email, '"');
+        Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->
+        range('A'.$id)->update([$data[0]]);
+       return true ;
+
+    }
     static public function Search($search)
     {
         $column = Sheets::spreadsheet(Session::get('sheet_id'))
@@ -118,6 +138,11 @@ class Order extends Model
             return  $value == $search;
         });
         return  $filtered ;
+    }
+    static public function allOrder()
+    {
+        return Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('')->majorDimension('')->get();    
+       
     }
     static public function SelectRows($search)
     {
@@ -192,7 +217,29 @@ class Order extends Model
         $personalReceipt = array_filter( $column[0], function ($value)  {
             return $value == "استلام شخصي";
         }); 
+        $admin = array_filter( $column[0], function ($value)  {
+            return $value == "انتظار موافقة الادمن";
+        }); 
+        $waiting = array_filter( $column[0], function ($value)  {
+            return $value == "قيد الانتظار";
+        }); 
 
+        array_push($orderState,[
+            'count'=>count($admin),
+            'prameter'=>'delivered',
+            'name'=>"انتظار موافقة الادمن",
+            'colorCardIcon'=>"card-header-success",
+            // 'icon'=>"image/dashbord/orderState/fromshop.png",
+            'icon'=>"images/Component 3 – 1.svg",
+        ]);
+        array_push($orderState,[
+            'count'=>count($waiting),
+            'prameter'=>'delivered',
+            'name'=>"قيد الانتظار",
+            'colorCardIcon'=>"card-header-success",
+            // 'icon'=>"image/dashbord/orderState/fromshop.png",
+            'icon'=>"images/waiting logo.svg",
+        ]);
         array_push($orderState,[
             'count'=>count($delivered),
             'prameter'=>'delivered',
