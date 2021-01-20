@@ -47,20 +47,22 @@ class Category extends Model
         $id=$store_id.$year.$mont.$type.rand(1,50000);
         
         $data=[
-        'Under category'=>(float)isset($request['titel'])?$request['titel']:"",
+        'Under category id'=>(float)isset($request['titel'])?$request['titel']:"1",
         'Product name'=>$request['name'],
+        'category or not'=>1,
         'Product price'=>"",
         'Describe it in 80 characters or less.'=>isset($request['detals'])?$request['detals']:"",
         'Product Keyword'=>"",
         'image url'=>$request['image'],
         'show'=>isset($request['show'])?'TRUE':'FALSE',
         'Qyantity'=>'',
-        'id'=>$id,
+        'id'=>(float )$id,
+        'Button name'=>$request['name'],
         'details'=>isset($request['info'])?$request['info']:"",
         ];
         
         $data = Sheets::spreadsheet(Session::get('sheet_id'))
-        ->sheet('Category')->append([$data]);
+        ->sheet('Shop')->append([$data]);
         
         return true;
     }

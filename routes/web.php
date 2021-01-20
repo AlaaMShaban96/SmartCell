@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\OrderController;
 
 /*
@@ -33,6 +34,10 @@ Route::post('/item', [ItemController::class,'store']);
 Route::post('/category', [ItemController::class,'storeCategory']);
 Route::put('/item/{id}', [ItemController::class,'update']);
 
+Route::get('/team', [TeamController::class,'index']);
+Route::post('/team', [TeamController::class,'store']);
+Route::post('/team/{email}', [TeamController::class,'update']);
+Route::delete('/team/{email}', [TeamController::class,'destroy']);
 
 
 

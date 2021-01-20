@@ -569,7 +569,8 @@ aside.left-panel {
   left: 0;
   bottom: 0;
   top: 55px;
-  z-index: 999; }
+  z-index: 1; 
+}
   aside.left-panel:hover {
     overflow-x: scroll; }
 

@@ -49,7 +49,6 @@ class ItemController extends Controller
     public function store(ItemUpdateRequest $request)
     {   
         $data=$request->all();
-        
         $data['image']="";
         if ($request->has('image')) {
             $data['image']=$this->compress($request);
@@ -73,7 +72,6 @@ class ItemController extends Controller
     public function storeCategory(CategoryRequest $request)
     {   
         $data=$request->all();
-        // dd( $request->all());
         $data['image']="";
         $data['category']="yes";
         if ($request->has('image')) {

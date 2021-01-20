@@ -1,80 +1,160 @@
 @extends('Dashbord/layout/master')
 @section('style')
 <style>
-    .img-icons{
-        width: 100%;
-        height: 200px;
-        border-radius: 6px;
+    #weatherWidget .currentDesc {
+    color: #ffffff!important;
     }
-    .img-icons-show{
-        width: 100%;
-        height: 300px;
-        border-radius: 6px;
+    .traffic-chart {
+      min-height: 335px;
+    }
+    #flotPie1  {
+      height: 150px;
+    }
+    #flotPie1 td {
+      padding:3px;
+    }
+    #flotPie1 table {
+      top: 20px!important;
+      right: -10px!important;
+    }
+    .chart-container {
+      display: table;
+      min-width: 270px ;
+      text-align: left;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    #flotLine5  {
+      height: 105px;
     }
 
-    .switch {
+    #flotBarChart {
+      height: 150px;
+    }
+    #cellPaiChart{
+      height: 160px;
+    }
+    .actionby {
+      font-size: 12px;
+    }
+    .text-left {
+      position: relative;
+      right: 22px
+    }
+    .na-v {
+      position: absolute;
+    right: 1%;
+    }
+    .form-switch {
+    display: inline-block;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    }
+
+    .form-switch i {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
-    }
-
-    .switch input { 
-    opacity: 0;
-    width: 0;
-    height: 0;
-    }
-
-    .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: red;
-    -webkit-transition: .4s;
-    transition: .4s;
-    }
-
-    .slider:before {
-    position: absolute;
-    content: "";
+    margin-right: .5rem;
+    width: 46px;
     height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
+    background-color: #e6e6e6;
+    border-radius: 23px;
+    vertical-align: text-bottom;
+    transition: all 0.3s linear;
     }
 
-   input:checked + .slider {
-    background-color:green;
+    .form-switch i::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 42px;
+    height: 22px;
+    background-color: #fff;
+    border-radius: 11px;
+    transform: translate3d(2px, 2px, 0) scale3d(1, 1, 1);
+    transition: all 0.25s linear;
     }
 
-     input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
+    .form-switch i::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 22px;
+    height: 22px;
+    background-color: #fff;
+    border-radius: 11px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24);
+    transform: translate3d(2px, 2px, 0);
+    transition: all 0.2s ease-in-out;
     }
 
-    input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
+    .form-switch:active i::after {
+    width: 28px;
+    transform: translate3d(2px, 2px, 0);
     }
 
-    /* Rounded sliders */
-    .slider.round {
-    border-radius: 34px;
+    .form-switch:active input:checked + i::after { transform: translate3d(16px, 2px, 0); }
+
+    .form-switch input { display: none; }
+
+    .form-switch input:checked + i { background-color: #4BD763; }
+
+    .form-switch input:checked + i::before { transform: translate3d(18px, 2px, 0) scale3d(0, 0, 0); }
+
+    .form-switch input:checked + i::after { transform: translate3d(22px, 2px, 0); }
+
+    .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     }
 
-    .slider.round:before {
-    border-radius: 50%;
+    /* Modal Content */
+    .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
     }
 
- 
+    /* The Close Button */
+    .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    }
+    .stat-widget-five .stat-heading {
+    color: #99abb4;
+    font-size: 12px;
+    color: black;
+    font-style: normal;
+    width: max-content;
+    }
+    * {
+    font-family: cairo;
+    }
+    p {
+    font-family: cairo;
+    }
+
 </style>
-    
 @endsection
 @section('content')
 
@@ -86,487 +166,349 @@
         <p class="h4" >{{ Session::get('message') }}</p> 
       </div>
   @endif
-  <button data-toggle="modal"  class="btn btn-primary" data-target="#add-item">اضافة منتج</button>
-  <button data-toggle="modal"  class="btn btn-primary" data-target="#add-category">اضافة تصنيف</button>
 
-  <div class="container">
-    <div class="row">
-        <div class="col-12 col-sm-3 ">
-            <div class="card bg-light mb-3 text-right">
-                <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-list"></i> الاصناف الاساسية</div>
-                <ul class="list-group ">
-                  @foreach ($items as $key=>$value)
-                    @if ($key!=0)
-                      @if ($value[0]=="" )
-                      <li class="">
-                        <div class="dropdown">
-
-                          <a class="btn btn-secondary  dropdown-toggle" onclick="show({{$value[9]}})" data-toggle="collapse" href="#" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            {{$value[1]}}
-                          </a>
-                         
-                        </div>
-                      
-                      </li>
-                      @endif
-                                      
-                    @endif
-                  @endforeach
-
-                </ul>
-            </div>
-            {{-- <div class="card bg-light mb-3">
-                <div class="card-header bg-success text-white text-uppercase">Last product</div>
-                <div class="card-body">
-                    <img class="img-fluid" src="https://dummyimage.com/600x400/55595c/fff">
-                    <h5 class="card-title">Product title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <p class="bloc_left_price">99.00 $</p>
-                </div>
-            </div> --}}
-        </div>
-       
-
-        <div class="col">
-          <div>
-            <ol class="breadcrumb" id="breadcrumb-links">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-            </ol>
-          </div>
-          <div id="subCategory" style="background-color: green;">
-            
-          </div>
-
-            <div class="row" id="items" style="background-color: red;">
-
-            </div>
-        </div>
-
+  @if ($errors->any())
+  @foreach ($errors->all() as $error)
+   <div class="alert alert-danger mt-1 alert-validation-msg" role="alert">
+        <i class="feather icon-info mr-1 align-middle"></i>
+        <span>{{ $error }}</span>
     </div>
-</div>
-
- 
-
-      {{-- <button data-toggle="modal"  class="btn btn-primary" data-target="#show-order"></button> --}}
-
-   
- 
-
+  @endforeach
+  @endif
     
 
-    <div class="container-fluid">
-      <div class="row">
+
+  <div class="content">
+    <div class="col-3 na-v mt-4  d-flex justify-content-center" style="text-align:center; ">
+
+        <ul class="nav flex-column shadow pb-3" style="background-color: white;border-radius: 25px;">
+            <h5 class="mb-4 p-2"  style="color: white;background-color: #10858b;width: 200px;border-radius: 10px 10px 0px 0px;">الأصناف الرئيسية</h5>
+          @foreach ($items as $item)
+            @if ($item[0]=="0")
+            <li>
+              <a class="btn" onclick="show('{{$item[9]}}','0')" data-bs-toggle="collapse" data-bs-target="#collapseExample{{$item[9]}}" aria-expanded="false" aria-controls="collapseExample{{$item[9]}}"style="text-align: center;"> {{$item[1]}} <i class="fa fa-book"></i> </a>
+              <div class="collapse" id="collapseExample{{$item[9]}}">
+               
+                <div id="sub{{$item[9]}}">   
+                </div>
+                
+                
+              </div>
+            </li> 
+            @endif
+              
+          @endforeach
+          
+        </ul>
+    </div>
+    <!-- Animated -->
+    <div class="animated fadeIn">
+        <!-- Widgets  -->
+        
+
+        <div class="orders mr-2 pr-5">
+            <div class="row">
+                <div class="col-9 col-xs-4">
+                    <div class="card-body d-flex justify-content-center"style="width: 105%; margin-left: -15px;height: 68px;"> 
+                        <h4 class="box-title w-100 mt-1 mx-auto" style="background-color: #7648E6;color: wheat;text-align: center;    position: absolute;top: 20px;border-radius: 10px 10px 0px 0px;">الأصناف </h4>
+                    </div>
+                    <div class="card">
+                        
+                        <div class="row"> 
+          
+                            <div class="col-4  d-flex justify-content-center pl-4 pr-4">
+                                <div class="card ml-4 mr-4 pl-4 pr-4 d-flex justify-content-center" style="min-width: 130px; border-radius: 25px;">
+                                        <button  id="showAddCategory" class="btn btn-success fa fa-plus pt-3 d-flex justify-content-center mx-auto" style="border-radius: 8vh;width: 50px;height: 50px;"></button>
+                                </div> 
+                            </div>
+                            <div id="category" style="width: 100%;" class="row">
+                              
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- /.card -->
+            </div>  <!-- /.col-lg-8 -->
+        </div>
+        <div class="orders mr-2 pr-5">
+            <div class="row">
+                <div class="col-9 col-xs-4">
+                    <div class="card-body d-flex justify-content-center"style="    width: 105%;
+                    margin-left: -15px;
+                    height: 68px;"> 
+                        <h4 class="box-title w-100 mt-1 mx-auto" style="background-color: #7648E6;color: wheat;text-align: center;    position: absolute;
+                        top: 20px;
+                        ;border-radius: 10px 10px 0px 0px;">المنتاجات </h4>
+                    </div>
+                    <div class="card">
+                        
+                        <div class="row"> 
+          
+                            <div class="col-4  d-flex justify-content-center pl-4 pr-4">
+                                <div class="card ml-4 mr-4 pl-4 pr-4 d-flex justify-content-center" style="min-width: 130px; border-radius: 25px;">
+                                        <button id="buttonadd" class="btn btn-success fa fa-plus pt-3 d-flex justify-content-center mx-auto" style="border-radius: 8vh;width: 50px;height: 50px;"></button>
+                                </div> 
+                            </div>
+                            <div id="item" style="width: 100%;" class="row">
+                              
+                              
+                            </div>
+                           {{-- <div class=" col-4  d-flex justify-content-center">
+                                <div class="card ml-4 mr-4 p-4" style="border-radius: 25px;">
+                                    <div class="text-center">
+                                        <img class="img-fluaid" src="image2/12.jpg" style="width:12vh;">
+                                    </div>
+                                    <p class="card-title  d-flex justify-content-center mt-2"> أحذية </p>
+                                    <span class="w-100 flex-fill bd-highlight" style="display:flex;position: inherit;right: 18.5px;">
+                                        <button class="btn btn-danger w-50 d-flexjustify-content-center mr-1" style=" min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; ">حذف</button>
+                                        <button class="btn btn-success w-50 d-flex justify-content-center mr-1" style=" min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;">تعديل</button>
+                                        
+                                    </span>
+
+                                </div> 
+                            
+                          </div>   --}}
+                        </div>
+                    </div>
+                </div> <!-- /.card -->
+            </div>  <!-- /.col-lg-8 -->
+        </div>
+
+    </div>
+        <!-- /Widgets -->
+</div>
+
+
+
+<div id="addCategory" class="modal">
+  <!-- Modal content -->
+    <div class="modal-content">
+      <span class="closesModelCategory">&times;</span>
+      <div class="row" style="padding-left: 10%;">
+        <form  action="{{url('/category')}}" dir="rtl" class="mx-auto" method="POST" enctype="multipart/form-data">
+          @csrf
+            {{-- <img class="img-fluid mb-5"  src="image2/12.jpg"style=" max-width: 200px;margin-left: 280px;" > --}}
+            <div class="form-row" dir="rtl">
+              <div class="form-group col-md-6">
+                <label for="#" style="display: flex;">إسم الصنف</label>
+                <input type="text" name="name" class="form-control" id="categoryName" placeholder="أدخل إسم المنتج">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="#">تحت تصنيف:</label>
+                <select name="titel" id="categoryTitel" style="width: 200px;text-align: center;">
+                  <option value="0">ليس تحت تصنيف</option>
+
+                  @foreach ($items as $item)
+                    @if ($item[3]=='1')
+                      <option value="{{$item[9]}}">{{$item[1]}}</option>
+                    @endif
+                  @endforeach
+        
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="#"style="display: flex;"">إضافة التفاصيل</label>
+              <textarea class="form-control" name="info" id="categoryInfo" rows="3"></textarea>
+            </div>
+            
+                <label>
+                    عرض الصنف
+                </label>
+                <label class="form-switch">
+                    <input name="show" id="categoryShow" type="checkbox"><i></i>
+                  </label>
+                <label class="mr-2 ml-3">
+                  رفع الصورة
+                </label>
+                
+                    <input type="file" id="myFile" name="image" >  
+                
+              <div class="d-flex justify-content-center">
+        
+                <button type="submit" class="btn btn-info mt-3" style="display: grid;width: 300px; border-radius: 22px;"> إضافة </button>
+              </div>
+        </form>
+      </div>
+
+    </div>
+</div>
+<div id="addItem" class="modal">
+  <!-- Modal content -->
+    <div class="modal-content">
+      <span class="closesModelItem">&times;</span>
+      <div class="row" style="padding-left: 10%;">
+        <form action="{{url('/item')}}" dir="rtl" class="mx-auto" method="POST" enctype="multipart/form-data">
+          @csrf
+            <img class="img-fluid mb-5"  src="image2/12.jpg"style=" max-width: 200px;margin-left: 280px;" >
+            <div class="form-row" dir="rtl">
+              <div class="form-group col-md-6">
+                <label for="#" style="display: flex;">إسم المنتج</label>
+                <input type="text" name="name" class="form-control" id="#" placeholder="أدخل إسم المنتج">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="#"style="display: flex;">سعر المنتج</label>
+                <input type="text" name="price" class="form-control" id="#" placeholder="سعر المنتج">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="#"style="display: flex;"">إضافة التفاصيل</label>
+              <textarea class="form-control" name="info" id="#" rows="3"></textarea>
+            </div>
+                <label for="#">تحت تصنيف:</label>
+                <select name="titel" id="#" style="width: 200px;text-align: center;">
+                  <option value="0">ليس تحت تصنيف</option>
+
+                  @foreach ($items as $item)
+                    @if ($item[3]=='1')
+                      <option value="{{$item[9]}}">{{$item[1]}}</option>
+                    @endif
+                  @endforeach
+        
+                </select>
+                <label>
+                    عرض المنتج
+                </label>
+                <label class="form-switch">
+                    <input type="checkbox"><i></i>
+                  </label>
+                <label class="mr-2 ml-3">
+                  رفع الصورة
+                </label>
+                
+                    <input type="file" id="myFile" name="image" >  
+                
+              <div class="d-flex justify-content-center">
+        
+                <button type="submit" class="btn btn-info mt-3" style="display: grid;width: 300px; border-radius: 22px;"> إضافة </button>
+              </div>
+        </form>
+      </div>
 
     </div>
 </div>
 
 
 
-
-
-  <!-- Modal  show order-->
-  <div class="modal fade" id="show-order" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="show-order" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h5 class="modal-title" > تعديل بيانات المنتج</h5>
-        
-        </div>
-        <form action="" id="form" method="post" enctype="multipart/form-data">
-          @csrf
-          @method('PUT')
-        
-          <div class="modal-body">
-            <div class="container-fluid">
-              <div class="row">
-                  <div class="card card-chart">
-                      <div class="card-header card-header-success">
-                          <img class="img-icons-show" id="img" src='{{asset('image/dashbord/logo/logo.jpg')}}' alt="" srcset="">
-                      </div>
-                      <div class="card-body text-right">
-                        <p class="card-category">
-                          
-                              {{-- <span id="card-detals">
-
-                              </span> --}}
-                              </p>
-                              <div class="row" id="price-row">
-                                  <div class="col">  
-                                      <h5> سعر المنتج</h5>
-                                </div>
-                                  <div class="col">  
-                                      <input type="number" class="card-title" name="price" id="card-price">
-                                  
-                                </div>
-                            </div>
-                              <div class="row">
-                                  <div class="col">  
-                                      <h5> تصنيف المنتج</h5>
-                                </div>
-                                  <div class="col">  
-                                      {{-- <input type="text" class="card-title" name="titel" id="card-title"> --}}
-                                      <select id="card-title" name="titel" class="form-control" >
-
-                                      </select>
-                                </div>
-                            </div>
-                            
-                                
-                              <div class="row">
-                                  <div class="col">  
-                                      <span><h5> عرض المنتج</h5></span>
-                                  </div>
-                                  <div class="col">  
-                                  <label class="switch" style="display: block;">
-
-                                      <input type="checkbox" name="show" id="checkbox" checked>
-                                      <span class="slider round" >  </span>
-                                      </label>
-                                  </div>
-                          </div>
-                          <div class="row">
-                              <div class="col">  
-                                  <h5> كلمات المفتاحية</h5>
-                            </div>
-                              <div class="col">  
-                                  <input type="text" class="card-title" name="keyWords" id="card-key-words">
-                              
-                            </div>
-                        </div>
-                          <div class="row">
-                              <div class="col">  
-                                  <h5> وصف المنتج</h5>
-                            </div>
-                              <div class="col">  
-                                  <textarea  class="card-title" name="detals" id="card-detals" cols="20" rows="3"></textarea>
-                              
-                            </div>
-                        </div>
-                          <div class="row">
-                              <div class="col">  
-                                  <h5> تفاصيل</h5>
-                            </div>
-                              <div class="col">  
-                                  <textarea  class="card-title" name="info" id="card-info" cols="20" rows="3"></textarea>
-                              
-                            </div>
-                        </div>
-                          <div class="row">
-                              <div class="col">  
-                                  <h5> تحيل صورة</h5>
-                            </div>
-                              <div class="col">  
-                                <input type="file" size="33" name="image" onchange="readURL(this);" id="image">
-                            </div>
-                        </div>
-                      </div>
-                      <div class="card-footer">
-                        <div class="stats">
-                        
-                        </div>
-                      </div>
-                  </div>
-              
-
-              </div>
-
-            </div>
-            
-          </div>
-        
-          <div class="modal-footer"> 
-            <input type="submit" class="btn btn-primary" value="حفظ">         
-          </div>
-      </form>
-      </div>
-    </div>
-  </div>
-
-
-
-  <!-- Modal add item -->
-  <div class="modal fade" id="add-item" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="show-order" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h5 class="modal-title" > اضافة بيانات المنتج</h5>
-        
-        </div>
-        <form action="{{url('/item')}}" method="post" enctype="multipart/form-data">
-          @csrf
-        
-          <div class="modal-body">
-            <div class="container-fluid">
-              <div class="row">
-                  <div class="card card-chart">
-                      <div class="card-header card-header-success">
-                          <img class="img-icons-show" id="xx" src='{{asset('image/dashbord/logo/logo.jpg')}}' alt="" srcset="">
-                      </div>
-                      <div class="card-body text-right">
-                        <p class="card-category">
-  
-                              </p>
-                              <div class="row" id="price-row">
-                                  <div class="col">  
-                                      <h5> اسم المنتج</h5>
-                                </div>
-                                  <div class="col">  
-                                      <input type="text" class="card-title" name="name" id="card-price">
-                                  
-                                </div>
-                            </div>
-                              <div class="row" id="price-row">
-                                  <div class="col">  
-                                      <h5> سعر المنتج</h5>
-                                </div>
-                                  <div class="col">  
-                                      <input type="number" class="card-title" name="price" id="card-price">
-                                  
-                                </div>
-                            </div>
-                              <div class="row" id="price-row">
-                                  <div class="col">  
-                                      <h5>  الكمية</h5>
-                                </div>
-                                  <div class="col">  
-                                      <input type="number" class="card-title" name="qyantity" id="card-price">
-                                  
-                                </div>
-                            </div>
-                              <div class="row">
-                                  <div class="col">  
-                                      <h5> تصنيف المنتج</h5>
-                                </div>
-                                  <div class="col">  
-                                      {{-- <input type="text" class="card-title" name="titel" id="card-title"> --}}
-                                      <select id="card-title-add-item" name="titel" class="form-control" >
-
-                                      </select>
-                                </div>
-                            </div>
-                            
-                                
-                              <div class="row">
-                                  <div class="col">  
-                                      <span><h5> عرض المنتج</h5></span>
-                                  </div>
-                                  <div class="col">  
-                                  <label class="switch" style="display: block;">
-
-                                      <input type="checkbox" name="show" id="checkbox" checked>
-                                      <span class="slider round" >  </span>
-                                      </label>
-                                  </div>
-                          </div>
-                          <div class="row">
-                              <div class="col">  
-                                  <h5> كلمات المفتاحية</h5>
-                            </div>
-                              <div class="col">  
-                                  <input type="text" class="card-title" name="keyWords" id="card-key-words">
-                              
-                            </div>
-                        </div>
-                          <div class="row">
-                              <div class="col">  
-                                  <h5> وصف المنتج</h5>
-                            </div>
-                              <div class="col">  
-                                  <textarea  class="card-title" name="detals" id="card-detals" cols="20" rows="3"></textarea>
-                              
-                            </div>
-                        </div>
-                          <div class="row">
-                              <div class="col">  
-                                  <h5> تفاصيل</h5>
-                            </div>
-                              <div class="col">  
-                                  <textarea  class="card-title" name="info" id="card-info" cols="20" rows="3"></textarea>
-                              
-                            </div>
-                        </div>
-                          <div class="row">
-                              <div class="col">  
-                                  <h5> تحيل صورة</h5>
-                            </div>
-                              <div class="col">  
-                                <input type="file" size="33" name="image" onchange="readImageURL(this);" id="imagexx">
-                            </div>
-                        </div>
-                      </div>
-                      <div class="card-footer">
-                        <div class="stats">
-                        
-                        </div>
-                      </div>
-                  </div>
-              
-
-              </div>
-
-            </div>
-            
-          </div>
-        
-          <div class="modal-footer"> 
-            <input type="submit" class="btn btn-primary" value="حفظ">         
-          </div>
-      </form>
-      </div>
-    </div>
-  </div>
-  <!-- Modal  add-category -->
-  <div class="modal fade" id="add-category" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="show-order" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h5 class="modal-title" > اضافة تصنيف </h5>
-        
-        </div>
-        <form action="{{url('/category')}}" method="post" enctype="multipart/form-data">
-          @csrf
-        
-          <div class="modal-body">
-            <div class="container-fluid">
-              <div class="row">
-                  <div class="card card-chart">
-                      <div class="card-header card-header-success">
-                          <img class="img-icons-show" id="xx" src='{{asset('image/dashbord/logo/logo.jpg')}}' alt="" srcset="">
-                      </div>
-                      <div class="card-body text-right">
-                        <p class="card-category">
-  
-                              </p>
-                              <div class="row">
-                                <div class="col">  
-                                    <h5> تصنيف تحت</h5>
-                              </div>
-                                <div class="col">  
-                                    {{-- <input type="text" class="card-title" name="titel" id="card-title"> --}}
-                                    <select id="card-title-add-category" name="titel" class="form-control card-title-add-item" >
-
-                                    </select>
-                                  </div>
-                              </div>
-                              <div class="row" id="price-row">
-                                  <div class="col">  
-                                      <h5> اسم التصنيف</h5>
-                                </div>
-                                  <div class="col">  
-                                      <input type="text" class="card-title" name="name" id="card-price">
-                                  
-                                </div>
-                            </div>
-                            
-                              <div class="row">
-                                  <div class="col">  
-                                      <span><h5> عرض التصنيف</h5></span>
-                                  </div>
-                                  <div class="col">  
-                                  <label class="switch" style="display: block;">
-
-                                      <input type="checkbox" name="show" id="checkbox" checked>
-                                      <span class="slider round" >  </span>
-                                      </label>
-                                  </div>
-                          </div>
-                          <div class="row">
-                              <div class="col">  
-                                  <h5> كلمات المفتاحية</h5>
-                            </div>
-                              <div class="col">  
-                                  <input type="text" class="card-title" name="keyWords" id="card-key-words">
-                              
-                            </div>
-                        </div>
-                          <div class="row">
-                              <div class="col">  
-                                  <h5> وصف التصنيف</h5>
-                            </div>
-                              <div class="col">  
-                                  <textarea  class="card-title" name="detals" id="card-detals" cols="20" rows="3"></textarea>
-                              
-                            </div>
-                        </div>
-                          <div class="row">
-                              <div class="col">  
-                                  <h5> تفاصيل</h5>
-                            </div>
-                              <div class="col">  
-                                  <textarea  class="card-title" name="info" id="card-info" cols="20" rows="3"></textarea>
-                              
-                            </div>
-                        </div>
-                          <div class="row">
-                              <div class="col">  
-                                  <h5> تحيل صورة</h5>
-                            </div>
-                              <div class="col">  
-                                <input type="file" size="33" name="image" onchange="readImageURL(this);" id="imagexx">
-                            </div>
-                        </div>
-                      </div>
-                      <div class="card-footer">
-                        <div class="stats">
-                        
-                        </div>
-                      </div>
-                  </div>
-              
-
-              </div>
-
-            </div>
-            
-          </div>
-        
-          <div class="modal-footer"> 
-            <input type="submit" class="btn btn-primary" value="حفظ">         
-          </div>
-      </form>
-      </div>
-    </div>
-  </div>
 @endsection
 @section('script')
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-<script>
-  var app = @json($items,JSON_PRETTY_PRINT);
-  var breadcrumb_index = 0;
 
+    <script>
+function showModelCategory() {
+  
+    // // Get the modal
+    var addCategory = document.getElementById("addCategory");
+    
+    // Get the button that opens the modal
+    var showAddCategory = document.getElementById("showAddCategory");
+    
+    // Get the <span> element that closes the modal
+    var closesModelCategory = document.getElementsByClassName("closesModelCategory")[0];
+    
+    // When the user clicks the button, open the modal 
+    showAddCategory.onclick = function() {
+        addCategory.style.display = "block";
+    }
+    
+    // When the user clicks on <span> (x), close the modal
+      closesModelCategory.onclick = function() {
+        addCategory.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == addCategory) {
+        addCategory.style.display = "none";
+      }
+    }
+}
+function showModelItem() {
+      // Get the modal
+    var addItem = document.getElementById("addItem");
+    
+    // Get the button that opens the modal
+    var addbtn = document.getElementById("buttonadd");
+    
+    // Get the <span> element that closes the modal
+    var closesModelItem = document.getElementsByClassName("closesModelItem")[0];
+    
+    // When the user clicks the button, open the modal 
+    addbtn.onclick = function() {
+        addItem.style.display = "block";
+    }
+    
+    // When the user clicks on <span> (x), close the modal
+    closesModelItem.onclick = function() {
+        addItem.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == addItem) {
+        addItem.style.display = "none";
+      }
+    }
+}
+  showModelItem();
+  showModelCategory();
+  
 
+    var items = @json($items,JSON_PRETTY_PRINT);
 
+  function show(id,index) { 
+       console.log(id);
 
-  var select = document.getElementById('card-title-add-item');
+    document.getElementById('sub'+id).innerHTML="";
+    document.getElementById('category').innerHTML="";
+    document.getElementById('item').innerHTML="";
 
-      var option=document.createElement('option');
-      option.value="";
-    var text=document.createTextNode('لايوجد تصنيف');
-    option.append(text);
-    select.append(option);
+    var sub=document.getElementById('sub'+id);
+    items.forEach(element => {
 
-    app.forEach(element => {
-        if (element[11]!=undefined && element[1]!="Product name") {
-            var option=document.createElement('option');
-             option.value=element[1];
-            var text=document.createTextNode(element[1]);
-            option.append(text);
-            select.append(option);
+      if (element[0] == id ) {
+        
+        if (element[3]=='1') {
+
+          sub.innerHTML = '<a class="btn" onclick="show('+element[9]+','+(index+1)+')" data-bs-toggle="collapse" data-bs-target="#collapseExample'+element[9]+'" aria-expanded="false" aria-controls="collapseExample'+element[9]+'" style="text-align: center;"> '+element[1]+' <i class="fa fa-book"></i> </a><div class="collapse" id="collapseExample'+element[9]+'"><div id="sub'+element[9]+'"></div>';
+
+          document.getElementById('category').innerHTML+= category(element);
         }
+      
+         element[3]=='0'? document.getElementById('item').innerHTML+= item(element):"";
+      }
+   
+
     });
+   
+  }
 
+  function category(element) {
+    return "<div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[1]+" </p> <span class='w-100 flex-fill bd-highlight' style='display:flex;position: inherit;right: 18.5px;'><button class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button><button  onclick='EditCategory("+element[9]+")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button></span></div></div>"; 
+    
+  }
+  function item(element) {
+    return "  <div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[1]+" </p> <span class='w-100 flex-fill bd-highlight' style='display:flex;position: inherit;right: 18.5px;'><button class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button><button class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;'>تعديل</button></span></div></div>"; 
+    
+  }
+  function EditCategory(id) {
+    var row=[];
+    items.forEach(element => {
+      if (element[9]==id) {
+        row =  element;
+      }
+      
+    });
+    console.log('on function Edit Category and date on row = ', row[7]);
+    document.getElementById('showAddCategory').click();
+    document.getElementById('categoryName').value=row[1];
+    // document.getElementById('categoryTitel').value=row[];
+    document.getElementById('categoryInfo').value=row[4]; 
+    document.getElementById('categoryShow').checked= row[7]=='TRUE'?true:false;
+    console.log(id);
+  }
+ 
 </script>
-<script src="{{asset('js/items.js')}}"></script>
-
 @endsection
