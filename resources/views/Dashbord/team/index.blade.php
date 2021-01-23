@@ -308,103 +308,39 @@
         // clearInput();
         }
     }
-    function showModelItem() {
-        // Get the modal
-        var addItem = document.getElementById("addItem");
-        
-        // Get the button that opens the modal
-        var addbtn = document.getElementById("buttonadd");
-        
-        // Get the <span> element that closes the modal
-        var closesModelItem = document.getElementsByClassName("closesModelItem")[0];
-        
-        // When the user clicks the button, open the modal 
-        addbtn.onclick = function() {
-            addItem.style.display = "block";
-        }
-        
-        // When the user clicks on <span> (x), close the modal
-        closesModelItem.onclick = function() {
-            addItem.style.display = "none";
-        }
-        
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-        if (event.target == addItem) {
-            addItem.style.display = "none";
-        }
-        }
-    }
-    // showModelItem();
     showModelUser();
   
     var users = @json($users,JSON_PRETTY_PRINT);
 
-
-  function show(id,index) { 
-       console.log(id);
-
-    document.getElementById('sub'+id).innerHTML="";
-    document.getElementById('category').innerHTML="";
-    document.getElementById('item').innerHTML="";
-
-    var sub=document.getElementById('sub'+id);
-    items.forEach(element => {
-
-      if (element[0] == id ) {
-        
-        if (element[3]=='1') {
-
-          sub.innerHTML = '<a class="btn" onclick="show('+element[9]+','+(index+1)+')" data-bs-toggle="collapse" data-bs-target="#collapseExample'+element[9]+'" aria-expanded="false" aria-controls="collapseExample'+element[9]+'" style="text-align: center;"> '+element[1]+' <i class="fa fa-book"></i> </a><div class="collapse" id="collapseExample'+element[9]+'"><div id="sub'+element[9]+'"></div>';
-
-          document.getElementById('category').innerHTML+= category(element);
-        }
+    function EditUser(id) {
+      var hostName = window.location.origin;
+      var user=users[id];
       
-         element[3]=='0'? document.getElementById('item').innerHTML+= item(element):"";
-      }
-   
+      // console.log('on function Edit Category and date on row = ', row[7]);
+      document.getElementById('showAddUser').click(1);
+      // showModelUser();
+      document.getElementById('userName').value=user.name;
+      document.getElementById('userEmail').value=user.email;
+      document.getElementById('userEmail').disabled=true;
+      document.getElementById('userPhoned').value=user.phoned;
+      document.getElementById('userRule').value= user.role;
+      document.getElementById('userForm').action= hostName+'/team/'+user.email;
+      clearFlag=1;
+    }
+    function clearInput(){
+      var hostName = window.location.origin;
+      // document.getElementById('showAddUser').click();
+      document.getElementById('userName').value="";
+      document.getElementById('userEmail').value="";
+      document.getElementById('userEmail').disabled=false;
+      document.getElementById('userPhoned').value="";
+      document.getElementById('userRule').value= "";
+      document.getElementById('userForm').action= hostName+'/team/';
+    }
+    function deleteUser(email) {
+      console.log(email);
+            document.getElementById('delete'+email).submit();
 
-    });
-   
-  }
-
-  function category(element) {
-    return "<div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[1]+" </p> <span class='w-100 flex-fill bd-highlight' style='display:flex;position: inherit;right: 18.5px;'><button class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button><button  onclick='EditCategory("+element[9]+")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button></span></div></div>"; 
-    
-  }
-  function item(element) {
-    return "  <div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[1]+" </p> <span class='w-100 flex-fill bd-highlight' style='display:flex;position: inherit;right: 18.5px;'><button class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button><button class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;'>تعديل</button></span></div></div>"; 
-    
-  }
-  function EditUser(id) {
-    var hostName = window.location.origin;
-    var user=users[id];
-    
-    // console.log('on function Edit Category and date on row = ', row[7]);
-    document.getElementById('showAddUser').click(1);
-    // showModelUser();
-    document.getElementById('userName').value=user.name;
-    document.getElementById('userEmail').value=user.email;
-    document.getElementById('userEmail').disabled=true;
-    document.getElementById('userPhoned').value=user.phoned;
-    document.getElementById('userRule').value= user.role;
-    document.getElementById('userForm').action= hostName+'/team/'+user.email;
-    clearFlag=1;
-  }
-  function clearInput(){
-    var hostName = window.location.origin;
-    // document.getElementById('showAddUser').click();
-    document.getElementById('userName').value="";
-    document.getElementById('userEmail').value="";
-    document.getElementById('userEmail').disabled=false;
-    document.getElementById('userPhoned').value="";
-    document.getElementById('userRule').value= "";
-    document.getElementById('userForm').action= hostName+'/team/';
- }
- function deleteUser(email) {
-   console.log(email);
-         document.getElementById('delete'+email).submit();
-
- }
+    }
 </script>
 @endsection

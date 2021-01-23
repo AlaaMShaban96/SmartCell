@@ -29,7 +29,7 @@
                         <a href="{{url('/item')}}"> <i class="menu-icon fa fa-qrcode"></i>المنتجات</a>
                     </li>
                     <li>
-                        <a href="{{url('/')}}"> <i class="menu-icon fa fa-map-marker"></i>الأماكن</a>
+                        <a href="{{url('/location')}}"> <i class="menu-icon fa fa-map-marker"></i>الأماكن</a>
                     </li>
                     <li>
                         <a href="{{url('/team')}}"> <i class="menu-icon fa fa-users"></i>الموظفين</a>
