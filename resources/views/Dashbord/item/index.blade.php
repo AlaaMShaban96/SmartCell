@@ -222,8 +222,22 @@
                                 </div> 
                             </div>
                             <div id="category" style="width: 100%;" class="row">
-                              
-                              
+                              @foreach ($items as $item)
+                                @if ($item[0]=="0")
+                                <div class=' col-4  d-flex justify-content-center'>
+                                  <div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'>
+                                    <div class='text-center'>
+                                          <img class='img-fluaid' src='{{$item[6]}}' style='width:12vh;'></img>
+                                    </div>
+                                    <p class='card-title  d-flex justify-content-center mt-2'> {{$item[1]}} </p> 
+                                    <span class='w-100 flex-fill bd-highlight' style='display:flex;position: inherit;right: 18.5px;'>
+                                      <button class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button>
+                                      <button  onclick='editCategory("{{$item[9]}}")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button>
+                                    </span>
+                                  </div>
+                                </div>
+                                @endif
+                              @endforeach
                             </div>
                         </div>
                     </div>
@@ -244,13 +258,33 @@
                         
                         <div class="row"> 
           
-                            <div class="col-4  d-flex justify-content-center pl-4 pr-4">
+                            {{-- <div class="col-4  d-flex justify-content-center pl-4 pr-4">
                                 <div class="card ml-4 mr-4 pl-4 pr-4 d-flex justify-content-center" style="min-width: 130px; border-radius: 25px;">
-                                        <button id="showAddItem" class="btn btn-success fa fa-plus pt-3 d-flex justify-content-center mx-auto" style="border-radius: 8vh;width: 50px;height: 50px;"></button>
                                 </div> 
+                            </div> --}}
+                            <div class=' col-4  d-flex justify-content-center'>
+                              <div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'>
+                                <button id="showAddItem" class="btn btn-success fa fa-plus pt-3 d-flex justify-content-center mx-auto" style="border-radius: 8vh;width: 50px;height: 50px;"></button>
+
+                              </div>
                             </div>
                             <div id="item" style="width: 100%;" class="row">
-                              
+                              @foreach ($items as $item)
+                              @if ($item[0]=="1")
+                              <div class=' col-4  d-flex justify-content-center'>
+                                <div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'>
+                                  <div class='text-center'>
+                                        <img class='img-fluaid' src='{{$item[6]}}' style='width:12vh;'></img>
+                                  </div>
+                                  <p class='card-title  d-flex justify-content-center mt-2'> {{$item[1]}} </p> 
+                                  <span class='w-100 flex-fill bd-highlight' style='display:flex;position: inherit;right: 18.5px;'>
+                                    <button class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button>
+                                    <button  onclick='editCategory("{{$item[9]}}")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button>
+                                  </span>
+                                </div>
+                              </div>
+                              @endif
+                            @endforeach
                               
                             </div>
                            {{-- <div class=" col-4  d-flex justify-content-center">

@@ -70,7 +70,7 @@ class Item extends Model
         return true;
     }
     static public function itemUpdate($id,$request)
-    {
+    { 
         $ids = Sheets::spreadsheet(Session::get('sheet_id'))
         ->sheet('Shop')->majorDimension('COLUMNS')->range('J:J')->all();
         // dd($ids[0]);

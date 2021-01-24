@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class OrderController extends Controller
-{
+{ 
 
     protected $db;
     public function __construct() {

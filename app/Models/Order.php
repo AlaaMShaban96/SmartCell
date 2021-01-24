@@ -111,10 +111,10 @@ class Order extends Model
     static public function chengeStatusItem($status, $id)
     {
         // dd(trim($status, '"'));
-        $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('A'.$id.':AV'.$id)->majorDimension('ROWS')->all();
+        $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('A'.($id).':AV'.($id))->majorDimension('ROWS')->all();
         $data[0][42]=trim($status, '"');
         Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->
-        range('A'.$id)->update([$data[0]]);
+        range('A'.($id))->update([$data[0]]);
        return true ;
 
     }

@@ -190,7 +190,7 @@
                         المجموع الكلي :<span id="orderTotal">50 </span> دل 
                     </div>
                 </div>  
-                    <div class="col-6 text-center" >
+                    {{-- <div class="col-6 text-center" >
                         <div style="padding-left: 0px;margin-left: 25%;margin-right: 24%; border-width: 2px;background-color: aqua;border-radius: 20px;">
                         طباعة 
                         </div>
@@ -200,7 +200,7 @@
                         <div style="padding-left: 0px;margin-left: 25%;margin-right: 24%; border-width: 2px;background-color: aqua;border-radius: 20px;">
                         طباعة 
                         </div>
-                    </div>  
+                    </div>   --}}
                         
             </div>
         </div>
