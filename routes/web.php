@@ -33,7 +33,8 @@ Route::get('/item/{id}', [ItemController::class,'show']);
 Route::get('/item/{id}/edit', [ItemController::class,'edit']);
 Route::post('/item', [ItemController::class,'store']);
 Route::post('/category', [ItemController::class,'storeCategory']);
-Route::put('/item/{id}', [ItemController::class,'update']);
+Route::post('/category/{id}', [ItemController::class,'updateCategory']);
+Route::post('/item/{id}', [ItemController::class,'update']);
 
 Route::get('/team', [TeamController::class,'index']);
 Route::post('/team', [TeamController::class,'store']);

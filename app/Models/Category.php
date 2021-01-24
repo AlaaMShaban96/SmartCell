@@ -54,7 +54,7 @@ class Category extends Model
         'Describe it in 80 characters or less.'=>isset($request['detals'])?$request['detals']:"",
         'Product Keyword'=>"",
         'image url'=>$request['image'],
-        'show'=>isset($request['show'])?'TRUE':'FALSE',
+        'show'=>(boolean)isset($request['show'])?'TRUE':'FALSE',
         'Qyantity'=>'',
         'id'=>(float )$id,
         'Button name'=>$request['name'],
@@ -65,5 +65,29 @@ class Category extends Model
         ->sheet('Shop')->append([$data]);
         
         return true;
+    }
+    static public function updateCategory($request,$id)
+    {
+        $ids = Sheets::spreadsheet(Session::get('sheet_id'))
+        ->sheet('Shop')->majorDimension('COLUMNS')->range('J:J')->all();
+        // dd($ids[0]);
+        foreach ($ids[0] as $key => $value) {
+            if ($value==$id) {
+                $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Shop')->range('A'.($key+1).':L'.($key+1))->majorDimension('ROWS')->all();
+                // dd($request->all());
+                $data[0][1]=$request['name'];
+                $data[0][0]=(float)$request['titel'];
+                $data[0][6]=isset($request['image'])?$data[0][6]:$request['image'];
+                $data[0][7]=(boolean)isset($request['show'])?'TRUE':'FALSE';
+                $data[0][10]=isset($request['info'])?$request['info']: $data[0][10];
+                Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Shop')->
+                range('A'.($key+1))->update([$data[0]]);
+                break;
+            }
+        }
+  
+       
+       return true ;
+
     }
 }

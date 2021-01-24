@@ -246,7 +246,7 @@
           
                             <div class="col-4  d-flex justify-content-center pl-4 pr-4">
                                 <div class="card ml-4 mr-4 pl-4 pr-4 d-flex justify-content-center" style="min-width: 130px; border-radius: 25px;">
-                                        <button id="buttonadd" class="btn btn-success fa fa-plus pt-3 d-flex justify-content-center mx-auto" style="border-radius: 8vh;width: 50px;height: 50px;"></button>
+                                        <button id="showAddItem" class="btn btn-success fa fa-plus pt-3 d-flex justify-content-center mx-auto" style="border-radius: 8vh;width: 50px;height: 50px;"></button>
                                 </div> 
                             </div>
                             <div id="item" style="width: 100%;" class="row">
@@ -285,7 +285,7 @@
     <div class="modal-content">
       <span class="closesModelCategory">&times;</span>
       <div class="row" style="padding-left: 10%;">
-        <form  action="{{url('/category')}}" dir="rtl" class="mx-auto" method="POST" enctype="multipart/form-data">
+        <form id="categoryForm" action="{{url('/category')}}" dir="rtl" class="mx-auto" method="POST" enctype="multipart/form-data">
           @csrf
             {{-- <img class="img-fluid mb-5"  src="image2/12.jpg"style=" max-width: 200px;margin-left: 280px;" > --}}
             <div class="form-row" dir="rtl">
@@ -326,7 +326,7 @@
                 
               <div class="d-flex justify-content-center">
         
-                <button type="submit" class="btn btn-info mt-3" style="display: grid;width: 300px; border-radius: 22px;"> إضافة </button>
+                <button type="submit" class="btn btn-info mt-3" style="display: grid;width: 300px; border-radius: 22px;">  حفظ </button>
               </div>
         </form>
       </div>
@@ -338,25 +338,24 @@
     <div class="modal-content">
       <span class="closesModelItem">&times;</span>
       <div class="row" style="padding-left: 10%;">
-        <form action="{{url('/item')}}" dir="rtl" class="mx-auto" method="POST" enctype="multipart/form-data">
+        <form id="itemForm" action="{{url('/item')}}" dir="rtl" class="mx-auto" method="POST" enctype="multipart/form-data">
           @csrf
-            <img class="img-fluid mb-5"  src="image2/12.jpg"style=" max-width: 200px;margin-left: 280px;" >
             <div class="form-row" dir="rtl">
               <div class="form-group col-md-6">
                 <label for="#" style="display: flex;">إسم المنتج</label>
-                <input type="text" name="name" class="form-control" id="#" placeholder="أدخل إسم المنتج">
+                <input type="text" name="name" class="form-control" id="itemName" placeholder="أدخل إسم المنتج">
               </div>
               <div class="form-group col-md-6">
                 <label for="#"style="display: flex;">سعر المنتج</label>
-                <input type="text" name="price" class="form-control" id="#" placeholder="سعر المنتج">
+                <input type="text" name="price" class="form-control" id="itemPrice" placeholder="سعر المنتج">
               </div>
             </div>
             <div class="form-group">
               <label for="#"style="display: flex;"">إضافة التفاصيل</label>
-              <textarea class="form-control" name="info" id="#" rows="3"></textarea>
+              <textarea class="form-control" name="info" id="itemInfo" rows="3"></textarea>
             </div>
                 <label for="#">تحت تصنيف:</label>
-                <select name="titel" id="#" style="width: 200px;text-align: center;">
+                <select name="titel" id="itemTitel" style="width: 200px;text-align: center;">
                   <option value="0">ليس تحت تصنيف</option>
 
                   @foreach ($items as $item)
@@ -370,7 +369,7 @@
                     عرض المنتج
                 </label>
                 <label class="form-switch">
-                    <input type="checkbox"><i></i>
+                    <input type="checkbox" name="show" id="itemShow"><i></i>
                   </label>
                 <label class="mr-2 ml-3">
                   رفع الصورة
@@ -380,7 +379,7 @@
                 
               <div class="d-flex justify-content-center">
         
-                <button type="submit" class="btn btn-info mt-3" style="display: grid;width: 300px; border-radius: 22px;"> إضافة </button>
+                <button type="submit" class="btn btn-info mt-3" style="display: grid;width: 300px; border-radius: 22px;"> حفظ </button>
               </div>
         </form>
       </div>
@@ -397,40 +396,41 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
     <script>
-function showModelCategory() {
-  
-    // // Get the modal
-    var addCategory = document.getElementById("addCategory");
+      let clearFlag=0;
+  function showModelCategory() {
     
-    // Get the button that opens the modal
-    var showAddCategory = document.getElementById("showAddCategory");
-    
-    // Get the <span> element that closes the modal
-    var closesModelCategory = document.getElementsByClassName("closesModelCategory")[0];
-    
-    // When the user clicks the button, open the modal 
-    showAddCategory.onclick = function() {
-        addCategory.style.display = "block";
-    }
-    
-    // When the user clicks on <span> (x), close the modal
-      closesModelCategory.onclick = function() {
-        addCategory.style.display = "none";
-    }
-    
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == addCategory) {
-        addCategory.style.display = "none";
+      // // Get the modal
+      var addCategory = document.getElementById("addCategory");
+      
+      // Get the button that opens the modal
+      var showAddCategory = document.getElementById("showAddCategory");
+      
+      // Get the <span> element that closes the modal
+      var closesModelCategory = document.getElementsByClassName("closesModelCategory")[0];
+      
+      // When the user clicks the button, open the modal 
+      showAddCategory.onclick = function() {
+          addCategory.style.display = "block";
       }
-    }
-}
-function showModelItem() {
+      
+      // When the user clicks on <span> (x), close the modal
+        closesModelCategory.onclick = function() {
+          addCategory.style.display = "none";
+      }
+      
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+        if (event.target == addCategory) {
+          addCategory.style.display = "none";
+        }
+      }
+  }
+  function showModelItem() {
       // Get the modal
     var addItem = document.getElementById("addItem");
     
     // Get the button that opens the modal
-    var addbtn = document.getElementById("buttonadd");
+    var addbtn = document.getElementById("showAddItem");
     
     // Get the <span> element that closes the modal
     var closesModelItem = document.getElementsByClassName("closesModelItem")[0];
@@ -438,6 +438,10 @@ function showModelItem() {
     // When the user clicks the button, open the modal 
     addbtn.onclick = function() {
         addItem.style.display = "block";
+        if (clearFlag == 1) {
+            clearInputItem();
+            clearFlag=0;
+            }
     }
     
     // When the user clicks on <span> (x), close the modal
@@ -451,12 +455,12 @@ function showModelItem() {
         addItem.style.display = "none";
       }
     }
-}
+ }
   showModelItem();
   showModelCategory();
   
 
-    var items = @json($items,JSON_PRETTY_PRINT);
+  var items = @json($items,JSON_PRETTY_PRINT);
 
   function show(id,index) { 
        console.log(id);
@@ -486,14 +490,15 @@ function showModelItem() {
   }
 
   function category(element) {
-    return "<div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[1]+" </p> <span class='w-100 flex-fill bd-highlight' style='display:flex;position: inherit;right: 18.5px;'><button class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button><button  onclick='EditCategory("+element[9]+")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button></span></div></div>"; 
+    return "<div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[1]+" </p> <span class='w-100 flex-fill bd-highlight' style='display:flex;position: inherit;right: 18.5px;'><button class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button><button  onclick='editCategory("+element[9]+")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button></span></div></div>"; 
     
   }
   function item(element) {
-    return "  <div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[1]+" </p> <span class='w-100 flex-fill bd-highlight' style='display:flex;position: inherit;right: 18.5px;'><button class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button><button class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;'>تعديل</button></span></div></div>"; 
+    return "  <div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[1]+" </p> <span class='w-100 flex-fill bd-highlight' style='display:flex;position: inherit;right: 18.5px;'><button class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button><button onclick='editItem("+element[9]+")'class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;'>تعديل</button></span></div></div>"; 
     
   }
-  function EditCategory(id) {
+  function editCategory(id) {
+    var hostName = window.location.origin;
     var row=[];
     items.forEach(element => {
       if (element[9]==id) {
@@ -501,14 +506,46 @@ function showModelItem() {
       }
       
     });
+    
     console.log('on function Edit Category and date on row = ', row[7]);
     document.getElementById('showAddCategory').click();
+    document.getElementById('categoryForm').action=hostName+'/category/'+id;
     document.getElementById('categoryName').value=row[1];
-    // document.getElementById('categoryTitel').value=row[];
+    document.getElementById('categoryTitel').value=row[0];
     document.getElementById('categoryInfo').value=row[4]; 
     document.getElementById('categoryShow').checked= row[7]=='TRUE'?true:false;
-    console.log(id);
   }
+  
+  function editItem(id) {
+    var hostName = window.location.origin;
+    var row=[];
+    items.forEach(element => {
+      if (element[9]==id) {
+        row =  element;
+      }
+      
+    });
+    
+    console.log('on function Edit Category and date on row = ', row[7]);
+    document.getElementById("showAddItem").click();
+    document.getElementById('itemForm').action=hostName+'/item/'+id;
+    document.getElementById('itemName').value=row[1];
+    document.getElementById('itemPrice').value=row[2];
+    document.getElementById('itemTitel').value=row[0];
+    document.getElementById('itemInfo').value=row[4]; 
+    document.getElementById('itemShow').checked= row[7]=='TRUE'?true:false;
+    clearFlag=1;
+  }
+  function clearInputItem(){
+    var hostName = window.location.origin;
+    document.getElementById('itemForm').action=hostName+'/item/';
+    document.getElementById('itemName').value="";
+    document.getElementById('itemPrice').value="";
+    document.getElementById('itemTitel').value="";
+    document.getElementById('itemInfo').value="" 
+    document.getElementById('itemShow').checked=false;
+    }
+  
  
 </script>
 @endsection

@@ -161,7 +161,7 @@
   @if(Session::has('message'))
       <div class="alert {{ Session::get('alert-class') }} text-center">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <i class="material-icons">close</i>
+          <i class="material-icons">x</i>
         </button>
         <p class="h4" >{{ Session::get('message') }}</p> 
       </div>

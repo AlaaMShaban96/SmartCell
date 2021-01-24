@@ -54,7 +54,7 @@ class ItemController extends Controller
             $data['image']=$this->compress($request);
         }
         
-
+        // dd($data);
         try {
             Item::createItems( $data);
         } catch (\Throwable $th) {
@@ -87,6 +87,30 @@ class ItemController extends Controller
             return ;
         }
         Session::flash('message', 'تم اضافة المنتج  بنجاح'); 
+        Session::flash('alert-class', 'alert-success'); 
+        return redirect()->back();
+       
+
+        
+    }
+    public function updateCategory(CategoryRequest $request,$id)
+    {   
+        $data=$request->all();
+        $data['image']="";
+        $data['category']="yes";
+        if ($request->has('image')) {
+            $data['image']=$this->compress($request);
+        }
+        
+
+        try {
+            Category::updateCategory( $data,$id);
+        } catch (\Throwable $th) {
+            Session::flash('message', $th.'فشلت عملية التعديل'); 
+            Session::flash('alert-class', 'alert-danger'); 
+            dd($th) ;
+        }
+        Session::flash('message', 'تم تعديل الصنف  بنجاح'); 
         Session::flash('alert-class', 'alert-success'); 
         return redirect()->back();
        
@@ -136,7 +160,7 @@ class ItemController extends Controller
         } catch (\Throwable $th) {
             Session::flash('message', $th.'فشلت عملية التعديل'); 
             Session::flash('alert-class', 'alert-danger'); 
-            return ;
+            return $th;
         }
         Session::flash('message', 'تم التعديل بنجاح'); 
         Session::flash('alert-class', 'alert-success'); 

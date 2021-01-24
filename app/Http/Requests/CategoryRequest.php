@@ -23,15 +23,36 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            // 'title' => 'required|unique:posts|max:255',
-            'name' => 'required',
-            'detals' => 'max:80',
-            // 'show' => 'required',
-            'image' => 'required',
-            // 'keyWords' => 'required',
-        ];
+        
+        $arr = explode('@', $this->route()->getActionName());
+        $method = $arr[1];  // The controller method
+    
+       
+        switch ($method) {
+            case 'storeCategory':
+                return [
+                    // 'title' => 'required|unique:posts|max:255',
+                    'name' => 'required',
+                    'detals' => 'max:80',
+                    // 'show' => 'required',
+                    'image' => 'required',
+                    // 'keyWords' => 'required',
+                ];
+                break;
+                
+            case 'updateCategory':
+                return [
+                    // 'title' => 'required|unique:posts|max:255',
+                    'name' => 'required',
+                    'detals' => 'max:80',
+                    // 'show' => 'required',
+                    // 'image' => 'required',
+                    // 'keyWords' => 'required',
+                ];
+                break;
+         }
     }
+   
     public function messages()
     {
         return [
