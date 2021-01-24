@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\LocationController;
 
 /*
@@ -42,9 +43,10 @@ Route::post('/team/{email}', [TeamController::class,'update']);
 Route::delete('/team/{email}', [TeamController::class,'destroy']);
 
 Route::get('/location', [LocationController::class,'index']);
-// Route::post('/team', [TeamController::class,'store']);
 Route::post('/location', [LocationController::class,'update']);
-// Route::delete('/team/{email}', [TeamController::class,'destroy']);
+
+Route::get('/setting', [SettingController::class,'index']);
+// Route::post('/location', [SettingController::class,'update']);
 
 
 

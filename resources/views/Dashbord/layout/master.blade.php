@@ -35,7 +35,7 @@
                         <a href="{{url('/team')}}"> <i class="menu-icon fa fa-users"></i>الموظفين</a>
                     </li>
                     <li>
-                        <a href="{{url('/')}}"> <i class="menu-icon fa fa-cog"></i>الإعدادات</a>
+                        <a href="{{url('/setting')}}"> <i class="menu-icon fa fa-cog"></i>الإعدادات</a>
                     </li>
                     <li>
                         <a href="{{url('/')}}"> <i class="menu-icon fa fa-sign-out"></i>تسجيل الخروج</a>
