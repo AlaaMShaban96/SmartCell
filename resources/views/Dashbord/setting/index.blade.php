@@ -1,51 +1,7 @@
 @extends('Dashbord/layout/master')
 @section('style')
 <style>
-    #weatherWidget .currentDesc {
-    color: #ffffff!important;
-    }
-    .traffic-chart {
-      min-height: 335px;
-    }
-    #flotPie1  {
-      height: 150px;
-    }
-    #flotPie1 td {
-      padding:3px;
-    }
-    #flotPie1 table {
-      top: 20px!important;
-      right: -10px!important;
-    }
-    .chart-container {
-      display: table;
-      min-width: 270px ;
-      text-align: left;
-      padding-top: 10px;
-      padding-bottom: 10px;
-    }
-    #flotLine5  {
-      height: 105px;
-    }
-
-    #flotBarChart {
-      height: 150px;
-    }
-    #cellPaiChart{
-      height: 160px;
-    }
-    .actionby {
-      font-size: 12px;
-    }
-    .text-left {
-      position: relative;
-      right: 22px
-    }
-    .na-v {
-      position: absolute;
-    right: 1%;
-    }
-    .form-switch {
+   .form-switch {
     display: inline-block;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
@@ -103,57 +59,15 @@
 
     .form-switch input:checked + i::after { transform: translate3d(22px, 2px, 0); }
 
-    .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    table > tbody > tr > td{
+    padding: 1.75rem;
     }
-
-    /* Modal Content */
-    .modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 40%;
+    table > tbody > tr {
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
+      border-color: lightgray;
+      margin-bottom: 2%;
     }
-
-    /* The Close Button */
-    .close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-    }
-    .stat-widget-five .stat-heading {
-    color: #99abb4;
-    font-size: 12px;
-    color: black;
-    font-style: normal;
-    width: max-content;
-    }
-    * {
-    font-family: cairo;
-    }
-    p {
-    font-family: cairo;
-    }
-
 </style>
 @endsection
 @section('content')
@@ -180,71 +94,142 @@
 
     <div class="content">
         <div class="card">
-            <form action="" method="post">
-                <table class="table text-right" dir="rtl" >
+            <form action="{{url('/setting')}}" method="post">
+              @csrf
+              <input type="hidden" name="welcomeId" value="{{$data['welcome']['id']}}">
+              <input type="hidden" name="infoId" value="{{$data['info']['id']}}">
+              <input type="hidden" name="mapId" value="{{$data['map']['id']}}">
+              <input type="hidden" name="locationId" value="{{$data['location']['id']}}">
+
+              <input type="hidden" name="Auto_moveId" value="{{$data['Auto_move']['id']}}">
+              <input type="hidden" name="SystemId" value="{{$data['System']['id']}}">
+              <input type="hidden" name="DeliveryId" value="{{$data['delivery']['id']}}">
+              <input type="hidden" name="placeId" value="{{$data['place']['id']}}">
+              
+              
+               
+              
+              {{-- <div class=" text-center"> --}}
+                <h2 class=" text-center mt-5" text-center>رسائل النظام</h2>
+
+              {{-- </div> --}}
+              <hr>
+                <table class=" text-center" dir="rtl" >
                  
                     <tbody>
                       <tr> 
-                        <td>‫الترحيبية‬ ‫الرسالة‬</td>
-                        <td><input type="text" name="" id=""></td>
-                        <td>‫موافقته‬ ‫بعد‬ ‫الا‬ ‫للمندوبين‬ ‫نقلها‬ ‫يتم‬ ‫ولا‬ ‫اولا‬ ‫للادمن‬ ‫تصل‬ ‫الطلبيات‬ ‫جعل‬</td>
+                        <td> ‫الرسالة‬ ‫الترحيبية‬ </td>
+                        
+                        <td>
+                          <textarea placeholder ="اهلا بكم في افضل رد تلقائي في المجره!" name="welcomeValue" id="" value="" cols="30" rows="3">{{$data['welcome']['value']!="No"?$data['welcome']['value']:""}}</textarea>
+                        </td>
+                        <td>رسالة الترحيبيه الخاصه بك في الرد التلقائي ، يجب وضع الرساله الترحيبيه و تعريف بالمتجر الخاص بك فيها</td>
 
                       </tr>
                       <tr>
-                        <td>‫التوصيل‬ ‫بيانات‬</td>
-                        <td><input type="text" name="" id=""></td>
-                        <td>‫موافقته‬ ‫بعد‬ ‫الا‬ ‫للمندوبين‬ ‫نقلها‬ ‫يتم‬ ‫ولا‬ ‫اولا‬ ‫للادمن‬ ‫تصل‬ ‫الطلبيات‬ ‫جعل‬</td>
+                        <td> ‫بيانات‬ ‫التوصيل‬ </td>
+                        <td>
+                          <textarea placeholder ="الرجاء الانتظار ، رقم الهاتف 09XXXXXXXX" name="infoValue" id="" value="" cols="30" rows="3">{{$data['info']['value']!="No"?$data['info']['value']:""}}</textarea>
+
+                        </td>
+                        <td>‫هادي الرساله تضهر عندما يقوم المستخدم بضغط على زر "التواصل معانا" و انتظار الرد البشري ‬</td>
 
                       </tr>
                       <tr>
-                        <td>‫الموقع‬ ‫مكان‬ ‫عن‬ ‫تفاصيل‬</td>
-                        <td ><input type="text" name="" id=""></td>
-                        <td >‫موافقته‬ ‫بعد‬ ‫الا‬ ‫للمندوبين‬ ‫نقلها‬ ‫يتم‬ ‫ولا‬ ‫اولا‬ ‫للادمن‬ ‫تصل‬ ‫الطلبيات‬ ‫جعل‬</td>
+                        <td>  ‫تفاصيل‬ ‫عن‬ ‫مكان‬ ‫الموقع‬    </td>
+                        <td>
+                          <textarea placeholder ="بعد المستشفى الكبير ، جمب الجامع" name="mapValue" id="" value="" cols="30" rows="3">{{$data['map']['value']!="No"?$data['map']['value']:""}}</textarea>
+
+                        </td>
+                        <td >يتم وضع في هادي الرساله توضيح اكتر عن مكان المتجر / الشركة الخاصه بك‫ ‬</td>
                       </tr>
                       <tr>
-                        <td>‫غوغل‬ ‫خريطة‬ ‫رابط‬</td>
-                        <td ><input type="text" name="" id=""></td>
-                        <td >‫موافقته‬ ‫بعد‬ ‫الا‬ ‫للمندوبين‬ ‫نقلها‬ ‫يتم‬ ‫ولا‬ ‫اولا‬ ‫للادمن‬ ‫تصل‬ ‫الطلبيات‬ ‫جعل‬</td>
+                        <td> ‫رابط‬ ‫خريطة‬ ‫غوغل‬  </td>
+                        <td>
+                          <textarea placeholder =" ( 21°25′21″N 39°49′34″E )" name="locationValue" id="" value="" cols="30" rows="3">{{$data['location']['value']!="No"?$data['location']['value']:""}}</textarea>
+
+                        </td>
+                        <td >يتم وضع فيها احداثيات Google Maps  للمتجر/للشركة الخاصه بك ، حتى يضهر للزبائن الخاصيآ  بك‬</td>
+                      </tr>
+                    </tbody>
+                </table>
+                <h2 class=" text-center mt-5" text-center>لوحة تحكم النظام</h2>
+
+
+              <hr>
+                <table dir="rtl" style="margin-left: 10%;" >
+                 
+                    <tbody>
+                      <tr> 
+                        <td> ‫ ‫موافقة‬ الادمن‬  </td>
+                        
+                        <td>
+                          <label class="form-switch">
+                            <input name="Auto_moveValue" id="locationShow" type="checkbox" {{$data['Auto_move']['value']=='Yes'?'checked':''}}><i></i>
+                          </label>
+                        </td>
+                        <td> ارسال الطلبية الى قائمة موافقة الادمن قبل ارسالها الى المندوبين.</td>
+
+                      </tr>
+                      <tr>
+                        <td>  ‫‫ تشغيل ‬النظام‬  </td>
+                        <td>
+                          <label class="form-switch">
+                            <input name="SystemValue" id="locationShow" type="checkbox" {{$data['System']['value']=='Yes'?'checked':''}}><i></i>
+                          </label>
+                        </td>
+                        <td>‫يمكن ايقاف و تشغيل نظام رد التلقائي عن طريق تغير حالة ‬</td>
+
+                      </tr>
+                      <tr>
+                        <td>   ‫‫‫ ‫توفر‬‬ ‬التوصيل‬   </td>
+                        <td>
+                          <label class="form-switch">
+                            <input name="DeliveryValue" id="locationShow" type="checkbox" {{$data['delivery']['value']=='Yes'?'checked':''}}><i></i>
+                          </label>
+                        </td>
+                        <td >‫ يتم وضع فيها احداثيات Google Maps  للمتجر/للشركة الخاصه بك ، حتى يضهر للزبائن الخاصيآ  بك‬</td>
+                      </tr>
+                      <tr>
+                        <td>  ‫ ‫استلام ‬شخصي‬  </td>
+                        <td>
+                          <label class="form-switch">
+                            <input name="placeValue" id="locationShow" type="checkbox" {{$data['place']['value']=='Yes'?'checked':''}}><i></i>
+                          </label>
+                        </td>
+                        <td >يتم وضع في هادي الرساله توضيح اكتر عن مكان المتجر / الشركة الخاصه بك‬</td>
                       </tr>
                     </tbody>
                 </table>
                
-                <div class="row" dir="rtl">
+                {{-- <div class="row mt-5" dir="rtl">
                     <div class='  col-l-3 col-s-12  content-center'>
                         <div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'>
-                            <p class='card-title  d-flex justify-content-center mt-2'>‫ ‫موافقة‬ الادمن‬ </p>
-                            <label class="form-switch">
-                                <input name="show" id="locationShow" type="checkbox"><i></i>
-                            </label>
+                            <p class='card-title  d-flex justify-content-center mt-2'></p>
+                            
                             
                         </div>
                       </div> 
                       <div class='  col-l-3 col-s-12  content-center'>
                         <div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'>
-                            <p class='card-title  d-flex justify-content-center mt-2'>‫‫ ‫ايقاف‬ ‬النظام‬ </p>
-                            <label class="form-switch">
-                                <input name="show" id="locationShow" type="checkbox"><i></i>
-                            </label>
-                        </div>
-                      </div> 
-                      <div class='  col-l-3 col-s-12  content-center'>
-                        <div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'>
-                            <p class='card-title  d-flex justify-content-center mt-2'>‫‫‫ ‫توفر‬‬ ‬التوصيل‬ </p>
-                            <label class="form-switch">
-                                <input name="show" id="locationShow" type="checkbox"><i></i>
-                            </label>
+                            <p class='card-title  d-flex justify-content-center mt-2'></p>
                             
                         </div>
                       </div> 
                       <div class='  col-l-3 col-s-12  content-center'>
                         <div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'>
-                            <p class='card-title  d-flex justify-content-center mt-2'> ‫ ‫استلام ‬شخصي‬ </p>
-                            <label class="form-switch">
-                                <input name="show" id="locationShow" type="checkbox"><i></i>
-                            </label>
+                            <p class='card-title  d-flex justify-content-center mt-2'></p>
+                            
+                            
                         </div>
                       </div> 
-                </div>
+                      <div class='  col-l-3 col-s-12  content-center'>
+                        <div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'>
+                            <p class='card-title  d-flex justify-content-center mt-2'></p>
+                           
+                        </div>
+                      </div> 
+                </div> --}}
                 <div class="row" dir="rtl">
                     <button  type="submit" class="btn btn-success">Success</button>
 
@@ -310,3 +295,24 @@
 </script>
 
 @endsection
+
+
+اول واحده : welcome
+التفاصيل : .
+
+hint : 
+
+
+تاني واحده : info 
+التفاصيل : 
+hint : 
+
+
+التالته map :
+التفاصيل :
+hint : 
+
+الرابعه : location 
+التفاصيل : .
+
+hint : 

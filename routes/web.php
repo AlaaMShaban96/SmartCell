@@ -46,7 +46,7 @@ Route::get('/location', [LocationController::class,'index']);
 Route::post('/location', [LocationController::class,'update']);
 
 Route::get('/setting', [SettingController::class,'index']);
-// Route::post('/location', [SettingController::class,'update']);
+Route::post('/setting', [SettingController::class,'update']);
 
 
 

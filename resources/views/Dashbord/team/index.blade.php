@@ -180,7 +180,7 @@
 
     <div class="content">
         <div class="card">
-            <div class="row">
+            <div class="row" style="width: 100%;padding-top: 3%;">
                 <div class=" col-l-3 col-s-12  d-flex justify-content-center pl-4 pr-4">
                     <div class="card ml-4 mr-4 pl-4 pr-4 d-flex justify-content-center" style="min-width: 130px; border-radius: 25px;">
                             <button  id="showAddUser"  class="btn btn-success fa fa-plus pt-3 d-flex justify-content-center mx-auto" style="border-radius: 8vh;width: 50px;height: 50px;"></button>

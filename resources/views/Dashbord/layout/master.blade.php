@@ -7,8 +7,9 @@
     <title>SmartCell</title>
     <meta name="description" content="SmartCell">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     @include('Dashbord.layout.include.style')
-    @yield('style')
+   @yield('style')
   
 
 </head>

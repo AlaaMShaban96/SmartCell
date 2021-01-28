@@ -61,7 +61,7 @@ class HomeController extends Controller
             $orderState=Order::orderState();
             $todayOrder=Order::todayOrder();
         } catch (\Throwable $th) {
-            dd('index function error',$th);
+            dd('index function on file HomeController error',$th);
         }
         $link="";
     
