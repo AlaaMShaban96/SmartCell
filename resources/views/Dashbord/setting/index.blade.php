@@ -199,6 +199,7 @@
                         </td>
                         <td >يتم وضع في هادي الرساله توضيح اكتر عن مكان المتجر / الشركة الخاصه بك‬</td>
                       </tr>
+                     
                     </tbody>
                 </table>
                
@@ -230,8 +231,8 @@
                         </div>
                       </div> 
                 </div> --}}
-                <div class="row" dir="rtl">
-                    <button  type="submit" class="btn btn-success">Success</button>
+                <div class="row  m-5" dir="rtl">
+                    <button  type="submit" class="btn btn-success">حفظ </button>
 
                 </div>
                
@@ -247,43 +248,6 @@
 
 
 
-<div id="editLocationModel" class="modal">
-  <!-- Modal content -->
-    <div class="modal-content">
-      <span class="closeEditLocationModel">&times;</span>
-      <div class="row" style="padding-left: 10%;">
-        <form id="userForm" action="{{url('/location')}}" dir="rtl" class="mx-auto" method="POST">
-          @csrf
-            {{-- <img class="img-fluid mb-5"  src="image2/12.jpg"style=" max-width: 200px;margin-left: 280px;" > --}}
-            <div class="form-row" dir="rtl">
-              <input type="hidden" id="idLocation" name="id">
-              
-              <div class="form-group col-md-6">
-                <label for="#" style="display: flex;">سعر التوصيل</label>
-                <input type="number" name="price" class="form-control" id="locationPrice" required placeholder="أدخل رقم الهاتف">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="#" style="display: flex;">تفعيل المنطقة</label>
-
-                <label class="form-switch">
-                  <input name="show" id="locationShow" type="checkbox"><i></i>
-                </label>
-              </div>
-
-              
-            </div>
-               
-                
-                
-              <div class="d-flex justify-content-center">
-        
-                <button type="submit" class="btn btn-info mt-3" style="display: grid;width: 300px; border-radius: 22px;"> حفظ </button>
-              </div>
-        </form>
-      </div>
-
-    </div>
-</div>
 
 
 
@@ -296,23 +260,3 @@
 
 @endsection
 
-
-اول واحده : welcome
-التفاصيل : .
-
-hint : 
-
-
-تاني واحده : info 
-التفاصيل : 
-hint : 
-
-
-التالته map :
-التفاصيل :
-hint : 
-
-الرابعه : location 
-التفاصيل : .
-
-hint : 

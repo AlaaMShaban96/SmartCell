@@ -154,6 +154,45 @@
     font-family: cairo;
     }
 
+  #sign{
+      width: 0px;
+      height: 5px;
+      display: inline-block;
+      position: static;
+      top:25px;
+      right:10px;
+      margin-left: -5px;
+  }
+  #sign .s{
+      width: 10px;
+      height: 4px;
+      display:inline-block;
+      border-radius:2px;
+      background-color:black;
+      position:absolute;
+  }
+  #sign #s1{
+      transform:rotate(45deg);
+      z-index:100;
+      margin-left:0;
+      transition:all 0.5s ease-out;
+      margin-left: 11px;
+  }
+  #sign #s2{
+      transform:rotate(-45deg);
+      z-index:200;
+      margin-left:16px;
+      transition:all 0.5s ease-in;
+  }
+  #sign #s2.close2{
+      margin-left:7px;
+      transition:all 0.5s ease-out;
+  }
+  #sign #s1.close1{
+      margin-left:7px;
+      transition:all 0.5s ease-out;
+  }
+
 </style>
 @endsection
 @section('content')
@@ -186,7 +225,7 @@
           @foreach ($items as $item)
             @if ($item[0]=="0")
             <li>
-              <a class="btn" onclick="show('{{$item[9]}}','0')" data-bs-toggle="collapse" data-bs-target="#collapseExample{{$item[9]}}" aria-expanded="false" aria-controls="collapseExample{{$item[9]}}"style="text-align: center;"> {{$item[1]}} <i class="fa fa-book"></i> </a>
+              <a class="btn" onclick="show('{{$item[9]}}','0')" data-bs-toggle="collapse" data-bs-target="#collapseExample{{$item[9]}}" aria-expanded="false" aria-controls="collapseExample{{$item[9]}}"style="text-align: center;"> {{$item[1]}}<span class="sign{{$item[9]}}" id="sign"><span id="s1" class="s"></span><span id="s2" class="s"></span></span> </a>
               <div class="collapse" id="collapseExample{{$item[9]}}">
                
                 <div id="sub{{$item[9]}}">   
@@ -210,7 +249,7 @@
             <div class="row">
                 <div class="col-9 col-xs-4">
                     <div class="card-body d-flex justify-content-center"style="width: 105%; margin-left: -15px;height: 68px;"> 
-                        <h4 class="box-title w-100 mt-1 mx-auto" style="background-color: #7648E6;color: wheat;text-align: center;    position: absolute;top: 20px;border-radius: 10px 10px 0px 0px;">الأصناف </h4>
+                        <h4 class="box-title w-100 mt-1 mx-auto" style="background-color: #7648E6;color: wheat;text-align: center;    position: absolute;top: 20px;border-radius: 10px 10px 0px 0px;">الأصناف   </h4>
                     </div>
                     <div class="card">
                         
@@ -330,126 +369,129 @@
 
     </div>
         <!-- /Widgets -->
-</div>
+  </div>
 
+  <div id="icon-3" class="icon">
+    <div id="dropdown-3" class="dropdown"></div>
+  </div>
 
-<div id="addCategory" class="modal">
-  <!-- Modal content -->
-    <div class="modal-content">
-      <span class="closesModelCategory">&times;</span>
-      <div class="row" style="padding-left: 10%;">
-        <form id="categoryForm" action="{{url('/category')}}" dir="rtl" class="mx-auto" method="POST" enctype="multipart/form-data">
-          @csrf
-            {{-- <img class="img-fluid mb-5"  src="image2/12.jpg"style=" max-width: 200px;margin-left: 280px;" > --}}
-            <div class="form-row" dir="rtl">
-              <div class="form-group col-md-6">
-                <label for="#" style="display: flex;">إسم الصنف</label>
-                <input type="text" name="name" class="form-control" id="categoryName" placeholder="أدخل إسم المنتج">
+  <div id="addCategory" class="modal">
+    <!-- Modal content -->
+      <div class="modal-content">
+        <span class="closesModelCategory">&times;</span>
+        <div class="row" style="padding-left: 10%;">
+          <form id="categoryForm" action="{{url('/category')}}" dir="rtl" class="mx-auto" method="POST" enctype="multipart/form-data">
+            @csrf
+              {{-- <img class="img-fluid mb-5"  src="image2/12.jpg"style=" max-width: 200px;margin-left: 280px;" > --}}
+              <div class="form-row" dir="rtl">
+                <div class="form-group col-md-6">
+                  <label for="#" style="display: flex;">إسم الصنف</label>
+                  <input type="text" name="name" class="form-control" id="categoryName" placeholder="أدخل إسم المنتج">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="#">تحت تصنيف:</label>
+                  <select name="titel" id="categoryTitel" style="width: 200px;text-align: center;">
+                    <option value="0">ليس تحت تصنيف</option>
+
+                    @foreach ($items as $item)
+                      @if ($item[3]=='1')
+                        <option value="{{$item[9]}}">{{$item[1]}}</option>
+                      @endif
+                    @endforeach
+          
+                  </select>
+                </div>
               </div>
-              <div class="form-group col-md-6">
-                <label for="#">تحت تصنيف:</label>
-                <select name="titel" id="categoryTitel" style="width: 200px;text-align: center;">
-                  <option value="0">ليس تحت تصنيف</option>
-
-                  @foreach ($items as $item)
-                    @if ($item[3]=='1')
-                      <option value="{{$item[9]}}">{{$item[1]}}</option>
-                    @endif
-                  @endforeach
-        
-                </select>
+              <div class="form-group">
+                <label for="#"style="display: flex;"">إضافة التفاصيل</label>
+                <textarea class="form-control" name="info" id="categoryInfo" rows="3"></textarea>
               </div>
-            </div>
-            <div class="form-group">
-              <label for="#"style="display: flex;"">إضافة التفاصيل</label>
-              <textarea class="form-control" name="info" id="categoryInfo" rows="3"></textarea>
-            </div>
-            
-                <label>
-                    عرض الصنف
-                </label>
-                <label class="form-switch">
-                    <input name="show" id="categoryShow" type="checkbox"><i></i>
+              
+                  <label>
+                      عرض الصنف
                   </label>
-                <label class="mr-2 ml-3">
-                  رفع الصورة
-                </label>
-                
-                    <input type="file" id="myFile" name="image" >  
-                
-              <div class="d-flex justify-content-center">
-        
-                <button type="submit" class="btn btn-info mt-3" style="display: grid;width: 300px; border-radius: 22px;">  حفظ </button>
-              </div>
-        </form>
-      </div>
-
-    </div>
-</div>
-<div id="addItem" class="modal">
-  <!-- Modal content -->
-    <div class="modal-content">
-      <span class="closesModelItem">&times;</span>
-      <div class="row" style="padding-left: 10%;">
-        <form id="itemForm" action="{{url('/item')}}" dir="rtl" class="mx-auto" method="POST" enctype="multipart/form-data">
-          @csrf
-            <div class="form-row" dir="rtl">
-              <div class="form-group col-md-6">
-                <label for="#" style="display: flex;">إسم المنتج</label>
-                <input type="text" name="name" class="form-control" id="itemName" placeholder="أدخل إسم المنتج">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="#"style="display: flex;">سعر المنتج</label>
-                <input type="text" name="price" class="form-control" id="itemPrice" placeholder="سعر المنتج">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="#"style="display: flex;"">إضافة التفاصيل</label>
-              <textarea class="form-control" name="info" id="itemInfo" rows="3"></textarea>
-            </div>
-                <label for="#">تحت تصنيف:</label>
-                <select name="titel" id="itemTitel" style="width: 200px;text-align: center;">
-                  <option value="0">ليس تحت تصنيف</option>
-
-                  @foreach ($items as $item)
-                    @if ($item[3]=='1')
-                      <option value="{{$item[9]}}">{{$item[1]}}</option>
-                    @endif
-                  @endforeach
-        
-                </select>
-                <label>
-                    عرض المنتج
-                </label>
-                <label class="form-switch">
-                    <input type="checkbox" name="show" id="itemShow"><i></i>
+                  <label class="form-switch">
+                      <input name="show" id="categoryShow" type="checkbox"><i></i>
+                    </label>
+                  <label class="mr-2 ml-3">
+                    رفع الصورة
                   </label>
-                <label class="mr-2 ml-3">
-                  رفع الصورة
-                </label>
-                
-                    <input type="file" id="myFile" name="image" >  
-                
-              <div class="d-flex justify-content-center">
-        
-                <button type="submit" class="btn btn-info mt-3" style="display: grid;width: 300px; border-radius: 22px;"> حفظ </button>
-              </div>
-        </form>
+                  
+                      <input type="file" id="myFile" name="image" >  
+                  
+                <div class="d-flex justify-content-center">
+          
+                  <button type="submit" class="btn btn-info mt-3" style="display: grid;width: 300px; border-radius: 22px;">  حفظ </button>
+                </div>
+          </form>
+        </div>
+
       </div>
+  </div>
+  <div id="addItem" class="modal">
+    <!-- Modal content -->
+      <div class="modal-content">
+        <span class="closesModelItem">&times;</span>
+        <div class="row" style="padding-left: 10%;">
+          <form id="itemForm" action="{{url('/item')}}" dir="rtl" class="mx-auto" method="POST" enctype="multipart/form-data">
+            @csrf
+              <div class="form-row" dir="rtl">
+                <div class="form-group col-md-6">
+                  <label for="#" style="display: flex;">إسم المنتج</label>
+                  <input type="text" name="name" class="form-control" id="itemName" placeholder="أدخل إسم المنتج">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="#"style="display: flex;">سعر المنتج</label>
+                  <input type="text" name="price" class="form-control" id="itemPrice" placeholder="سعر المنتج">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="#"style="display: flex;"">إضافة التفاصيل</label>
+                <textarea class="form-control" name="info" id="itemInfo" rows="3"></textarea>
+              </div>
+                  <label for="#">تحت تصنيف:</label>
+                  <select name="titel" id="itemTitel" style="width: 200px;text-align: center;">
+                    <option value="0">ليس تحت تصنيف</option>
 
-    </div>
-</div>
+                    @foreach ($items as $item)
+                      @if ($item[3]=='1')
+                        <option value="{{$item[9]}}">{{$item[1]}}</option>
+                      @endif
+                    @endforeach
+          
+                  </select>
+                  <label>
+                      عرض المنتج
+                  </label>
+                  <label class="form-switch">
+                      <input type="checkbox" name="show" id="itemShow"><i></i>
+                    </label>
+                  <label class="mr-2 ml-3">
+                    رفع الصورة
+                  </label>
+                  
+                      <input type="file" id="myFile" name="image" >  
+                  
+                <div class="d-flex justify-content-center">
+          
+                  <button type="submit" class="btn btn-info mt-3" style="display: grid;width: 300px; border-radius: 22px;"> حفظ </button>
+                </div>
+          </form>
+        </div>
 
+      </div>
+  </div>
 
 
 @endsection
-@section('script')
+@section('script')  
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
     <script>
-      let clearFlag=0;
+
+  let clearFlag=0;
   function showModelCategory() {
     
       // // Get the modal
@@ -517,6 +559,8 @@
   var items = @json($items,JSON_PRETTY_PRINT);
 
   function show(id,index) { 
+    $('.sign'+id+' #s1').toggleClass('close1');
+    $('.sign'+id+' #s2').toggleClass('close2');
        console.log(id);
 
     document.getElementById('sub'+id).innerHTML="";
@@ -526,12 +570,13 @@
 
     var sub=document.getElementById('sub'+id);
     items.forEach(element => {
+      console.log("id is"+id, "elementId is");
 
-      if (element[0] == id ) {
-        
+      if (Math.floor(element[0]) == id ) {
+
         if (element[3]=='1') {
 
-          sub.innerHTML = '<a class="btn" onclick="show('+element[9]+','+(index+1)+')" data-bs-toggle="collapse" data-bs-target="#collapseExample'+element[9]+'" aria-expanded="false" aria-controls="collapseExample'+element[9]+'" style="text-align: center;"> '+element[1]+' <i class="fa fa-book"></i> </a><div class="collapse" id="collapseExample'+element[9]+'"><div id="sub'+element[9]+'"></div>';
+          sub.innerHTML += '<div><a class="btn" onclick="show('+element[9]+','+(index+1)+')" data-bs-toggle="collapse" data-bs-target="#collapseExample'+element[9]+'" aria-expanded="false" aria-controls="collapseExample'+element[9]+'" style="text-align: center;"> '+element[1]+' <span class="sign'+element[9]+'" id="sign"><span id="s1" class="s"></span><span id="s2" class="s"></span></span>  </a><div class="collapse" id="collapseExample'+element[9]+'"><div id="sub'+element[9]+'"></div></div>';
 
           document.getElementById('category').innerHTML+= category(element);
         }
@@ -617,5 +662,5 @@
     }
   
  
-</script>
+  </script>
 @endsection
