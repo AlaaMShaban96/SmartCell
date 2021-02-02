@@ -219,25 +219,22 @@
 
   <div class="content">
     <div class="col-3 na-v mt-4  d-flex justify-content-center" style="text-align:center; ">
-
         <ul class="nav flex-column shadow pb-3" style="background-color: white;border-radius: 25px;">
             <h5 class="mb-4 p-2"  style="color: white;background-color: #10858b;width: 200px;border-radius: 10px 10px 0px 0px;">الأصناف الرئيسية</h5>
           @foreach ($items as $item)
-            @if ($item[0]=="0")
+            @if (isset($item[28])&& ($item[28]=="1"))
             <li>
-              <a class="btn" onclick="show('{{$item[9]}}','0')" data-bs-toggle="collapse" data-bs-target="#collapseExample{{$item[9]}}" aria-expanded="false" aria-controls="collapseExample{{$item[9]}}"style="text-align: center;"> {{$item[1]}}<span class="sign{{$item[9]}}" id="sign"><span id="s1" class="s"></span><span id="s2" class="s"></span></span> </a>
-              <div class="collapse" id="collapseExample{{$item[9]}}">
+              <a class="btn" onclick="show('{{$item[1]}}','0')" data-bs-toggle="collapse" data-bs-target="#collapseExample{{$item[1]}}" aria-expanded="false" aria-controls="collapseExample{{$item[1]}}"style="text-align: center;"> {{$item[3]}}<span class="sign{{$item[1]}}" id="sign"><span id="s1" class="s"></span><span id="s2" class="s"></span></span> </a>
+              <div class="collapse" id="collapseExample{{$item[1]}}">
                
-                <div id="sub{{$item[9]}}">   
+                <div id="sub{{$item[1]}}">   
                 </div>
                 
                 
               </div>
             </li> 
-            @endif
-              
-          @endforeach
-          
+            @endif   
+          @endforeach          
         </ul>
     </div>
     <!-- Animated -->
@@ -263,21 +260,21 @@
                               </div>
                               
                               @foreach ($items as $key=> $item)
-                                @if ($item[0]=="0")
+                                @if (isset($item[28])&& ($item[28]=="1"))
                                 <div class=' col-4  d-flex justify-content-center'>
                                   <div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'>
                                     <div class='text-center'>
                                           <img class='img-fluaid' src='{{$item[6]}}' style="width:12vh;border-radius: 5px;"></img>
                                     </div>
-                                    <p class='card-title  d-flex justify-content-center mt-2'> {{$item[1]}} </p> 
+                                    <p class='card-title  d-flex justify-content-center mt-2'> {{$item[3]}} </p> 
                           
                                     <div class="row">
                                       <div class="col-6">
-                                        <button class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button>
+                                        <button onclick="deleteItem('{{$item[1]}}')" class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button>
 
                                       </div>
                                       <div class="col-6">
-                                        <button  onclick='editCategory("{{$item[9]}}")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button>
+                                        <button  onclick='editCategory("{{$item[1]}}")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button>
 
                                       </div>
                                     </div>
@@ -306,11 +303,7 @@
                         
                         <div class="row"> 
           
-                            {{-- <div class="col-4  d-flex justify-content-center pl-4 pr-4">
-                                <div class="card ml-4 mr-4 pl-4 pr-4 d-flex justify-content-center" style="min-width: 130px; border-radius: 25px;">
-                                </div> 
-                            </div> --}}
-                            
+                        
                             
                             <div id="item" style="width: 100%;padding-top: 3%;" class="row">
                               @foreach ($items as $key=> $item)
@@ -322,22 +315,22 @@
                                 </div>
                               </div>
                               @endif
-                              @if ($item[0]=="1")
+                              @if (isset($item[28])&& ($item[28]=="0"))
                               <div class=' col-4  d-flex justify-content-center'>
                                 <div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'>
                                   <div class='text-center'>
                                         <img class='img-fluaid' src='{{$item[6]}}' style="width:12vh;border-radius: 5px;"></img>
                                   </div>
-                                  <p class='card-title  d-flex justify-content-center mt-2'> {{$item[1]}} </p> 
+                                  <p class='card-title  d-flex justify-content-center mt-2'> {{$item[3]}} </p> 
                                   <span class='w-100 flex-fill bd-highlight' style='display:flex;position: inherit;right: 18.5px;'>
                                    
                                  </span>
                                  <div class="row">
                                   <div class="col-6">
-                                    <button class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button>
+                                    <button onclick="deleteItem('{{$item[1]}}')" class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button>
                                   </div>
                                   <div class="col-6">
-                                    <button  onclick='editCategory("{{$item[9]}}")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button>
+                                    <button  onclick='editCategory("{{$item[1]}}")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button>
                                   </div>
                                  </div>
                                 </div>
@@ -346,21 +339,7 @@
                             @endforeach
                               
                             </div>
-                           {{-- <div class=" col-4  d-flex justify-content-center">
-                                <div class="card ml-4 mr-4 p-4" style="border-radius: 25px;">
-                                    <div class="text-center">
-                                        <img class="img-fluaid" src="image2/12.jpg" style="width:12vh;">
-                                    </div>
-                                    <p class="card-title  d-flex justify-content-center mt-2"> أحذية </p>
-                                    <span class="w-100 flex-fill bd-highlight" style="display:flex;position: inherit;right: 18.5px;">
-                                        <button class="btn btn-danger w-50 d-flexjustify-content-center mr-1" style=" min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; ">حذف</button>
-                                        <button class="btn btn-success w-50 d-flex justify-content-center mr-1" style=" min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;">تعديل</button>
-                                        
-                                    </span>
-
-                                </div> 
-                            
-                          </div>   --}}
+                        
                         </div>
                     </div>
                 </div> <!-- /.card -->
@@ -394,8 +373,8 @@
                     <option value="0">ليس تحت تصنيف</option>
 
                     @foreach ($items as $item)
-                      @if ($item[3]=='1')
-                        <option value="{{$item[9]}}">{{$item[1]}}</option>
+                      @if (isset($item[28])&& ($item[28]=="1"))
+                        <option value="{{$item[1]}}">{{$item[3]}}</option>
                       @endif
                     @endforeach
           
@@ -440,22 +419,34 @@
                   <label for="#" style="display: flex;">إسم المنتج</label>
                   <input type="text" name="name" class="form-control" id="itemName" placeholder="أدخل إسم المنتج">
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-3">
                   <label for="#"style="display: flex;">سعر المنتج</label>
                   <input type="text" name="price" class="form-control" id="itemPrice" placeholder="سعر المنتج">
                 </div>
+                <div class="form-group col-md-3">
+                  <label for="#"style="display: flex;"> الكمية</label>
+                  <input type="number" name="qyantity" class="form-control" id="itemQyantity" placeholder="كمية المنتج">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="#"style="display: flex;"">إضافة وصف قصير</label>
+                <textarea class="form-control" name="subtitle" id="itemSubtitle" rows="3" maxlength="80"></textarea>
               </div>
               <div class="form-group">
                 <label for="#"style="display: flex;"">إضافة التفاصيل</label>
                 <textarea class="form-control" name="info" id="itemInfo" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="#"style="display: flex;"">كلمات مفتاحية</label>
+                <textarea class="form-control" name="keywords" id="itemKeywords" rows="3"></textarea>
               </div>
                   <label for="#">تحت تصنيف:</label>
                   <select name="titel" id="itemTitel" style="width: 200px;text-align: center;">
                     <option value="0">ليس تحت تصنيف</option>
 
                     @foreach ($items as $item)
-                      @if ($item[3]=='1')
-                        <option value="{{$item[9]}}">{{$item[1]}}</option>
+                      @if (isset($item[28])&& ($item[28]=="1"))
+                        <option value="{{$item[1]}}">{{$item[3]}}</option>
                       @endif
                     @endforeach
           
@@ -481,7 +472,12 @@
 
       </div>
   </div>
+  <form style="display: none" id="deleteItemForm" action="" method="post">
+    @method('delete')
+    @csrf
+    {{-- <button  type="submit"></button> --}}
 
+  </form>
 
 @endsection
 @section('script')  
@@ -551,7 +547,7 @@
         addItem.style.display = "none";
       }
     }
- }
+  }
   showModelItem();
   showModelCategory();
   
@@ -570,18 +566,18 @@
 
     var sub=document.getElementById('sub'+id);
     items.forEach(element => {
-      console.log("id is"+id, "elementId is");
+      // console.log("here",element[8]);
 
-      if (Math.floor(element[0]) == id ) {
+      if (Math.floor(element[7])  == id ) {
 
-        if (element[3]=='1') {
+        if (element[28]=='1') {
 
-          sub.innerHTML += '<div><a class="btn" onclick="show('+element[9]+','+(index+1)+')" data-bs-toggle="collapse" data-bs-target="#collapseExample'+element[9]+'" aria-expanded="false" aria-controls="collapseExample'+element[9]+'" style="text-align: center;"> '+element[1]+' <span class="sign'+element[9]+'" id="sign"><span id="s1" class="s"></span><span id="s2" class="s"></span></span>  </a><div class="collapse" id="collapseExample'+element[9]+'"><div id="sub'+element[9]+'"></div></div>';
+          sub.innerHTML += '<div><a class="btn" onclick="show('+element[1]+','+(index+1)+')" data-bs-toggle="collapse" data-bs-target="#collapseExample'+element[1]+'" aria-expanded="false" aria-controls="collapseExample'+element[1]+'" style="text-align: center;"> '+element[3]+' <span class="sign'+element[1]+'" id="sign"><span id="s1" class="s"></span><span id="s2" class="s"></span></span>  </a><div class="collapse" id="collapseExample'+element[1]+'"><div id="sub'+element[1]+'"></div></div>';
 
           document.getElementById('category').innerHTML+= category(element);
         }
       
-         element[3]=='0'? document.getElementById('item').innerHTML+= item(element):"";
+         element[28]=='0'? document.getElementById('item').innerHTML+= item(element):"";
       }
    
 
@@ -604,51 +600,52 @@
   }
 
   function category(element) {
-    return "<div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[1]+" </p><div class='row'><div class='col-6'><button class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button></div><div class='col-6'><button  onclick='editCategory("+element[9]+")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button></div></div></div></div>"; 
+    return "<div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[3]+" </p><div class='row'><div class='col-6'><button onclick='deleteItem("+element[1]+")' class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button></div><div class='col-6'><button  onclick='editCategory("+element[1]+")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button></div></div></div></div>"; 
     
   }
   function item(element) {
-    return "<div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[1]+" </p><div class='row'><div class='col-6'><button class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button></div><div class='col-6'><button  onclick='editItem("+element[9]+")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button></div></div></div></div>"; 
+    return "<div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[3]+" </p><div class='row'><div class='col-6'><button onclick='deleteItem("+element[1]+")' class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button></div><div class='col-6'><button  onclick='editItem("+element[1]+")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button></div></div></div></div>"; 
     
   }
   function editCategory(id) {
     var hostName = window.location.origin;
     var row=[];
     items.forEach(element => {
-      if (element[9]==id) {
+      if (element[1]==id) {
         row =  element;
       }
       
     });
     
-    console.log('on function Edit Category and date on row = ', row[7]);
+    console.log('on function Edit Category and date on row = ', row[29]);
     document.getElementById('showAddCategory').click();
     document.getElementById('categoryForm').action=hostName+'/category/'+id;
-    document.getElementById('categoryName').value=row[1];
-    document.getElementById('categoryTitel').value=row[0];
-    document.getElementById('categoryInfo').value=row[4]; 
-    document.getElementById('categoryShow').checked= row[7]=='TRUE'?true:false;
+    document.getElementById('categoryName').value=row[3];
+    document.getElementById('categoryTitel').value=Math.floor(element[8]);
+    document.getElementById('categoryInfo').value=row[30]; 
+    document.getElementById('categoryShow').checked= row[0]=='TRUE'?true:false;
   }
   
   function editItem(id) {
     var hostName = window.location.origin;
     var row=[];
     items.forEach(element => {
-      if (element[9]==id) {
+      if (element[1]==id) {
         row =  element;
       }
       
     });
-    console.log(row[10]+'value of info');
+    console.log(row);
     
-    console.log('on function Edit Category and date on row = ', row[7]);
+    // console.log('on function Edit Category and date on row = ', row[7]);
     document.getElementById("showAddItem").click();
     document.getElementById('itemForm').action=hostName+'/item/'+id;
-    document.getElementById('itemName').value=row[1];
+    document.getElementById('itemName').value=row[3];
     document.getElementById('itemPrice').value=row[2];
-    document.getElementById('itemTitel').value=row[0];
-    document.getElementById('itemInfo').value=row[10]; 
-    document.getElementById('itemShow').checked= row[7]=='TRUE'?true:false;
+    document.getElementById('itemTitel').value=Math.floor(row[7]);
+    document.getElementById('itemInfo').value=row[27]; 
+    document.getElementById('itemQyantity').value=row[26]; 
+    document.getElementById('itemShow').checked= (row[0]=='TRUE')?true:false;
     clearFlag=1;
   }
   function clearInputItem(){
@@ -659,7 +656,12 @@
     document.getElementById('itemTitel').value="";
     document.getElementById('itemInfo').value="" 
     document.getElementById('itemShow').checked=false;
-    }
+  }
+  function deleteItem(id) {
+    var hostName = window.location.origin;
+    document.getElementById('deleteItemForm').action=hostName+'/item/'+id;
+    document.getElementById('deleteItemForm').submit();
+  }
   
  
   </script>

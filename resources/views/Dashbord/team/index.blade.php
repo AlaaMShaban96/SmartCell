@@ -202,7 +202,7 @@
                                     @csrf
                                   {{-- <button  type="submit"></button> --}}
                                 
-                                </form>
+                                  </form>
                                 <button  onclick='EditUser({{$key}})' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button>
                             </span>
                         </div>

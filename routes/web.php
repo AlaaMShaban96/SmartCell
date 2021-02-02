@@ -36,6 +36,7 @@ Route::post('/item', [ItemController::class,'store']);
 Route::post('/category', [ItemController::class,'storeCategory']);
 Route::post('/category/{id}', [ItemController::class,'updateCategory']);
 Route::post('/item/{id}', [ItemController::class,'update']);
+Route::delete('/item/{id}', [ItemController::class,'destroy']);
 
 Route::get('/team', [TeamController::class,'index']);
 Route::post('/team', [TeamController::class,'store']);
