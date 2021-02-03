@@ -128,8 +128,9 @@ class HomeController extends Controller
                         Session::put('store_id', $snapshot->data()['store_id']);
                         Session::put('store_name', $store->data()['name']);
                         Session::put('store_users', $store->data()['users']);
-                        // Session::put('sheet_id', $store->data()['SA1']['s_id']);
-                        Session::put('sheet_id', '1ag225UN7QfaqV-cHbmJPmWssvwso7STmcPBYyW7BMb0');
+                        Session::put('sheet_id', $store->data()['SA1']['s_id']);
+                        Session::put('mc_api', $store->data()['mc_api']);
+                        // Session::put('sheet_id', '1ag225UN7QfaqV-cHbmJPmWssvwso7STmcPBYyW7BMb0');
 
                         $this->setGoogleSheetCredentials($store);
                    

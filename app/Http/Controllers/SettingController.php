@@ -13,9 +13,9 @@ class SettingController extends Controller
        
         $response =Http::withHeaders([
             'content-type'=> 'application/json',
-            'Authorization' => 'Bearer 1428315620615476:963d2a474e3b49a476d661037f226ffa',
+            'Authorization' => 'Bearer 112321970125960:0383f33062bf7e8750c9c8b592d4532a',
         ])->get('https://api.manychat.com/fb/page/getBotFields')->json();
-        // dd($response['data']);
+        // dd($response);
         $data=[];
         foreach ($response['data'] as $key => $value) {
             switch ($value['name']) {
@@ -54,7 +54,7 @@ class SettingController extends Controller
                     break;
             }
         }
-        // dd($data);
+      
         return view('Dashbord.setting.index',compact('data'));
     }
     public function update(Request $request)

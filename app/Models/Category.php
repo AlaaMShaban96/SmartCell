@@ -5,13 +5,14 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Session;
+use App\Http\Traits\ItemAndCategoryTrait;
 use Revolution\Google\Sheets\Facades\Sheets;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
 {
     use HasFactory;
-
+    use ItemAndCategoryTrait;
     static public function allCategory()
     {
 
@@ -47,45 +48,84 @@ class Category extends Model
         $id=$store_id.$year.$mont.$type.rand(1,50000);
         
         $data=[
-        'Under category id'=>(float)isset($request['titel'])?$request['titel']:"1",
-        'Product name'=>$request['name'],
-        'category or not'=>1,
-        'Product price'=>"",
-        'Describe it in 80 characters or less.'=>isset($request['detals'])?$request['detals']:"",
-        'Product Keyword'=>"",
-        'image url'=>$request['image'],
-        'show'=>(boolean)isset($request['show'])?'TRUE':'FALSE',
-        'Qyantity'=>'',
-        'id'=>(float )$id,
-        'Button name'=>$request['name'],
-        'details'=>isset($request['info'])?$request['info']:"",
+           
+            (boolean)isset($request['show'])?TRUE:FALSE,
+            (int)$id,
+            "",
+            $request['name'],
+            isset($request['keywords'])?$request['keywords']: "",
+            isset($request['subtitle'])?$request['subtitle']:"", //بتع 80 حر,
+            isset($request['image'])?$request['image']:"",
+            (float)$request['titel'],
+            'flow step',
+            $request['name'],
+            'SubCategories',
+            'set_field_value, set_field_value',
+            'cate1, order id',
+            '1||'.$id,            
+            isset($request['info'])?"flow step":"none",
+            isset($request['info'])?"تفاصيل أكثر":"",
+            isset($request['info'])?"details":"",
+            isset($request['info'])?"set_field_value, set_field_value, set_field_value":"",
+            isset($request['info'])?"details, cate1, order id":"",
+            isset($request['info'])?$request['info'].'||1||'.$id :"",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            isset($request['info'])?$request['info']:"",
+            (int)'1',
         ];
         
+
         $data = Sheets::spreadsheet(Session::get('sheet_id'))
-        ->sheet('Shop')->append([$data]);
-        
+        ->sheet('Shop Logic')->append([$data]);
         return true;
     }
     static public function updateCategory($request,$id)
     {
+        
         $ids = Sheets::spreadsheet(Session::get('sheet_id'))
-        ->sheet('Shop')->majorDimension('COLUMNS')->range('J:J')->all();
+        ->sheet('Shop Logic')->majorDimension('COLUMNS')->range('B:B')->all();
         // dd($ids[0]);
         foreach ($ids[0] as $key => $value) {
+            
             if ($value==$id) {
-                $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Shop')->range('A'.($key+1).':L'.($key+1))->majorDimension('ROWS')->all();
+                $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Shop Logic')->range('A'.($key+1).':AC'.($key+1))->majorDimension('ROWS')->all();
                 // dd($request->all());
-                $data[0][1]=$request['name'];
-                $data[0][0]=(float)$request['titel'];
+                $data[0][0]=(boolean)isset($request['show'])?TRUE:FALSE;
+                $data[0][2]="";
+                $data[0][3]=$request['name'];
+                $data[0][4]=isset($request['keywords'])?$request['keywords']: $data[0][4];
+                $data[0][5]=isset($request['subtitle'])?"السعر".$request['price'].','.$request['subtitle']:""; //بتع 80 حرف
                 $data[0][6]=isset($request['image'])?$data[0][6]:$request['image'];
-                $data[0][7]=(boolean)isset($request['show'])?'TRUE':'FALSE';
-                $data[0][10]=isset($request['info'])?$request['info']: $data[0][10];
-                Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Shop')->
+                $data[0][7]=(float)$request['titel'];
+                // $data[0][8]='flow step';
+                // $data[0][9]='شراء المنتج';
+                // $data[0][10]='SubCategories';
+                // $data[0][11]='set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value , set_field_value';
+                // $data[0][12]='set order, price, photo, set_quantity, quantity_text, cate1, order id';
+                
+                $data[0][14]=isset($request['info'])?"flow step":"none";
+                $data[0][15]=isset($request['info'])?"تفاصيل أكثر":"";
+                $data[0][16]=isset($request['info'])?"details":"";
+                $data[0][17]=isset($request['info'])?"set_field_value, set_field_value, set_field_value":"";
+                $data[0][18]=isset($request['info'])?"details, cate1, order id":"";
+                $data[0][19]=isset($request['info'])?$request['info'].'||1||'.$id :"";
+                $data[0][26]='';
+                $data[0][27]=isset($request['info'])?$request['info']:"";
+                $data[0][28]=(float)'1';
+                // dd( $data);
+                Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Shop Logic')->
                 range('A'.($key+1))->update([$data[0]]);
+
                 break;
             }
         }
-  
+            // dd('here');
        
        return true ;
 

@@ -59,13 +59,13 @@ class ItemController extends Controller
         }
         
         // dd($data);
-        // try {
+        try {
             Item::createItems( $data);
-        // } catch (\Throwable $th) {
-        //     Session::flash('message', $th.'فشلت عملية الاضافة'); 
-        //     Session::flash('alert-class', 'alert-danger'); 
-        //     return ;
-        // }
+        } catch (\Throwable $th) {
+            Session::flash('message', $th.'فشلت عملية الاضافة'); 
+            Session::flash('alert-class', 'alert-danger'); 
+            return ;
+        }
         Session::flash('message', 'تم اضافة المنتج  بنجاح'); 
         Session::flash('alert-class', 'alert-success'); 
         return redirect()->back();
@@ -83,13 +83,13 @@ class ItemController extends Controller
         }
         
 
-        try {
+        // try {
             Category::createCategory( $data);
-        } catch (\Throwable $th) {
-            Session::flash('message', $th.'فشلت عملية الاضافة'); 
-            Session::flash('alert-class', 'alert-danger'); 
-            return ;
-        }
+        // } catch (\Throwable $th) {
+        //     Session::flash('message', $th.'فشلت عملية الاضافة'); 
+        //     Session::flash('alert-class', 'alert-danger'); 
+        //     return ;
+        // }
         Session::flash('message', 'تم اضافة المنتج  بنجاح'); 
         Session::flash('alert-class', 'alert-success'); 
         return redirect()->back();
@@ -180,40 +180,15 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        // dd($id);
-        // try {
-            // $response =Http::post('https://sheets.googleapis.com/v4/spreadsheets/'.Session::get('sheet_id').':batchUpdate', 
-            //    )->json();
-        //     Session::flash('message', 'تم التعديل بنجاح'); 
-        //     Session::flash('alert-class', 'alert-success'); 
-
-        // } catch (\Throwable $th) {
-        //     Session::flash('message', 'فشلت عملية التعديل'); 
-        //     Session::flash('alert-class', 'alert-danger'); 
-        // }
-
-
             try {
-                $batchUpdateRequest = new \Google_Service_Sheets_BatchUpdateSpreadsheetRequest(array(
-                    'requests' => array(
-                      'deleteDimension' => array(
-                          'range' => array(
-                              'sheetId' => 1247890525, // the ID of the sheet/tab shown after 'gid=' in the URL
-                              'dimension' => "ROWS",
-                              'startIndex' => 10, // row number to delete
-                              'endIndex' => 11
-                          )
-                      )    
-                    )
-                ));
-                // dd('done',$batchUpdateRequest);
-                $result = Sheets::getService()->spreadsheets->batchUpdate(Session::get('sheet_id'), $batchUpdateRequest);
-                dd('done',$result);
-
+                Item::deleteItemOrCategory($id);
             } catch (\Throwable $th) {
-                dd($th);
+                
+                return view('errors.404');
             }
-        
+            Session::flash('message', 'تم الحدف بنجاح'); 
+            Session::flash('alert-class', 'alert-success'); 
+            return redirect()->back();  
     }
   
     private function compress(Request $request)
