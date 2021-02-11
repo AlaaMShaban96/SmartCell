@@ -81,7 +81,7 @@ class Category extends Model
         ];
         
 
-        $data = Sheets::spreadsheet(Session::get('sheet_id'))
+        Sheets::spreadsheet(Session::get('sheet_id'))
         ->sheet('Shop Logic')->append([$data]);
         return true;
     }

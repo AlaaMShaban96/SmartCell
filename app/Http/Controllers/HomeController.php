@@ -26,35 +26,6 @@ class HomeController extends Controller
 
 
     }
-
-    // public function __invoke(Request $request)
-    // {
-
-    //     $this->db = app('firebase.firestore')->database();
-    //     $snapshot = $this->db->collection('Stores')->document('1')->snapshot();
-
-    //     // dd($snapshot );
-        
-
-    //     /**
-    //      * Service Account demo.
-    //      */
-    //     $sheets = Sheets::spreadsheet('13yIzeYkaacCdcFICbPGWlf3jVH1-aoWeG-9rdr70FMA')
-    //                     ->sheet('Orders')
-    //                     ->get();
-    //     // dd( $sheets);
-    //     //$header = $sheets->pull(0);
-    //     $header = [
-    //         'name',
-    //         'message',
-    //         'created_at',
-    //     ];
-
-    //     $posts = Sheets::collection($header, $sheets);
-    //     $posts = $posts->reverse()->take(10);
-
-    //     return view('welcome')->with(compact('posts'));
-    // }
     public function index()
     {
         try {
@@ -86,6 +57,20 @@ class HomeController extends Controller
     {
         
         return redirect('/redirect');
+    }
+    public function logout()
+    {
+        
+        Session::forget('name');
+        Session::forget('role');
+        Session::forget('email');
+        Session::forget('store_id');
+        Session::forget('store_name');
+        Session::forget('store_users');
+        Session::forget('sheet_id');
+        Session::forget('mc_api');
+        return redirect('/login');
+
     }
     public function handleProviderCallback(Request $request)
     {

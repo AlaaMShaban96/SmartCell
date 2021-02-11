@@ -39,7 +39,7 @@
                         <a href="{{url('/setting')}}"> <i class="menu-icon fa fa-cog"></i>الإعدادات</a>
                     </li>
                     <li>
-                        <a href="{{url('/')}}"> <i class="menu-icon fa fa-sign-out"></i>تسجيل الخروج</a>
+                        <a href="{{url('/logout')}}"> <i class="menu-icon fa fa-sign-out"></i>تسجيل الخروج</a>
                     </li>
                  
                 </ul>
@@ -58,7 +58,7 @@
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>
             </div>
-            <div class="top-right">
+            {{-- <div class="top-right">
                 <div class="header-menu">
                     <div class="header-left">
                         <button id="myBtn" class="fa fa-plus mt-3" style="border: none; background-color: white;color: #10858b;"></button>
@@ -99,9 +99,9 @@
                           
                         </div>
                     </div>
-            <div class="form-inline">
-            </div>
-            </div>
+                <div class="form-inline">
+                </div>
+            </div> --}}
         </header>
         <!-- /#header -->
         @yield('content')

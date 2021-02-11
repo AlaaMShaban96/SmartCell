@@ -82,8 +82,8 @@ class Order extends Model
                 $now  = Carbon::now();
         
                 $diff = $date->diffInDays($now);
-                
-                if ($value[40]=='2020-09-29T11:00:58+02:00') {
+                // dd($diff,'2020-09-29T11:00:58+02:00');
+                if ($diff==0) {
                     array_push($data,$value);
                 }
             }

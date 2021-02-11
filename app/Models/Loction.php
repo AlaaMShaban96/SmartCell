@@ -15,19 +15,100 @@ class Loction extends Model
     
     static public function getLoctions()
     {
-        return Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Manage Cities')->range('')->majorDimension('')->get();    
+        return Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Cities info Logic')->range('')->majorDimension('')->get();    
        
     }
     static public function updateLoctions(Request $request)
     {
-        $loaction = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Manage Cities')->range('A'.($request->id).':AV'.($request->id))->majorDimension('ROWS')->all();
-    //    $loaction=$loaction[0]->toArray();
-    //    dd($loaction);
-        $loaction[0][2]=(boolean)$request->show=='on'?'TRUE':'FALSE';
+        $loaction = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Cities info Logic')->range('A'.($request->id).':Z'.($request->id))->majorDimension('ROWS')->all();
+        $loaction[0][2]=(boolean)$request->show=='on'?TRUE:FALSE;
         $loaction[0][3]=(FLOAT)$request->price;
+        $loaction[0][5]=(FLOAT)$loaction[0][5];
         Sheets::spreadsheet(Session::get('sheet_id'))
             ->sheet('Manage Cities')
             ->range('A'.$request->id)
             ->update([$loaction[0]]);
+    }
+    static public function after($thisx, $inthat)
+    {
+        if (!is_bool(strpos($inthat, $thisx)))
+        return substr($inthat, strpos($inthat,$thisx)+strlen($thisx));
+    }
+    static public function before($thisx, $inthat)
+    {
+        return substr($inthat, 0, strpos($inthat, $thisx));    
+    }
+    static public function createLoctions($request)
+    {
+        self::createed($request,'Cities info Logic', $request['name']);
+        dd($request);
+
+        // Sheets::spreadsheet(Session::get('sheet_id'))
+        //     ->sheet('Manage Cities')
+        //     ->range('A'.$request->id)
+        //     ->update([$loaction[0]]);
+    }
+           
+    static public function createed($request, $sheetName,$titelName)
+    {
+        $titelID=self::before('#', $request['titel']);
+    //    dd($titelID);
+        // dd(self::before('#', $request['titel']));
+        $ids = Sheets::spreadsheet(Session::get('sheet_id'))
+        ->sheet($sheetName)
+        ->majorDimension('COLUMNS')
+        ->range('Z:Z')
+        ->all();
+            
+        $data=[
+            (boolean) $request['show']=='on'?TRUE:FALSE,
+            $titelName,
+            (FLOAT)$request['price'],
+            ("السعر".$request['price']."دينار "),
+            $request['image'],
+            '',
+            'flow step',
+            $sheetName=='Cities info Logic'?('تصفح العروض😎'):'اختيار',
+            'SubCities',
+            $sheetName=='Cities info Logic'?('set_field_value'):'set_field_value, set_field_value, set_field_value',
+            $sheetName=='Cities info Logic'?'order id':'Delivery price, Get City, order id',
+            $sheetName=='Cities info Logic'?(FLOAT)(count($ids[0])+1):$request['price'].'||'.$titelName.'||'. (count($ids[0])+1),
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            (FLOAT)$titelID,
+            (FLOAT)(count($ids[0])+1),
+        ];
+        // dd($data,$request);
+        Sheets::spreadsheet(Session::get('sheet_id'))
+        ->sheet($sheetName)->append([$data]);
+        if ($request['type']==1) {
+
+            $loaction = Sheets::spreadsheet(Session::get('sheet_id'))->sheet($sheetName)->range('A'.($titelID).':Z'.($titelID))->majorDimension('ROWS')->all();
+            $loaction[0][3]='اضغظ '. $loaction[0][1].' لرؤية المناطق';
+            $loaction[0][2]="";
+            $loaction[0][7]=$loaction[0][1];
+            $loaction[0][11]=$loaction[0][11];
+            $loaction[0][24]=(FLOAT)$loaction[0][24];
+            $loaction[0][25]=(FLOAT)$loaction[0][25];
+            Sheets::spreadsheet(Session::get('sheet_id'))
+                ->sheet($sheetName)
+                ->range('A'.$titelID)
+                ->update([$loaction[0]]);
+        }
+        if ($sheetName=='Cities info Logic') {
+            self::createed($request,'Cities Logic', $request['name'].','.self::after('#', $request['titel']));
+        }
+
+  
     }
 }
