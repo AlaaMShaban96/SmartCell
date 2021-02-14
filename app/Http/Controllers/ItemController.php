@@ -195,14 +195,11 @@ class ItemController extends Controller
     {
         $photo =  $request->file('image');
         $img = Image::make($photo->getRealPath())->resize(466, 466)->save('storage/x.jpg');
-        $file = base64_encode(file_get_contents(public_path('storage/x.jpg')));
-        $client = new Client(['base_uri' => 'https://api.imgbb.com']);
-        $response = $client->request('POST', '/1/upload', ['form_params' => [
-            'key' => '10d7821a327b25dfa51b8fd036a64cac',
-            'image' => $file,
-            'name' => Session::get('store_name').Carbon::now()->toDateTimeString(),
-        ]]);
-        $data=json_decode($response->getBody());
-        return $data->data->url;
-    }  
+        $s3 = Storage::disk('s3');
+        $filePath = 'images/' .Session::get('store_name').(string) Str::uuid();
+        $s3->put($filePath, file_get_contents(public_path('storage/x.jpg')), 'public');
+        $path='https://smartcellimage.s3.af-south-1.amazonaws.com/'.$filePath;
+        return $path;
+
+    } 
 }

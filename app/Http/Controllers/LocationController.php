@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
 use App\Models\Loction;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 
 class LocationController extends Controller
@@ -24,11 +26,17 @@ class LocationController extends Controller
     }
     public function update(Request $request)
     {
+        // dd('uodate',$request);
         try {
-            Loction::updateLoctions($request);
+            $data=$request->all();
+            $data['image']="";
+            if ($request->has('image')) {
+                $data['image']=$this->compress($request);
+            }
+            Loction::updateLoctions($data);
 
         } catch (\Throwable $th) {
-            Session::flash('message', $th.'فشلت عملية التعديل'); 
+            Session::flash('message', 'فشلت عملية التعديل'); 
             Session::flash('alert-class', 'alert-danger'); 
             return $th ;
         }
@@ -38,19 +46,20 @@ class LocationController extends Controller
     }
     public function store(Request $request)
     {
-        // try {
+        try {
             $data=$request->all();
             $data['image']="";
             if ($request->has('image')) {
                 $data['image']=$this->compress($request);
             }
+            // dd($data['image']);
             Loction::createLoctions($data);
 
-        // } catch (\Throwable $th) {
-        //     Session::flash('message', $th.'فشلت عملية الاضافة'); 
-        //     Session::flash('alert-class', 'alert-danger'); 
-        //     return redirect()->back() ;
-        // }
+        } catch (\Throwable $th) {
+            Session::flash('message', ' فشلت عملية الاضافة '); 
+            Session::flash('alert-class', 'alert-danger'); 
+            return redirect()->back() ;
+        }
         Session::flash('message', 'تم إضافة المدينة  بنجاح'); 
         Session::flash('alert-class', 'alert-success'); 
         return redirect()->back();
@@ -60,14 +69,11 @@ class LocationController extends Controller
     {
         $photo =  $request->file('image');
         $img = Image::make($photo->getRealPath())->resize(466, 466)->save('storage/x.jpg');
-        $file = base64_encode(file_get_contents(public_path('storage/x.jpg')));
-        $client = new Client(['base_uri' => 'https://api.imgbb.com']);
-        $response = $client->request('POST', '/1/upload', ['form_params' => [
-            'key' => '10d7821a327b25dfa51b8fd036a64cac',
-            'image' => $file,
-            'name' => Session::get('store_name').Carbon::now()->toDateTimeString(),
-        ]]);
-        $data=json_decode($response->getBody());
-        return $data->data->url;
+        $s3 = Storage::disk('s3');
+        $filePath = 'images/' .Session::get('store_name').(string) Str::uuid();
+        $s3->put($filePath, file_get_contents(public_path('storage/x.jpg')), 'public');
+        $path='https://smartcellimage.s3.af-south-1.amazonaws.com/'.$filePath;
+        return $path;
+
     } 
 }

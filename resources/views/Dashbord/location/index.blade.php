@@ -215,9 +215,6 @@
       </div>
     @endforeach
   @endif
-    
-
-
   <div class="content">
     <div class="col-3 na-v mt-4  d-flex justify-content-center" style="text-align:center; ">
 
@@ -290,8 +287,9 @@
       <div class="modal-content">
         <span class="closeEditLocationModel">&times;</span>
         <div class="row" style="padding-left: 10%;">
-            <form  action="{{url('/setLocation')}}" dir="rtl"  method="POST" enctype="multipart/form-data">
+            <form id="locationForm"  action="{{url('/setLocation')}}" dir="rtl"  method="POST" enctype="multipart/form-data">
               @csrf
+              <input type="hidden" name="id" id="locationId">
                 <div class="form-row" dir="rtl">
                   <div class="form-group col-md-3 text-center">
                     <label for="#" style="display: flex;">تحديد نوع البيانات</label>
@@ -475,37 +473,63 @@
     });
   }
   function EditsubLocatin(id) {
+    var hostName = window.location.origin;
+
+    var subTitelDiv=document.getElementById('subTitelLocation');
 
     var location= [];
-    loctions.forEach(element => {
-      if (element[5]==id) {
-        location=element;
+    
+    location= loctions[id-1];
+    if (location[2]=="") {
+      document.getElementById('subTitel2').checked=true;
+      // document.getElementById('subTitelLocation').value="'"+loctions[Math.floor(location[24])-1][1]+'#'+Math.floor(location[24])+"'";
+      onchangeCitiecs();
+    }else{
+    
+      document.getElementById('subTitel1').checked=true;
+      var titel=loctions[Math.floor(location[24])-1];
+      
+      var subtitel=Math.floor(location[24])+'#'+titel[1];
+      
+      if (subtitel.search("المدن")==-1) {
+        var superTitel=Math.floor(titel[24])+'#'+loctions[Math.floor(titel[24])-1][1];
+       
+        document.getElementById('titelLocation').value=superTitel;
+        onchangeCitiecs();
+        document.getElementById('subTitelLocation').value=subtitel;
         
+      }else{        
+        document.getElementById('titelLocation').value=subtitel;
+        onchangeCitiecs();
+        document.getElementById('subTitelLocation').value= location[11]+'#'+location[1];
       }
-    });
-    console.log('here',location);
-    document.getElementById('nameLocation').value=location[0];
-    document.getElementById('priceLocation').value=location[3];
-    document.getElementById('showLocation').checked= location[2]=='TRUE'?true:false;
-    console.log('here toooooo');
+      
+   
+    }
+    document.getElementById('locationForm').action=hostName+'/location';
+    document.getElementById('locationId').value=location[25];
+    document.getElementById('nameLocation').value=location[1];
+    document.getElementById('priceLocation').value=location[2];
+    document.getElementById('showLocation').checked= location[0]=='TRUE'?true:false;
+    console.log();
 
     showEditLocationModel();
   } 
   function clear() {
-    console.log('clear input 22222');
+    var hostName = window.location.origin;
+    document.getElementById('locationForm').action=hostName+'/setLocation';
     document.getElementById('nameLocation').value="";
     document.getElementById('priceLocation').value="";
     document.getElementById('titelLocation').value="0";
     document.getElementById('showLocation').value="";
     // document.getElementById('priceLocation').value="";
     document.getElementById('showLocation').checked= false;
+    // document.getElementById('subTitelLocation').innerHTML="";
   }
   function onchangeCitiecs() {
-    console.log('onchangeCitiecs');
     var subTitelDiv=document.getElementById('subTitelLocation');
     subTitelDiv.innerHTML="";
     var titelLocation=document.getElementById('titelLocation').value;
-    console.log(titelLocation.substring(0, titelLocation.indexOf('#')));
     if (document.getElementById('subTitel1').checked) {
           loctions.forEach(element => {
           if (Math.floor(element[24])==titelLocation.substring(0, titelLocation.indexOf('#'))) {
