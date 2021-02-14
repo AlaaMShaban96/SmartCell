@@ -62,7 +62,7 @@ class ItemController extends Controller
         try {
             Item::createItems( $data);
         } catch (\Throwable $th) {
-            Session::flash('message', $th.'فشلت عملية الاضافة'); 
+            Session::flash('message', 'فشلت عملية الاضافة'); 
             Session::flash('alert-class', 'alert-danger'); 
             return ;
         }
@@ -83,13 +83,13 @@ class ItemController extends Controller
         }
         
 
-        // try {
+        try {
             Category::createCategory( $data);
-        // } catch (\Throwable $th) {
-        //     Session::flash('message', $th.'فشلت عملية الاضافة'); 
-        //     Session::flash('alert-class', 'alert-danger'); 
-        //     return ;
-        // }
+        } catch (\Throwable $th) {
+            Session::flash('message', 'فشلت عملية الاضافة'); 
+            Session::flash('alert-class', 'alert-danger'); 
+            return ;
+        }
         Session::flash('message', 'تم اضافة المنتج  بنجاح'); 
         Session::flash('alert-class', 'alert-success'); 
         return redirect()->back();
@@ -110,7 +110,7 @@ class ItemController extends Controller
         try {
             Category::updateCategory( $data,$id);
         } catch (\Throwable $th) {
-            Session::flash('message', $th.'فشلت عملية التعديل'); 
+            Session::flash('message', 'فشلت عملية التعديل'); 
             Session::flash('alert-class', 'alert-danger'); 
             dd($th) ;
         }
@@ -162,7 +162,7 @@ class ItemController extends Controller
         try {
             Item::itemUpdate($id,$data);
         } catch (\Throwable $th) {
-            Session::flash('message', $th.'فشلت عملية التعديل'); 
+            Session::flash('message', 'فشلت عملية التعديل'); 
             Session::flash('alert-class', 'alert-danger'); 
             return $th;
         }
@@ -181,7 +181,7 @@ class ItemController extends Controller
     public function destroy($id)
     {
             try {
-                Item::deleteItemOrCategory($id);
+                Item::deleteItemOrCategoryOrLocation($id,'Shop Logic','1247890525');
             } catch (\Throwable $th) {
                 
                 return view('errors.404');

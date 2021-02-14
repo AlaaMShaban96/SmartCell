@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Http\Request;
+use App\Http\Traits\ItemAndCategoryTrait;
 use Revolution\Google\Sheets\Facades\Sheets;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 
 class Loction extends Model
 {
     use HasFactory;
+    use ItemAndCategoryTrait;
+
     
     static public function getLoctions()
     {
@@ -45,7 +48,7 @@ class Loction extends Model
         self::createed($request,'Cities info Logic', $request['name']);
         // dd($request);
     }
-           
+       
     static public function createed($request, $sheetName,$titelName)
     {
         $titelID=self::before('#', $request['titel']);

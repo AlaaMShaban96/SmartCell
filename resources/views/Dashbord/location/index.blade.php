@@ -345,7 +345,12 @@
       </div>
   </div>
 
+  <form style="display: none" id="deleteLocationForm" action="" method="post">
+    @method('delete')
+    @csrf
+    {{-- <button  type="submit"></button> --}}
 
+  </form>
 
 @endsection
 
@@ -424,7 +429,7 @@
   }
 
   function showLocation(element) {
-    return "<div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[4]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[1]+" </p><div class='row'><div class='col-6'><button class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button></div><div class='col-6'><button  onclick='EditsubLocatin("+element[11]+")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button></div></div></div></div>"; 
+    return "<div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[4]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[1]+" </p><div class='row'><div class='col-6'><button onclick='deleteItem("+element[25]+")' class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button></div><div class='col-6'><button  onclick='EditsubLocatin("+element[11]+")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button></div></div></div></div>"; 
     
   }
 
@@ -545,6 +550,11 @@
 
       document.getElementById('subTitelLocation').disabled = true;
     }
+  }
+  function deleteItem(id) {
+    var hostName = window.location.origin;
+    document.getElementById('deleteLocationForm').action=hostName+'/location/'+id;
+    document.getElementById('deleteLocationForm').submit();
   }
  
   

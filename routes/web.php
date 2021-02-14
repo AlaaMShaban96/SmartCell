@@ -49,6 +49,8 @@ Route::group(['middleware' => ['isLogin']], function () {
     Route::get('/location', [LocationController::class,'index']);
     Route::post('/location', [LocationController::class,'update']);
     Route::post('/setLocation', [LocationController::class,'store']);
+    Route::delete('/location/{id}', [LocationController::class,'destroy']);
+
 
     Route::get('/setting', [SettingController::class,'index']);
     Route::post('/setting', [SettingController::class,'update']);

@@ -64,7 +64,21 @@ class LocationController extends Controller
         Session::flash('alert-class', 'alert-success'); 
         return redirect()->back();
     }
-
+    public function destroy($id)
+    {
+        // dd($id);
+            try {
+                Loction::deleteItemOrCategoryOrLocation($id,'Cities Logic','1256008603');
+                Loction::deleteItemOrCategoryOrLocation($id,'Cities info Logic','2058078174');
+            } catch (\Throwable $th) {
+                Session::flash('message', ' فشلت عملية الحدف '); 
+                Session::flash('alert-class', 'alert-danger'); 
+                // return view('errors.404');
+            }
+            Session::flash('message', 'تم الحدف بنجاح'); 
+            Session::flash('alert-class', 'alert-success'); 
+            return redirect()->back();  
+    }
     private function compress(Request $request)
     {
         $photo =  $request->file('image');
