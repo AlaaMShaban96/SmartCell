@@ -66,7 +66,6 @@ class LocationController extends Controller
     }
     public function destroy($id)
     {
-        // dd($id);
             try {
                 Loction::deleteItemOrCategoryOrLocation($id,'Cities Logic','1256008603');
                 Loction::deleteItemOrCategoryOrLocation($id,'Cities info Logic','2058078174');
