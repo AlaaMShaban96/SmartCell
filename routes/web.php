@@ -21,39 +21,39 @@ use App\Http\Controllers\LocationController;
 Route::group(['middleware' => ['isLogin']], function () {
     
 
-    Route::get('/', [HomeController::class,'index']);
+    Route::get('/', [HomeController::class,'index'])->name('index');
 
     Route::get('/pdf/{id}', [OrderController::class,'printPDF']);
 
-    Route::get('/order', [OrderController::class,'index']);
-    Route::get('/order/{id}', [OrderController::class,'show']);
-    Route::get('/order/{id}/edit', [OrderController::class,'edit']);
-    Route::put('/order/{id}', [OrderController::class,'update']);
-    Route::get('/order/{status}/{id}', [OrderController::class,'chengeStatusItem']);
-    Route::post('/order/send-to-user/{id}', [OrderController::class,'sendToUser']);
+    Route::get('/order', [OrderController::class,'index'])->name('order');
+    Route::get('/order/{id}', [OrderController::class,'show'])->name('order');
+    Route::get('/order/{id}/edit', [OrderController::class,'edit'])->name('order');
+    Route::put('/order/{id}', [OrderController::class,'update'])->name('order');
+    Route::get('/order/{status}/{id}', [OrderController::class,'chengeStatusItem'])->name('order');
+    Route::post('/order/send-to-user/{id}', [OrderController::class,'sendToUser'])->name('order');
     
-    Route::get('/item', [ItemController::class,'index']);
-    Route::get('/item/{id}', [ItemController::class,'show']);
-    Route::get('/item/{id}/edit', [ItemController::class,'edit']);
-    Route::post('/item', [ItemController::class,'store']);
-    Route::post('/category', [ItemController::class,'storeCategory']);
-    Route::post('/category/{id}', [ItemController::class,'updateCategory']);
-    Route::post('/item/{id}', [ItemController::class,'update']);
-    Route::delete('/item/{id}', [ItemController::class,'destroy']);
+    Route::get('/item', [ItemController::class,'index'])->name('item');
+    Route::get('/item/{id}', [ItemController::class,'show'])->name('item');
+    Route::get('/item/{id}/edit', [ItemController::class,'edit'])->name('item');
+    Route::post('/item', [ItemController::class,'store'])->name('item');
+    Route::post('/category', [ItemController::class,'storeCategory'])->name('item');
+    Route::post('/category/{id}', [ItemController::class,'updateCategory'])->name('item');
+    Route::post('/item/{id}', [ItemController::class,'update'])->name('item');
+    Route::delete('/item/{id}', [ItemController::class,'destroy'])->name('item');
+// 
+    Route::get('/team', [TeamController::class,'index'])->name('team');
+    Route::post('/team', [TeamController::class,'store'])->name('team');
+    Route::post('/team/{email}', [TeamController::class,'update'])->name('team');
+    Route::delete('/team/{email}', [TeamController::class,'destroy'])->name('team');
 
-    Route::get('/team', [TeamController::class,'index']);
-    Route::post('/team', [TeamController::class,'store']);
-    Route::post('/team/{email}', [TeamController::class,'update']);
-    Route::delete('/team/{email}', [TeamController::class,'destroy']);
-
-    Route::get('/location', [LocationController::class,'index']);
-    Route::post('/location', [LocationController::class,'update']);
-    Route::post('/setLocation', [LocationController::class,'store']);
-    Route::delete('/location/{id}', [LocationController::class,'destroy']);
+    Route::get('/location', [LocationController::class,'index'])->name('location');
+    Route::post('/location', [LocationController::class,'update'])->name('location');
+    Route::post('/setLocation', [LocationController::class,'store'])->name('location');
+    Route::delete('/location/{id}', [LocationController::class,'destroy'])->name('location');
 
 
-    Route::get('/setting', [SettingController::class,'index']);
-    Route::post('/setting', [SettingController::class,'update']);
+    Route::get('/setting', [SettingController::class,'index'])->name('setting');
+    Route::post('/setting', [SettingController::class,'update'])->name('setting');
     Route::get('/logout', [HomeController::class,'logout']);
 
 });

@@ -6,13 +6,14 @@ use Carbon\Carbon;
 use App\Models\Item;
 use GuzzleHttp\Client;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Intervention\Image\Facades\Image;
 use App\Http\Requests\CategoryRequest;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\ItemUpdateRequest;
-use Illuminate\Support\Facades\Http;
 use Revolution\Google\Sheets\Facades\Sheets;
 
 
@@ -194,7 +195,7 @@ class ItemController extends Controller
     private function compress(Request $request)
     {
         $photo =  $request->file('image');
-        $img = Image::make($photo->getRealPath())->resize(466, 466)->save('storage/x.jpg');
+        $img = Image::make($photo->getRealPath())->resize(466, 466)->save('storage/'.Session::get('store_name').(string) Str::uuid().'.png');
         $s3 = Storage::disk('s3');
         $filePath = 'images/' .Session::get('store_name').(string) Str::uuid();
         $s3->put($filePath, file_get_contents(public_path('storage/x.jpg')), 'public');

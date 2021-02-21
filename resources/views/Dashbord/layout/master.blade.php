@@ -20,22 +20,22 @@
         <nav class="navbar navbar-expand-sm navbar-default">
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active">
+                    <li class="{{ (\Request::route()->getName() == 'index') ? 'active' : '' }}">
                         <a href="{{url('/')}}"><i class="menu-icon fa fa-laptop"></i>الرئيسية</a>
                     </li>
-                    <li>
+                    <li class="{{ (\Request::route()->getName() == 'order') ? 'active' : '' }}">
                         <a href="{{url('/order')}}"> <i class="menu-icon fa fa-book"></i>الطلبيات</a>
                     </li>
-                    <li>
+                    <li class="{{ (\Request::route()->getName() == 'item') ? 'active' : '' }}">
                         <a href="{{url('/item')}}"> <i class="menu-icon fa fa-qrcode"></i>المنتجات</a>
                     </li>
-                    <li>
+                    <li class="{{ (\Request::route()->getName() == 'location') ? 'active' : '' }}">
                         <a href="{{url('/location')}}"> <i class="menu-icon fa fa-map-marker"></i>الأماكن</a>
                     </li>
-                    <li>
+                    <li class="{{ (\Request::route()->getName() == 'team') ? 'active' : '' }}">
                         <a href="{{url('/team')}}"> <i class="menu-icon fa fa-users"></i>الموظفين</a>
                     </li>
-                    <li>
+                    <li class="{{ (\Request::route()->getName() == 'setting') ? 'active' : '' }}">
                         <a href="{{url('/setting')}}"> <i class="menu-icon fa fa-cog"></i>الإعدادات</a>
                     </li>
                     <li>
