@@ -115,13 +115,14 @@
                     <div class="col-sm-6">
                         Copyright &copy; SmarCell
                     </div>
-
+    
                 </div>
             </div>
         </footer>
-        <!-- /.site-footer -->
-            </div>
-    <!-- /#right-panel -->
+      
+    </div>
+  
+
     @include('Dashbord.layout.include.script')
     @yield('script')
 

@@ -96,16 +96,16 @@
         <div class="card">
             <form action="{{url('/setting')}}" method="post">
               @csrf
-              <input type="hidden" name="welcomeId" value="{{$data['welcome']['name']}}">
-              {{-- <input type="hidden" name="infoId" value="{{$data['info']['name']}}"> --}}
-              <input type="hidden" name="mapId" value="{{$data['map']['name']}}">
-              <input type="hidden" name="locationId" value="{{$data['location']['name']}}">
+              <input type="hidden" name="welcomeId" value="{{$data['welcome']['id']}}">
+              <input type="hidden" name="infoId" value="{{$data['info']['id']}}">
+              <input type="hidden" name="mapId" value="{{$data['map']['id']}}">
+              <input type="hidden" name="locationId" value="{{$data['location']['id']}}">
 
-              <input type="hidden" name="Auto_moveId" value="{{$data['Auto_move']['name']}}">
-              <input type="hidden" name="SystemId" value="{{$data['System']['name']}}">
-              <input type="hidden" name="DeliveryId" value="{{$data['delivery']['name']}}">
-              {{-- <input type="hidden" name="placeId" value="{{$data['place']['name']}}"> --}}
-              <input type="hidden" name="welcomeName" value="{{$data['welcome']['name']}}">
+              <input type="hidden" name="Auto_moveId" value="{{$data['Auto_move']['id']}}">
+              <input type="hidden" name="SystemId" value="{{$data['System']['id']}}">
+              <input type="hidden" name="DeliveryId" value="{{$data['delivery']['id']}}">
+              <input type="hidden" name="placeId" value="{{$data['place']['id']}}">
+              <input type="hidden" name="welcomeName" value="{{$data['welcome']['id']}}">
               
               
                
@@ -127,7 +127,7 @@
                         <td>رسالة الترحيبيه الخاصه بك في الرد التلقائي ، يجب وضع الرساله الترحيبيه و تعريف بالمتجر الخاص بك فيها</td>
 
                       </tr>
-                      {{-- <tr>
+                      <tr>
                         <td> ‫بيانات‬ ‫التوصيل‬ </td>
                         <td>
                           <textarea placeholder ="الرجاء الانتظار ، رقم الهاتف 09XXXXXXXX" name="infoValue" id="" value="" cols="30" rows="3">{{$data['info']['value']!="No"?$data['info']['value']:""}}</textarea>
@@ -135,7 +135,7 @@
                         </td>
                         <td>‫هادي الرساله تضهر عندما يقوم المستخدم بضغط على زر "التواصل معانا" و انتظار الرد البشري ‬</td>
 
-                      </tr> --}}
+                      </tr>
                       <tr>
                         <td>  ‫تفاصيل‬ ‫عن‬ ‫مكان‬ ‫الموقع‬    </td>
                         <td>
@@ -191,7 +191,8 @@
                         </td>
                         <td >‫ يتم وضع فيها احداثيات Google Maps  للمتجر/للشركة الخاصه بك ، حتى يضهر للزبائن الخاصيآ  بك‬</td>
                       </tr>
-                      {{-- <tr>
+                      
+                      <tr>
                         <td>  ‫ ‫استلام ‬شخصي‬  </td>
                         <td>
                           <label class="form-switch">
@@ -199,7 +200,7 @@
                           </label>
                         </td>
                         <td >يتم وضع في هادي الرساله توضيح اكتر عن مكان المتجر / الشركة الخاصه بك‬</td>
-                      </tr> --}}
+                      </tr>
                      
                     </tbody>
                 </table>

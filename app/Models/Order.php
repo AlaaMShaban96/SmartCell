@@ -123,6 +123,7 @@ class Order extends Model
         $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('A'.$id.':AV'.$id)->majorDimension('ROWS')->all();
         $data[0][39]=trim($name, '"');
         $data[0][44]=trim($email, '"');
+        $data[0][42]='قيد التوصيل';
         Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->
         range('A'.$id)->update([$data[0]]);
        return true ;

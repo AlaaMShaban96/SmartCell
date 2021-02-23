@@ -23,7 +23,7 @@
 
 
 
-            @foreach ($orderState as $order)
+            {{-- @foreach ($orderState as $order)
                 <div class="col-lg-3 col-md-6">
                     <div class="card">
                         <div class="card-body">
@@ -41,7 +41,14 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @endforeach --}}
+            <div class="col-lg-12 col-md-12">
+                <h1 class='text-center'> {{Session::get('store_name')}} مرحبا بك في متجر  </h1>
+
+            </div>
+            <div class="col-lg-12 col-md-12">
+                <img class='img-fluaid' src='{{Session::get('logo')}}' style='width:22vh;margin-left: 43%;margin-top: 2%;margin-bottom: 1%;border-radius: 89px;'></img>
+            </div>
     
         </div>
         <!-- /Widgets -->

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Http;
 use Intervention\Image\Facades\Image;
 use App\Http\Requests\CategoryRequest;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ItemUpdateRequest;
 use Revolution\Google\Sheets\Facades\Sheets;
 
@@ -195,10 +196,11 @@ class ItemController extends Controller
     private function compress(Request $request)
     {
         $photo =  $request->file('image');
-        $img = Image::make($photo->getRealPath())->resize(466, 466)->save('storage/'.Session::get('store_name').(string) Str::uuid().'.png');
+        $nameFile=Session::get('store_name').(string) Str::uuid().'.png';
+        $img = Image::make($photo->getRealPath())->resize(466, 466)->save('storage/'.$nameFile);
         $s3 = Storage::disk('s3');
         $filePath = 'images/' .Session::get('store_name').(string) Str::uuid();
-        $s3->put($filePath, file_get_contents(public_path('storage/x.jpg')), 'public');
+        $s3->put($filePath, file_get_contents(public_path('storage/'. $nameFile)), 'public');
         $path='https://smartcellimage.s3.af-south-1.amazonaws.com/'.$filePath;
         return $path;
 

@@ -33,7 +33,7 @@ class SettingController extends Controller
                 case 'Auto_move':
                     $data['Auto_move']=$value;
                     break;
-                case 'info':
+                case 'Info':
                     $data['info']=$value;
                     break;
                 case 'map':
@@ -48,7 +48,7 @@ class SettingController extends Controller
                 case 'delivery':
                     $data['delivery']=$value;
                     break;
-                case 'place':
+                case 'Place':
                     $data['place']=$value;
                     break;
             }
@@ -68,45 +68,45 @@ class SettingController extends Controller
             [
                 'fields'=>  [
                                 [
-                                    'field_name' =>$request->welcomeId,
+                                    'field_id' =>$request->welcomeId,
                                     'field_value' => (string) isset($request->welcomeValue)?$request->welcomeValue :"No" ,
                     
                                     ],
-                                // [
-                                //     'field_name' =>$request->infoId,
-                                //     'field_value' => (string)isset($request->infoValue)?$request->infoValue:"No" ,
-                    
-                                //     ],
                                 [
-                                    'field_name' =>$request->mapId,
+                                    'field_id' =>$request->infoId,
+                                    'field_value' => (string)isset($request->infoValue)?$request->infoValue:"No" ,
+                    
+                                    ],
+                                [
+                                    'field_id' =>$request->mapId,
                                     'field_value' =>(string) isset($request->mapValue)?$request->mapValue:"No" ,
                     
                                     ],
                                 [
-                                    'field_name' =>$request->locationId,
+                                    'field_id' =>$request->locationId,
                                     'field_value' => (string)isset($request->locationValue)?$request->locationValue:"No" ,
                     
                                 ],
                                 [
-                                    'field_name' =>$request->Auto_moveId,
+                                    'field_id' =>$request->Auto_moveId,
                                     'field_value' => (string)isset($request->Auto_moveValue)?"Yes":"No",
                     
                                 ],
                                 [
-                                    'field_name' =>$request->SystemId,
+                                    'field_id' =>$request->SystemId,
                                     'field_value' => (string)isset($request->SystemValue)?"Yes":"No",
                     
                                 ],
                                 [
-                                    'field_name' =>$request->DeliveryId,
+                                    'field_id' =>$request->DeliveryId,
                                     'field_value' => (string)isset($request->DeliveryValue)?"Yes":"No" ,
                     
                                 ],
-                                // [
-                                //     'field_name' =>$request->placeId,
-                                //     'field_value' => (string)isset($request->placeValue)?"Yes":"No",
+                                [
+                                    'field_id' =>$request->placeId,
+                                    'field_value' => (string)isset($request->placeValue)?"Yes":"No",
                     
-                                // ],
+                                ],
                                 
                             ]       
             ])->json();

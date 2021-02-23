@@ -27,6 +27,11 @@
 				</div>
 				<form action="{{url('/login')}}" method="post">
 					@csrf
+					@if (Session::has('message'))
+						<div class="alert alert-danger" role="alert">
+							{{ Session::get('message') }}
+						</div>
+				 	@endif
 							<button type="submit" class="btn btn-primary" style=" background-color:#1dc5ca;color: white; border-radius: 26px; width: 57%;margin-left: 24%;font-size: 20px;"><i class="fa fa-google mr-3 fa-lg">  </i>تسجيل الدخول</button>
 
 				</form>
@@ -34,11 +39,7 @@
 				{{-- <div class="row"> --}}
 					<p style="  text-align: center;margin-top: 37%;font-size: 20px;">ليس لديك حساب ؟ <a href="#" style="color:#10858b ;font-size: 20px;">تواصل معنا</a></p>
 				{{-- </div> --}}
-				@if (Session::has('message'))
-				<div class="alert alert-danger" role="alert">
-					{{ Session::get('message') }}
-				  </div>
-				 @endif
+				
 			</div>
 			
 		</div>

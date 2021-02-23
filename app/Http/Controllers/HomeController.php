@@ -66,6 +66,7 @@ class HomeController extends Controller
         Session::forget('email');
         Session::forget('store_id');
         Session::forget('store_name');
+        Session::forget('logo');
         Session::forget('store_users');
         Session::forget('sheet_id');
         Session::forget('mc_api');
@@ -85,7 +86,7 @@ class HomeController extends Controller
 
             //   return view('Dashbord.index');
             }else {
-                Session::flash('message', "This Email is Not Found ");
+                Session::flash('message', "البريد غير موجود او لاتملك صلاحية الدخول");
                 return view('login');
                 
             }
@@ -107,6 +108,7 @@ class HomeController extends Controller
                 $store=$this->db->collection('Stores')->document($snapshot->data()['store_id'])->snapshot();
                
                 if ($store->exists()) {
+                    if ($snapshot->data()['role']=='admin') {
                         Session::put('name', $snapshot->data()['name']);
                         Session::put('role', $snapshot->data()['role']);
                         Session::put('email',$user->data()['email']);
@@ -115,11 +117,16 @@ class HomeController extends Controller
                         Session::put('store_users', $store->data()['users']);
                         Session::put('sheet_id', $store->data()['SA1']['s_id']);
                         Session::put('mc_api', $store->data()['mc_api']);
+                        Session::put('logo', $store->data()['icon']);
                         // Session::put('sheet_id', '1ag225UN7QfaqV-cHbmJPmWssvwso7STmcPBYyW7BMb0');
 
                         $this->setGoogleSheetCredentials($store);
                    
                         return true;
+                    }else {
+                        return false;
+                    }
+                       
 
                 } else {
 
