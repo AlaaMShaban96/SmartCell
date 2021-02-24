@@ -60,13 +60,14 @@ class ItemController extends Controller
             $data['image']=$this->compress($request);
         }
         
-        // dd($data);
+        
         try {
             Item::createItems( $data);
+            // dd($data);
         } catch (\Throwable $th) {
             Session::flash('message', 'فشلت عملية الاضافة'); 
             Session::flash('alert-class', 'alert-danger'); 
-            return ;
+            return redirect()->back();
         }
         Session::flash('message', 'تم اضافة المنتج  بنجاح'); 
         Session::flash('alert-class', 'alert-success'); 
@@ -166,7 +167,7 @@ class ItemController extends Controller
         } catch (\Throwable $th) {
             Session::flash('message', 'فشلت عملية التعديل'); 
             Session::flash('alert-class', 'alert-danger'); 
-            return $th;
+            return redirect()->back();
         }
         Session::flash('message', 'تم التعديل بنجاح'); 
         Session::flash('alert-class', 'alert-success'); 

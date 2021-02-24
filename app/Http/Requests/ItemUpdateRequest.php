@@ -27,11 +27,9 @@ class ItemUpdateRequest extends FormRequest
             // 'title' => 'required|unique:posts|max:255',
             'titel' => 'required',
             'name' => 'required',
-            'price' => 'required',
+            // 'price' => 'required',
             'detals' => 'max:80',
-            // 'show' => 'required',
-            // 'image' => 'required',
-            // 'keyWords' => 'required',
+
         ];
     }
     public function messages()

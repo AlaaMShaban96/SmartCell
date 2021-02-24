@@ -123,7 +123,7 @@ class Loction extends Model
         $loaction[0][1]=$titelName;
         $loaction[0][2]=(FLOAT)$request['price'];
         $loaction[0][3]=("السعر".$request['price']."دينار ");
-        $loaction[0][4]=$request['image']==""?$loaction[0][4]:$request['image'];
+        $loaction[0][4]=isset($request['image'])?$request['image']:$loaction[0][4];
         $loaction[0][7]=$sheetName=='Cities info Logic'?('تصفح العروض😎'):'اختيار';
         $loaction[0][9]=$sheetName=='Cities info Logic'?('set_field_value'):'set_field_value, set_field_value, set_field_value';
         $loaction[0][10]=$sheetName=='Cities info Logic'?'order id':'Delivery price, Get City, order id';

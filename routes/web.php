@@ -56,7 +56,7 @@ Route::group(['middleware' => ['isLogin']], function () {
     Route::post('/setting', [SettingController::class,'update'])->name('setting');
     Route::get('/logout', [HomeController::class,'logout']);
 
-});
+}); 
 
 
 Route::get('/login', [HomeController::class,'loginShow'])->name('login');

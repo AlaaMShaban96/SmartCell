@@ -43,7 +43,8 @@
                 </div>
             @endforeach --}}
             <div class="col-lg-12 col-md-12">
-                <h1 class='text-center'> {{Session::get('store_name')}} مرحبا بك في متجر  </h1>
+                <h1 class='text-center'>  مرحبا بك في   </h1>
+                <h1 class='text-center'> {{Session::get('store_name')}}  </h1>
 
             </div>
             <div class="col-lg-12 col-md-12">

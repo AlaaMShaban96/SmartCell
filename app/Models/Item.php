@@ -57,28 +57,30 @@ class Item extends Model
         //     Item::itemUpdate($index,$request,$id);
         // }else {
             // dd( $id.'||0||'.(isset($request['qyantity'])?"غير محدودة":"محدودة").'||'.$request['qyantity'].'||'.$request['image'].'||'.$request['price'].'||'.$request['name']);
+          
             $data=[
                
             (boolean)isset($request['show'])?TRUE:FALSE,
             (int)$id,
-            (float)$request['price'],
+            (float)isset($request['price'])?$request['price']:'',
             $request['name'],
             isset($request['keywords'])?$request['keywords']: "",
-            isset($request['subtitle'])?$request['subtitle'].","."السعر".$request['price']:"", //بتع 80 حر,
+            isset($request['subtitle'])?$request['subtitle'].","."السعر".(isset($request['price'])?$request['price']:''):"", //بتع 80 حر,
             isset($request['image'])?$request['image']:"",
             (float)$request['titel'],
             'flow step',
-            'شراء المنتج 🛒',
-            'SubCategories',
-            'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value , set_field_value',
-            'set order, price, photo, set_quantity, quantity_text, cate1, order id',
-            $request['name'].'||'.$request['price'].'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id,            
-            isset($request['info'])?"flow step":"none",
-            isset($request['info'])?"تفاصيل أكثر":"",
-            isset($request['info'])?"details":"",
-            isset($request['info'])?"set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value":"",
-            isset($request['info'])?"details, set order, price, photo, set_quantity, quantity_text, cate1, order id":"",
-            isset($request['info'])?$request['info'].$request['name'].'||'.$request['price'].'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id :"",
+            isset($request['price'])?'شراء المنتج 🛒':'تفاصيل أكثر',
+            isset($request['price'])?'SubCategories':'details',
+            isset($request['price'])?'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value , set_field_value':'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value',
+            isset($request['price'])?'set order, price, photo, set_quantity, quantity_text, cate1, order id':'details, set order, price, photo, set_quantity, quantity_text, cate1, order id',
+            isset($request['price'])?$request['name'].'||'.(isset($request['price'])?$request['price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id :($request['info'].$request['name'].'||'.(isset($request['price'])?$request['price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id),            
+           
+            isset($request['price'])?isset($request['info'])?"flow step":"none":'',
+            isset($request['price'])?isset($request['info'])?"تفاصيل أكثر":"":'',
+            isset($request['price'])?isset($request['info'])?"details":"":'',
+            isset($request['price'])?isset($request['info'])?"set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value":"":'',
+            isset($request['price'])?isset($request['info'])?"details, set order, price, photo, set_quantity, quantity_text, cate1, order id":"":'',
+            isset($request['price'])?isset($request['info'])?$request['info'].$request['name'].'||'.(isset($request['price'])?$request['price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id :"":'',
             "",
             "",
             "",
@@ -101,7 +103,7 @@ class Item extends Model
     }
     static public function itemUpdate($id,$request)
     { 
-        
+        // dd($request);
             $ids = Sheets::spreadsheet(Session::get('sheet_id'))
                             ->sheet('Shop Logic')
                             ->majorDimension('COLUMNS')
@@ -118,25 +120,25 @@ class Item extends Model
                     // dd($request->all());
                     
                     $data[0][0]=(boolean)isset($request['show'])?TRUE:FALSE;
-                    $data[0][2]=(float)isset($request['price'])?$request['price']:0;
+                    $data[0][2]=(float)isset($request['price'])?$request['price']:'';
                     $data[0][3]=$request['name'];
                     $data[0][4]=isset($request['keywords'])?$request['keywords']: $data[0][4];
                     $data[0][5]=isset($request['subtitle'])?"السعر".$request['price'].','.$request['subtitle']:""; //بتع 80 حرف
-                    $data[0][6]=isset($request['image'])?$data[0][6]:$request['image'];
+                    $data[0][6]=isset($request['image'])?$request['image']:$data[0][6];
                     $data[0][7]=(float)$request['titel'];
                     // $data[0][8]='flow step';
                     // $data[0][9]='شراء المنتج';
                     // $data[0][10]='SubCategories';
                     // $data[0][11]='set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value , set_field_value';
                     // $data[0][12]='set order, price, photo, set_quantity, quantity_text, cate1, order id';
-                    $data[0][13]=$request['name'].'||'.$data[0][2].'||'.$data[0][6].'||'.$request['qyantity'].'||'.(isset($request['qyantity'])?$request['qyantity']:"غير محدودة").'||0||'.$id;
+                    $data[0][13]=$request['name'].'||'.$data[0][2].'||'.$data[0][6].'||'.(isset($request['qyantity'])?$request['qyantity']:$data[0][26]).'||'.(isset($request['qyantity'])?$request['qyantity']:"غير محدودة").'||0||'.$id;
                     $data[0][14]=isset($request['info'])?"flow step":"none";
                     $data[0][15]=isset($request['info'])?"تفاصيل أكثر":"";
                     $data[0][16]=isset($request['info'])?"details":"";
                     $data[0][17]=isset($request['info'])?"set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value":"";
                     $data[0][18]=isset($request['info'])?"details, set order, price, photo, set_quantity, quantity_text, cate1, order id":"";
-                    $data[0][19]=$request['info'].'||'.$request['name'].'||'.$data[0][2].'||'.$data[0][6].'||'.$request['qyantity'].'||'.(isset($request['qyantity'])?$request['qyantity']:"غير محدودة").'||0||'.$id;
-                    $data[0][26]=(float)isset($request['qyantity'])?$request['qyantity']:'';
+                    $data[0][19]=$request['info'].'||'.$request['name'].'||'.$data[0][2].'||'.$data[0][6].'||'.(isset($request['qyantity'])?$request['qyantity']:$data[0][26]).'||'.(isset($request['qyantity'])?$request['qyantity']:"غير محدودة").'||0||'.$id;
+                    $data[0][26]=(float)isset($request['qyantity'])?$request['qyantity']:'0';
                     $data[0][27]=isset($request['info'])?$request['info']:"";
                     $data[0][28]=(float)'0';
                     Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Shop Logic')->

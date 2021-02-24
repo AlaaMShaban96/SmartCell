@@ -1,199 +1,7 @@
 @extends('Dashbord/layout/master')
 @section('style')
-<style>
-    #weatherWidget .currentDesc {
-    color: #ffffff!important;
-    }
-    .traffic-chart {
-      min-height: 335px;
-    }
-    #flotPie1  {
-      height: 150px;
-    }
-    #flotPie1 td {
-      padding:3px;
-    }
-    #flotPie1 table {
-      top: 20px!important;
-      right: -10px!important;
-    }
-    .chart-container {
-      display: table;
-      min-width: 270px ;
-      text-align: left;
-      padding-top: 10px;
-      padding-bottom: 10px;
-    }
-    #flotLine5  {
-      height: 105px;
-    }
 
-    #flotBarChart {
-      height: 150px;
-    }
-    #cellPaiChart{
-      height: 160px;
-    }
-    .actionby {
-      font-size: 12px;
-    }
-    .text-left {
-      position: relative;
-      right: 22px
-    }
-    .na-v {
-      position: absolute;
-    right: 1%;
-    }
-    .form-switch {
-    display: inline-block;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    }
-
-    .form-switch i {
-    position: relative;
-    display: inline-block;
-    margin-right: .5rem;
-    width: 46px;
-    height: 26px;
-    background-color: #e6e6e6;
-    border-radius: 23px;
-    vertical-align: text-bottom;
-    transition: all 0.3s linear;
-    }
-
-    .form-switch i::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    width: 42px;
-    height: 22px;
-    background-color: #fff;
-    border-radius: 11px;
-    transform: translate3d(2px, 2px, 0) scale3d(1, 1, 1);
-    transition: all 0.25s linear;
-    }
-
-    .form-switch i::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    width: 22px;
-    height: 22px;
-    background-color: #fff;
-    border-radius: 11px;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24);
-    transform: translate3d(2px, 2px, 0);
-    transition: all 0.2s ease-in-out;
-    }
-
-    .form-switch:active i::after {
-    width: 28px;
-    transform: translate3d(2px, 2px, 0);
-    }
-
-    .form-switch:active input:checked + i::after { transform: translate3d(16px, 2px, 0); }
-
-    .form-switch input { display: none; }
-
-    .form-switch input:checked + i { background-color: #4BD763; }
-
-    .form-switch input:checked + i::before { transform: translate3d(18px, 2px, 0) scale3d(0, 0, 0); }
-
-    .form-switch input:checked + i::after { transform: translate3d(22px, 2px, 0); }
-
-    .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    }
-
-    /* Modal Content */
-    .modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    }
-
-    /* The Close Button */
-    .close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-    }
-    .stat-widget-five .stat-heading {
-    color: #99abb4;
-    font-size: 12px;
-    color: black;
-    font-style: normal;
-    width: max-content;
-    }
-    * {
-    font-family: cairo;
-    }
-    p {
-    font-family: cairo;
-    }
-
-  #sign{
-      width: 0px;
-      height: 5px;
-      display: inline-block;
-      position: static;
-      top:25px;
-      right:10px;
-      margin-left: -5px;
-  }
-  #sign .s{
-      width: 10px;
-      height: 4px;
-      display:inline-block;
-      border-radius:2px;
-      background-color:black;
-      position:absolute;
-  }
-  #sign #s1{
-      transform:rotate(45deg);
-      z-index:1;
-      margin-left:0;
-      transition:all 0.5s ease-out;
-      margin-left: 11px;
-  }
-  #sign #s2{
-      transform:rotate(-45deg);
-      z-index:1;
-      margin-left:16px;
-      transition:all 0.5s ease-in;
-  }
-  #sign #s2.close2{
-      margin-left:7px;
-      transition:all 0.5s ease-out;
-  }
-  #sign #s1.close1{
-      margin-left:7px;
-      transition:all 0.5s ease-out;
-  }
-
-</style>
+<link rel="stylesheet" href="{{asset('css/dashbord/item/index.css')}}">
 @endsection
 @section('content')
 
@@ -297,14 +105,11 @@
                     height: 68px;"> 
                         <h4 class="box-title w-100 mt-1 mx-auto" style="background-color: #7648E6;color: wheat;text-align: center;    position: absolute;
                         top: 20px;
-                        ;border-radius: 10px 10px 0px 0px;">المنتاجات </h4>
+                        ;border-radius: 10px 10px 0px 0px;">العناصر </h4>
                     </div>
                     <div class="card">
-                        
+    
                         <div class="row"> 
-          
-                        
-                            
                             <div id="item" style="width: 100%;padding-top: 3%;" class="row">
                               @foreach ($items as $key=> $item)
                               @if ($key==0)
@@ -407,9 +212,10 @@
 
       </div>
   </div>
+
   <div id="addItem" class="modal">
     <!-- Modal content -->
-      <div class="modal-content">
+      <div class="modal-content" id='modal-content-select-item' style="display: none;">
         <span class="closesModelItem">&times;</span>
         <div class="row" style="padding-left: 10%;">
           <form id="itemForm" action="{{url('/item')}}" dir="rtl" class="mx-auto" method="POST" enctype="multipart/form-data">
@@ -417,11 +223,11 @@
               <div class="form-row" dir="rtl">
                 <div class="form-group col-md-6">
                   <label for="#" style="display: flex;">إسم المنتج</label>
-                  <input type="text" name="name" class="form-control" id="itemName" placeholder="أدخل إسم المنتج">
+                  <input type="text" name="name" class="form-control" id="itemName" placeholder="أدخل إسم المنتج" required>
                 </div>
                 <div class="form-group col-md-3">
                   <label for="#"style="display: flex;">سعر المنتج</label>
-                  <input type="text" name="price" class="form-control" id="itemPrice" placeholder="سعر المنتج">
+                  <input type="text" name="price" class="form-control" id="itemPrice" placeholder="سعر المنتج" required >
                 </div>
                 <div class="form-group col-md-3">
                   <label for="#"style="display: flex;"> الكمية</label>
@@ -470,6 +276,106 @@
           </form>
         </div>
 
+      </div>
+      <div class="modal-content " id='modal-content-select-option'>
+        <span class="closesModeloption">&times;</span>
+        <div class='row text-center'>
+          <div class="card t col-5  ml-4 mr-4 pl-4 pr-4 d-flex justify-content-center" style=" border-radius: 25px;">
+            
+          <div class='text-center'>
+            <svg width="50%" height="50%" viewBox="0 0 13 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+                <g transform="matrix(1,0,0,1,-2.16378e-05,-1.78153e-05)">
+                    <g transform="matrix(1,0,0,1,-9.64803,-5.3376)">
+                        <g transform="matrix(1,0,0,1,9.64803,5.3376)">
+                            <path d="M5.883,0C7.675,0 9.093,0.549 10.381,1.927C10.54,2.097 10.53,2.363 10.361,2.521C10.191,2.68 9.926,2.67 9.767,2.501C8.639,1.294 7.439,0.84 5.883,0.84C3.881,0.84 2.038,1.935 0.908,3.782C2.038,5.628 3.881,6.723 5.883,6.723C7.957,6.723 9.863,5.546 10.979,3.575C11.094,3.372 11.351,3.301 11.552,3.416C11.754,3.53 11.825,3.787 11.711,3.989C10.443,6.227 8.264,7.563 5.883,7.563C3.501,7.563 1.322,6.227 0.055,3.989C-0.018,3.86 -0.018,3.703 0.055,3.575C1.322,1.337 3.501,0 5.883,0ZM5.883,5.883C7.041,5.883 7.984,4.94 7.984,3.782C7.984,2.623 7.041,1.681 5.883,1.681C4.724,1.681 3.782,2.623 3.782,3.782C3.782,4.94 4.724,5.883 5.883,5.883ZM5.883,2.521C6.578,2.521 7.143,3.087 7.143,3.782C7.143,4.477 6.578,5.042 5.883,5.042C5.188,5.042 4.622,4.477 4.622,3.782C4.622,3.087 5.188,2.521 5.883,2.521Z" style="fill:rgb(0,174,166);fill-rule:nonzero;"/>
+                        </g>
+                        <g transform="matrix(0.844337,0,0,0.753495,-2.65108,-3.465)">
+                            <ellipse cx="27.395" cy="15.028" rx="2.218" ry="2.474" style="fill:rgb(0,174,166);"/>
+                        </g>
+                        <g transform="matrix(0.532802,-0.532802,0.532802,0.532802,10.5395,10.7549)">
+                            <path d="M12.788,5.126L13.53,5.868L12.788,6.61L13.53,7.352L12.788,8.094L12.046,7.352L11.304,8.094L10.561,7.352L11.304,6.61L10.561,5.868L11.304,5.126L12.046,5.868L12.788,5.126Z" style="fill:white;"/>
+                        </g>
+                    </g>
+                </g>
+            </svg>
+            <h3>اضافة عرض</h3>
+            <p>لعرض الخدمات المتوفرة لديك </p>
+            <button onclick='selectInformtion()'  class='btn btn-success w-50  justify-content-center mr-1' style='height: 40px;border-radius: 85px;' >اضافة تفاصيل</button>
+
+          </div>
+          
+          </div>
+          {{-- class="form-group col-md-6" --}}
+          <div class="card  col-5 ml-4 mr-4 pl-4 pr-4 d-flex justify-content-center" style=" border-radius: 25px;">
+           
+          <div class='text-center'>
+            <svg width="50%" height="50%" viewBox="0 0 11 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+                <g transform="matrix(1,0,0,1,-4.9144e-05,1.07295e-05)">
+                    <g transform="matrix(1,0,0,1,4.9144e-05,-1.07295e-05)">
+                        <path d="M9.995,9.337L9.618,9.604C9.28,9.797 8.893,9.916 8.475,9.916C8.17,9.916 7.88,9.853 7.613,9.747L5.316,10.972L5.316,5.562L10.171,3.064L10.171,6.015C10.557,6.43 10.799,6.982 10.799,7.593C10.799,8.291 10.483,8.91 9.995,9.337ZM-0,3.034L4.855,5.561L4.855,10.972L-0,8.382L-0,3.034ZM10.336,7.593C10.336,6.567 9.501,5.732 8.475,5.732C7.45,5.732 6.615,6.567 6.615,7.593C6.615,8.618 7.45,9.454 8.475,9.454C9.501,9.454 10.336,8.618 10.336,7.593ZM8.08,6.407L8.871,6.407L8.871,7.197L9.662,7.197L9.662,7.988L8.871,7.988L8.871,8.779L8.08,8.779L8.08,7.988L7.289,7.989L7.29,7.197L8.08,7.197L8.08,6.407ZM2.363,1.485L0.245,2.64L5.086,5.161L7.268,4.039L2.363,1.485ZM9.927,2.67L5.085,0L2.852,1.218L7.772,3.779L9.927,2.67Z" style="fill:rgb(0,174,166);"/>
+                    </g>
+                </g>
+            </svg>
+            <h3>اضافة منتح</h3>
+            <p> لإضافة المنتاجات و السلع التي تريد بيعها </p>
+            <button onclick='selectItem()'   class='btn btn-success w-50  justify-content-center mr-1'  style='height: 40px;border-radius: 85px;'>اضافة منتج</button>
+          </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-content " id='modal-content-select-informtion' style="display: none;">
+        <span class="closesModelInformtion">&times;</span>
+        <div class="row" style="padding-left: 10%;">
+          <form id="itemFormInformtion" action="{{url('/item')}}" dir="rtl" class="mx-auto" method="POST" enctype="multipart/form-data">
+            @csrf
+              <div class="form-row" dir="rtl">
+                <div class="form-group col-md-12">
+                  <label for="#" style="display: flex;">إسم العرض</label>
+                  <input type="text" name="name" class="form-control" id="itemNameInformtion" placeholder="أدخل إسم العرض">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="#"style="display: flex;"">إضافة وصف قصير</label>
+                <textarea class="form-control" name="subtitle"  id="itemSubtitleInformtion" rows="3" maxlength="60"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="#"style="display: flex;"">إضافة التفاصيل</label>
+                <textarea class="form-control" name="info" id="itemInfoInformtion" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="#"style="display: flex;"">كلمات مفتاحية</label>
+                <textarea class="form-control" name="keywords" id="itemKeywordsInformtion" rows="3"></textarea>
+              </div>
+                  <label for="#">تحت تصنيف:</label>
+                  <select name="titel" id="itemTitelInformtion" style="width: 200px;text-align: center;">
+                    <option value="0">ليس تحت تصنيف</option>
+
+                    @foreach ($items as $item)
+                      @if (isset($item[28])&& ($item[28]=="1"))
+                        <option value="{{$item[1]}}">{{$item[3]}}</option>
+                      @endif
+                    @endforeach
+          
+                  </select>
+                  <label>
+                      عرض العرض
+                  </label>
+                  <label class="form-switch">
+                      <input type="checkbox" name="show" id="itemShowInformtion"><i></i>
+                    </label>
+                  <label class="mr-2 ml-3">
+                    رفع الصورة
+                  </label>
+                  
+                      <input type="file" id="myFile" name="image" >  
+                  
+                <div class="d-flex justify-content-center">
+          
+                  <button type="submit" class="btn btn-info mt-3" style="display: grid;width: 300px; border-radius: 22px;"> حفظ </button>
+                </div>
+          </form>
+        </div>
       </div>
   </div>
   <form style="display: none" id="deleteItemForm" action="" method="post">
@@ -526,6 +432,8 @@
     
     // Get the <span> element that closes the modal
     var closesModelItem = document.getElementsByClassName("closesModelItem")[0];
+    var closesModelInformtion = document.getElementsByClassName("closesModelInformtion")[0];
+    var closesModeloption = document.getElementsByClassName("closesModeloption")[0];
     
     // When the user clicks the button, open the modal 
     addbtn.onclick = function() {
@@ -538,6 +446,15 @@
     
     // When the user clicks on <span> (x), close the modal
     closesModelItem.onclick = function() {
+        clearInputItem();
+        addItem.style.display = "none";
+    }
+    closesModelInformtion.onclick = function() {
+        clearInputItem();
+        addItem.style.display = "none";
+    }
+    closesModeloption.onclick = function() {
+        clearInputItem();
         addItem.style.display = "none";
     }
     
@@ -642,7 +559,29 @@
     document.getElementById('itemSubtitle').value=row[5].split(",").pop(); 
     document.getElementById('itemKeywords').value=row[4]; 
     document.getElementById('itemShow').checked= (row[0]=='TRUE')?true:false;
-    clearFlag=1;
+
+      document.getElementById('itemFormInformtion').action=hostName+'/item/'+row[1];
+      document.getElementById('itemNameInformtion').value=row[3];
+      document.getElementById('itemTitelInformtion').value=parseInt(row[7].replaceAll(",",""));
+      document.getElementById('itemInfoInformtion').value=row[27]; 
+      document.getElementById('itemSubtitleInformtion').value=row[5].split(",").pop(); 
+      document.getElementById('itemKeywordsInformtion').value=row[4]; 
+      document.getElementById('itemShowInformtion').checked= (row[0]=='TRUE')?true:false;
+    
+      clearFlag=1;
+    
+    console.log(isEmpty(row[2]));
+    if (isEmpty(row[2])) {
+      document.getElementById('modal-content-select-option').style.display='none';
+      document.getElementById('modal-content-select-informtion').style.display='block';
+
+    }else{
+      document.getElementById('modal-content-select-option').style.display='none';
+      document.getElementById('modal-content-select-item').style.display='block';
+
+    }
+   
+   
   }
   function clearInputItem(){
     var hostName = window.location.origin;
@@ -655,11 +594,29 @@
     document.getElementById('itemSubtitle').value="" 
     document.getElementById('itemKeywords').value="" 
     document.getElementById('itemShow').checked=false;
+    resetSelectOption();
   }
   function deleteItem(id) {
     var hostName = window.location.origin;
     document.getElementById('deleteItemForm').action=hostName+'/item/'+id;
     document.getElementById('deleteItemForm').submit();
+  }
+  function selectItem() {
+    document.getElementById('modal-content-select-option').style.display='none';
+    document.getElementById('modal-content-select-item').style.display='block';
+  }
+  function selectInformtion() {
+    document.getElementById('modal-content-select-option').style.display='none';
+    document.getElementById('modal-content-select-informtion').style.display='block';
+  }
+  function resetSelectOption() {
+    document.getElementById('modal-content-select-item').style.display='none';
+    document.getElementById('modal-content-select-informtion').style.display='none';
+    document.getElementById('modal-content-select-option').style.display='block';
+
+  }
+  function isEmpty(value){
+   return (value == null || value.length === 0);
   }
   
  

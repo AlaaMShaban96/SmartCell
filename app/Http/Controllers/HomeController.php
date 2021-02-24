@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 use Revolution\Google\Sheets\Facades\Sheets;
@@ -80,17 +81,23 @@ class HomeController extends Controller
       
             $user = Socialite::with('google')->getAccessTokenResponse($request->code);
             
-           if ($this->selectUser($user['id_token'],$user)) {
-              
-                return redirect('/');
-
-            //   return view('Dashbord.index');
-            }else {
-                Session::flash('message', "البريد غير موجود او لاتملك صلاحية الدخول");
-                return view('login');
-                
-            }
-            
+                # code...
+           
+                if ($this->selectUser($user['id_token'],$user)) {
+                            if ($this->checkmanyChatAPI()) {
+                                return redirect('/');
+                            }else {
+                                $this->logout();
+                                Session::flash('message', "انتهئ اشتراك  الخاص بك في النظام ");
+                                return view('login');  
+                            }
+                    }else {
+                    
+                        Session::flash('message', "البريد غير موجود او لاتملك صلاحية الدخول");
+                        return view('login');
+                        
+                    }
+             
         } catch (\Exception $e) {
             return 'status'. $e;
         }
@@ -201,5 +208,19 @@ class HomeController extends Controller
         file_put_contents(storage_path('credentials.json'), stripslashes($newJsonString));
 
     }
+    private function checkmanyChatAPI()
+    {
+        $response =Http::withHeaders([
+            'content-type'=> 'application/json',
+            'Authorization' => 'Bearer '. Session::get('mc_api'),
+        ])->get('https://api.manychat.com/fb/page/getBotFields')->json();
+        if ($response['status']=='success') {
+            return true;
+        }else {
+            return false;
+        }
+
+    }
+
 
 }
