@@ -48,7 +48,8 @@
 
             </div>
             <div class="col-lg-12 col-md-12">
-                <img class='img-fluaid' src='{{Session::get('logo')}}' style='width:22vh;margin-left: 43%;margin-top: 2%;margin-bottom: 1%;border-radius: 89px;'></img>
+                <img class='img-fluaid' src='{{Session::get('logo')!=""?Session::get('logo'):asset('images/logo.svg')}}' style='width:22vh;margin-left: 43%;margin-top: 2%;margin-bottom: 1%;border-radius: 89px;'></img>
+                {{-- <img class='img-fluaid' src='{{Session::get('logo')}}' style='width:22vh;margin-left: 43%;margin-top: 2%;margin-bottom: 1%;border-radius: 89px;'></img> --}}
             </div>
     
         </div>

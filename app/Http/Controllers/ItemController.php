@@ -31,7 +31,7 @@ class ItemController extends Controller
        
         $items=Item::allItems();
         // dd($categories);
-        dd($items);
+        // dd($items);
         $link="/منتجات";
         return view('Dashbord.item.index',compact('items','link'));
     }
@@ -55,7 +55,7 @@ class ItemController extends Controller
     public function store(ItemUpdateRequest $request)
     {   
         $data=$request->all();
-        $data['image']="";
+        $data['image']=null;
         if ($request->has('image')) {
             $data['image']=$this->compress($request);
         }
@@ -79,7 +79,7 @@ class ItemController extends Controller
     public function storeCategory(CategoryRequest $request)
     {   
         $data=$request->all();
-        $data['image']="";
+        $data['image']=null;
         $data['category']="yes";
         if ($request->has('image')) {
             $data['image']=$this->compress($request);

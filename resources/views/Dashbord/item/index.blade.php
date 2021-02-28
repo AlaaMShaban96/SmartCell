@@ -2,54 +2,7 @@
 @section('style')
 <style>
 
-/* #loader {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        background: rgba(0,0,0,0.75) no-repeat center center;
-        z-index: 10000;
-            }
 
-@keyframes ldio-iv6kxree6la {
-  0% { transform: translate(-50%,-50%) rotate(0deg); }
-  100% { transform: translate(-50%,-50%) rotate(360deg); }
-}
-.ldio-iv6kxree6la div {
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  border: 20px solid #93dbe9;
-  border-top-color: transparent;
-  border-radius: 50%;
-}
-.ldio-iv6kxree6la div {
-  animation: ldio-iv6kxree6la 1s linear infinite;
-  top: 100px;
-  left: 100px
-}
-.loadingio-spinner-rolling-meno62sw6a {
-  width: 200px;
-  height: 200px;
-  display: inline-block;
-  overflow: hidden;
-  background: none;
-}
-.ldio-iv6kxree6la {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform: translateZ(0) scale(1);
-  backface-visibility: hidden;
-  transform-origin: 0 0; /* see note above 
-}
-.ldio-iv6kxree6la div { box-sizing: content-box; }*/
-
-
-/* This is the submit button styles */
 #button {
   display: block;
   margin: 0 auto;
@@ -122,7 +75,7 @@ Change this to whatever you want and spinner elements will size to match. */
   @if(Session::has('message'))
       <div class="alert {{ Session::get('alert-class') }} text-center">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <i class="material-icons">close</i>
+          <i class="material-icons">x</i>
         </button>
         <p class="h4" >{{ Session::get('message') }}</p> 
       </div>
@@ -385,8 +338,16 @@ Change this to whatever you want and spinner elements will size to match. */
                   
                 <div class="d-flex justify-content-center">
           
-                  <button type="submit" class="btn btn-info mt-3" style="display: grid;width: 300px; border-radius: 22px;"> حفظ </button>
-                </div>
+                  <button id="button"  onclick='checkInputitemForm()'  class="btn btn-info mt-3" style="display: block ruby;width: 300px; border-radius: 22px;"> حفظ 
+                    <span id="img333" style='display:none;'>
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%; display: block; shape-rendering: auto; animation-play-state: running; animation-delay: 0s;"
+                       width="30px" height="30px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" fill="none" stroke="#93dbe9" stroke-width="10" r="35" stroke-dasharray="164.93361431346415 56.97787143782138" style="animation-play-state: running; animation-delay: 0s;">
+                          <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1" style="animation-play-state: running; animation-delay: 0s;"></animateTransform>
+                        </circle>
+                      </svg>
+                    </span>
+                    </button>                </div>
           </form>
         </div>
 
@@ -414,7 +375,7 @@ Change this to whatever you want and spinner elements will size to match. */
             </svg>
             <h3>اضافة عرض</h3>
             <p>لعرض الخدمات المتوفرة لديك </p>
-            <button onclick='selectInformtion()'  class='btn btn-success w-50  justify-content-center mr-1' style='height: 40px;border-radius: 85px;' >اضافة تفاصيل</button>
+            <button onclick='select()'  class='btn btn-success w-50  justify-content-center mr-1' style='height: 40px;border-radius: 85px;' >اضافة تفاصيل</button>
 
           </div>
           
@@ -485,7 +446,7 @@ Change this to whatever you want and spinner elements will size to match. */
                   
                 <div class="d-flex justify-content-center">
           
-                  <button id="button"  onclick='loding()' type="submit" class="btn btn-info mt-3" style="display: block ruby;width: 300px; border-radius: 22px;"> حفظ 
+                  <button id="button"  onclick='checkInputitemFormInformtion()'  class="btn btn-info mt-3" style="display: block ruby;width: 300px; border-radius: 22px;"> حفظ 
                   <span id="img333" style='display:none;'>
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%; display: block; shape-rendering: auto; animation-play-state: running; animation-delay: 0s;"
                      width="30px" height="30px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
@@ -671,15 +632,24 @@ Change this to whatever you want and spinner elements will size to match. */
       }
       
     });
-    document.getElementById("showAddItem").click();
-    document.getElementById('itemForm').action=hostName+'/item/'+id;
-    document.getElementById('itemName').value=row[3];
-    document.getElementById('itemPrice').value=row[2];
-    document.getElementById('itemTitel').value=parseInt(row[7].replaceAll(",",""));
-    document.getElementById('itemInfo').value=row[27]; 
-    document.getElementById('itemQyantity').value=row[26]; 
-    document.getElementById('itemSubtitle').value=row[5].split(",").pop(); 
-    document.getElementById('itemKeywords').value=row[4]; 
+    document.getElemenInformtion
+Informtion
+Informtion
+Informtion
+Informtion
+Informtion
+Informtion
+Informtion
+Informtion
+Informtion
+Informtion
+Informtion
+Informtion
+Informtion
+Informtion
+Informtion
+Informtion
+InformtionById('itemKeywords').value=row[4]; 
     document.getElementById('itemShow').checked= (row[0]=='TRUE')?true:false;
 
       document.getElementById('itemFormInformtion').action=hostName+'/item/'+row[1];
@@ -741,58 +711,31 @@ Change this to whatever you want and spinner elements will size to match. */
    return (value == null || value.length === 0);
   }
   
-  // var spinner = $('#loader');
-  //       $('form').submit(function(e) {
-  //               e.preventDefault();
-  //               spinner.show();
-  //               this.submit();
-  //               // $.ajax({
-  //               // url: 't2228.php',
-  //               // data: $(this).serialize(),
-  //               // method: 'post',
-  //               // dataType: 'JSON'
-  //               // }).done(function(resp) {
-  //               // spinner.hide();
-  //               // alert(resp.status);
-  //               // });
-  // });
+  function checkInputitemFormInformtion() {
+      var itemNameInformtion=document.getElementById('itemNameInformtion').value;
+      var itemTitelInformtion=document.getElementById('itemTitelInformtion').value;
+      var itemInfoInformtion=document.getElementById('itemInfoInformtion').value;
+      var itemSubtitleInformtion=document.getElementById('itemSubtitleInformtion').value;
+      var itemKeywordsInformtion=document.getElementById('itemKeywordsInformtion').value;
+      var itemShowInformtion=document.getElementById('itemShowInformtion');
 
+      if ( itemNameInformtion!="" && itemTitelInformtion!="" && itemInfoInformtion!="" && itemSubtitleInformtion!=""  && itemKeywordsInformtion!="" ) {
+        loding();
+      }
+  }
+  function checkInputitemForm() {
+      var itemName=document.getElementById('itemName').value;
+      var itemTitel=document.getElementById('itemTitel').value;
+      var itemInfo=document.getElementById('itemInfo').value;
+      var itemSubtitle=document.getElementById('itemSubtitle').value;
+      var itemKeywords=document.getElementById('itemKeywords').value;
+      var itemPrice=document.getElementById('itemPrice').value;
+      var itemQyantity=document.getElementById('itemQyantity').value;
 
- function loding() {
-  let btn = document.querySelector('#button');
-  document.getElementById('img333').style.display='block';
+      if ( itemName!="" && itemTitel!="" && itemInfo!="" && itemSubtitle!=""  && itemKeywords!="" &&itemPrice !="" && itemQyantity!="" ) {
+        loding();
+      }
+  }
 
-  // document.getElementById('img333').style.display='none';
-btn.addEventListener('click', function () {
-  // form submission starts
-        // $('form').submit(function(e) {
-        //         e.preventDefault();
-                // this.submit();
-                // // $.ajax({
-                // // url: 't2228.php',
-                // // data: $(this).serialize(),
-                // // method: 'post',
-                // // dataType: 'JSON'
-                // // }).done(function(resp) {
-                // // spinner.hide();
-                // // alert(resp.status);
-                // });
-  // button is disabled
-  btn.classList.add('spin');
-  btn.disabled = true;
-  // This disables the whole form via the fieldset
-  btn.form.firstElementChild.disabled = true;
-  // $('#img333').show();
-  // this setTimeout call mimics some asyncronous action
-  // you would have something else here
-  // window.setTimeout(function () {
-  //   // when asyncronous action is done, remove the spinner
-  //   // re-enable button/fieldset
-  //   btn.classList.remove('spin');
-  //   btn.disabled = false;
-  //   btn.form.firstElementChild.disabled = false;
-  // }, 4000);
-}, false);
- }
   </script>
 @endsection

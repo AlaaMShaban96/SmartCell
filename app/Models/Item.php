@@ -66,7 +66,7 @@ class Item extends Model
             $request['name'],
             isset($request['keywords'])?$request['keywords']: "",
             isset($request['subtitle'])?$request['subtitle']:'', //بتع 80 حر,
-            isset($request['image'])?$request['image']:"",
+            isset($request['image'])?$request['image']:asset("images/logo.svg"),
             (float)$request['titel'],
             'flow step',
             isset($request['price'])?'شراء المنتج 🛒':'تفاصيل أكثر',

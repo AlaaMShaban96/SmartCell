@@ -15,45 +15,49 @@ class SettingController extends Controller
             'content-type'=> 'application/json',
             'Authorization' => 'Bearer '. Session::get('mc_api'),
         ])->get('https://api.manychat.com/fb/page/getBotFields')->json();
-        $data=[];
-        foreach ($response['data'] as $key => $value) {
-            switch ($value['name']) {
-                case 'System':
-                    $data['System']=$value;
-                    break;
-                case 'delivery':
-                    $data['delivery']=$value;
-                    break;
-                case 'location':
-                    $data['location']=$value;
-                    break;
-                case 'welcome':
-                    $data['welcome']=$value;
-                    break;
-                case 'Auto_move':
-                    $data['Auto_move']=$value;
-                    break;
-                case 'Info':
-                    $data['info']=$value;
-                    break;
-                case 'map':
-                    $data['map']=$value;
-                    break;
-                case 'Auto_move':
-                    $data['Auto_move']=$value;
-                    break;
-                case 'System':
-                    $data['System']=$value;
-                    break;
-                case 'delivery':
-                    $data['delivery']=$value;
-                    break;
-                case 'Place':
-                    $data['place']=$value;
-                    break;
+        if ($response['status']=='success') {
+            $data=[];
+            foreach ($response['data'] as $key => $value) {
+                switch ($value['name']) {
+                    case 'System':
+                        $data['System']=$value;
+                        break;
+                    case 'delivery':
+                        $data['delivery']=$value;
+                        break;
+                    case 'location':
+                        $data['location']=$value;
+                        break;
+                    case 'welcome':
+                        $data['welcome']=$value;
+                        break;
+                    case 'Auto_move':
+                        $data['Auto_move']=$value;
+                        break;
+                    case 'Info':
+                        $data['info']=$value;
+                        break;
+                    case 'map':
+                        $data['map']=$value;
+                        break;
+                    case 'Auto_move':
+                        $data['Auto_move']=$value;
+                        break;
+                    case 'System':
+                        $data['System']=$value;
+                        break;
+                    case 'delivery':
+                        $data['delivery']=$value;
+                        break;
+                    case 'Place':
+                        $data['place']=$value;
+                        break;
+                }
             }
+        }else {
+            $data=null;
         }
-    //   dd($response);
+       
         return view('Dashbord.setting.index',compact('data'));
     }
     public function update(Request $request)
@@ -127,4 +131,5 @@ class SettingController extends Controller
          return redirect('/setting');
         
     }
+ 
 }
