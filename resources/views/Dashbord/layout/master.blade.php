@@ -109,7 +109,7 @@
         <!-- /.content -->
         <div class="clearfix"></div>
         <!-- Footer -->
-        <footer class="site-footer">
+        {{-- <footer class="site-footer">
             <div class="footer-inner bg-white">
                 <div class="row">
                     <div class="col-sm-6">
@@ -118,11 +118,15 @@
     
                 </div>
             </div>
-        </footer>
+        </footer> --}}
       
     </div>
   
-
+    <div id="loader">
+        <div class="loadingio-spinner-rolling-meno62sw6a"><div class="ldio-iv6kxree6la">
+            <div></div>
+            </div></div>
+    </div>
     @include('Dashbord.layout.include.script')
     @yield('script')
 

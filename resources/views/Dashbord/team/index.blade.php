@@ -84,17 +84,17 @@
                 <label for="#" style="display: flex;">رقم الهاتف</label>
                 <input type="number" name="phoned" class="form-control" id="userPhoned" required placeholder="أدخل رقم الهاتف">
               </div>
-            
+             
                 <div class="form-group col-md-6">
                 <label>الصلاحيات</label>
                     <select name="rule" id="userRule">
-                        <option value="Admin">مدير </option>
+                        <option value="admin">مدير </option>
                         <option value="Editor">معدل بيانات </option>
                     </select>
                 </div>
-                <div class="form-group col-md-6">
+                {{-- <div class="form-group col-md-6">
                     <input type="file" id="myFile" name="image" >                    
-                </div>
+                </div> --}}
             </div>
                
                 

@@ -31,7 +31,7 @@ class ItemController extends Controller
        
         $items=Item::allItems();
         // dd($categories);
-        // dd($items);
+        dd($items);
         $link="/منتجات";
         return view('Dashbord.item.index',compact('items','link'));
     }
@@ -158,14 +158,14 @@ class ItemController extends Controller
     {
         // dd($request->all());
         $data=$request->all();
-        $data['image']="";
+        $data['image']=null;
         if ($request->has('image')) {
             $data['image']=$this->compress($request);
         }
         try {
             Item::itemUpdate($id,$data);
         } catch (\Throwable $th) {
-            Session::flash('message', 'فشلت عملية التعديل'); 
+            Session::flash('message', $th.'فشلت عملية التعديل'); 
             Session::flash('alert-class', 'alert-danger'); 
             return redirect()->back();
         }

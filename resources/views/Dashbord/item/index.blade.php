@@ -1,6 +1,120 @@
 @extends('Dashbord/layout/master')
 @section('style')
+<style>
 
+/* #loader {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        background: rgba(0,0,0,0.75) no-repeat center center;
+        z-index: 10000;
+            }
+
+@keyframes ldio-iv6kxree6la {
+  0% { transform: translate(-50%,-50%) rotate(0deg); }
+  100% { transform: translate(-50%,-50%) rotate(360deg); }
+}
+.ldio-iv6kxree6la div {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border: 20px solid #93dbe9;
+  border-top-color: transparent;
+  border-radius: 50%;
+}
+.ldio-iv6kxree6la div {
+  animation: ldio-iv6kxree6la 1s linear infinite;
+  top: 100px;
+  left: 100px
+}
+.loadingio-spinner-rolling-meno62sw6a {
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  overflow: hidden;
+  background: none;
+}
+.ldio-iv6kxree6la {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above 
+}
+.ldio-iv6kxree6la div { box-sizing: content-box; }*/
+
+
+/* This is the submit button styles */
+#button {
+  display: block;
+  margin: 0 auto;
+  padding: .6em .8em;
+  /* Font-size is the root value that determines size of spinner parts. 
+Change this to whatever you want and spinner elements will size to match. */
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: .4em;
+  border: none;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  transition: all 1s;
+}
+
+/* focus/disabled styles, you can change this for accessibility */
+#button:focus, #button:disabled {
+  outline: none;
+  background: #aaa;
+}
+
+/* This is the space for the spinner to appear, applied to the button */
+.spin {
+  padding-left: 2.5em;
+  display: block;
+}
+
+/* position of the spinner when it appears, you might have to change these values */
+.spin .spinner {
+  left: -.6em;
+  top: .4em;
+  width: 2.5em;
+  display: block;
+  position: absolute;
+}
+
+/* spinner animation */
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* The actual spinner element is a pseudo-element */
+.spin .spinner::before {
+  content: "";
+  width: 1.5em; /* Size of the spinner */
+  height: 1.5em; /* Change as desired */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  border: solid .35em #999; /* Thickness/color of spinner track */
+  border-bottom-color: #555; /* Color of variant spinner piece */
+  animation: .8s linear infinite spinner; /* speed of spinner */
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+
+</style>
 <link rel="stylesheet" href="{{asset('css/dashbord/item/index.css')}}">
 @endsection
 @section('content')
@@ -267,7 +381,7 @@
                     رفع الصورة
                   </label>
                   
-                      <input type="file" id="myFile" name="image" >  
+                      <input type="file"  onchange="ValidateSize(this)" id="myFile" name="image" >  
                   
                 <div class="d-flex justify-content-center">
           
@@ -332,16 +446,16 @@
               <div class="form-row" dir="rtl">
                 <div class="form-group col-md-12">
                   <label for="#" style="display: flex;">إسم العرض</label>
-                  <input type="text" name="name" class="form-control" id="itemNameInformtion" placeholder="أدخل إسم العرض">
+                  <input type="text" name="name" class="form-control" id="itemNameInformtion" placeholder="أدخل إسم العرض" required>
                 </div>
               </div>
               <div class="form-group">
                 <label for="#"style="display: flex;"">إضافة وصف قصير</label>
-                <textarea class="form-control" name="subtitle"  id="itemSubtitleInformtion" rows="3" maxlength="60"></textarea>
+                <textarea class="form-control" name="subtitle"  id="itemSubtitleInformtion" rows="3" maxlength="60" required></textarea>
               </div>
               <div class="form-group">
                 <label for="#"style="display: flex;"">إضافة التفاصيل</label>
-                <textarea class="form-control" name="info" id="itemInfoInformtion" rows="3"></textarea>
+                <textarea class="form-control" name="info" id="itemInfoInformtion" rows="3" required></textarea>
               </div>
               <div class="form-group">
                 <label for="#"style="display: flex;"">كلمات مفتاحية</label>
@@ -367,12 +481,20 @@
                   <label class="mr-2 ml-3">
                     رفع الصورة
                   </label>
-                  
-                      <input type="file" id="myFile" name="image" >  
+                      <input type="file" onchange="ValidateSize(this)" id="myFile" name="image" >  
                   
                 <div class="d-flex justify-content-center">
           
-                  <button type="submit" class="btn btn-info mt-3" style="display: grid;width: 300px; border-radius: 22px;"> حفظ </button>
+                  <button id="button"  onclick='loding()' type="submit" class="btn btn-info mt-3" style="display: block ruby;width: 300px; border-radius: 22px;"> حفظ 
+                  <span id="img333" style='display:none;'>
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%; display: block; shape-rendering: auto; animation-play-state: running; animation-delay: 0s;"
+                     width="30px" height="30px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                      <circle cx="50" cy="50" fill="none" stroke="#93dbe9" stroke-width="10" r="35" stroke-dasharray="164.93361431346415 56.97787143782138" style="animation-play-state: running; animation-delay: 0s;">
+                        <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1" style="animation-play-state: running; animation-delay: 0s;"></animateTransform>
+                      </circle>
+                    </svg>
+                  </span>
+                  </button>
                 </div>
           </form>
         </div>
@@ -619,6 +741,58 @@
    return (value == null || value.length === 0);
   }
   
- 
+  // var spinner = $('#loader');
+  //       $('form').submit(function(e) {
+  //               e.preventDefault();
+  //               spinner.show();
+  //               this.submit();
+  //               // $.ajax({
+  //               // url: 't2228.php',
+  //               // data: $(this).serialize(),
+  //               // method: 'post',
+  //               // dataType: 'JSON'
+  //               // }).done(function(resp) {
+  //               // spinner.hide();
+  //               // alert(resp.status);
+  //               // });
+  // });
+
+
+ function loding() {
+  let btn = document.querySelector('#button');
+  document.getElementById('img333').style.display='block';
+
+  // document.getElementById('img333').style.display='none';
+btn.addEventListener('click', function () {
+  // form submission starts
+        // $('form').submit(function(e) {
+        //         e.preventDefault();
+                // this.submit();
+                // // $.ajax({
+                // // url: 't2228.php',
+                // // data: $(this).serialize(),
+                // // method: 'post',
+                // // dataType: 'JSON'
+                // // }).done(function(resp) {
+                // // spinner.hide();
+                // // alert(resp.status);
+                // });
+  // button is disabled
+  btn.classList.add('spin');
+  btn.disabled = true;
+  // This disables the whole form via the fieldset
+  btn.form.firstElementChild.disabled = true;
+  // $('#img333').show();
+  // this setTimeout call mimics some asyncronous action
+  // you would have something else here
+  // window.setTimeout(function () {
+  //   // when asyncronous action is done, remove the spinner
+  //   // re-enable button/fieldset
+  //   btn.classList.remove('spin');
+  //   btn.disabled = false;
+  //   btn.form.firstElementChild.disabled = false;
+  // }, 4000);
+}, false);
+ }
   </script>
 @endsection

@@ -43,8 +43,8 @@ class TeamController extends Controller
         $user->set([
           'name' => $request->name,
           'email' => $request->email,
-          'phoned'  => '0927780208',
-          'rule'  => $request->rule,
+          'phone'  => '0927780208',
+          'role'  => $request->rule,
           'store_id'  =>Session::get('store_id') ,
         ]); 
         $store=$this->db->collection('Stores')->document(Session::get('store_id'))->snapshot();
