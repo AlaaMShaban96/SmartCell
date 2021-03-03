@@ -255,9 +255,9 @@
         }
 
 
-    function loding() {
+    function loding(imgName) {
         let btn = document.querySelector('#button');
-        document.getElementById('img333').style.display='block';
+        document.getElementById(imgName).style.display='block';
 
         // document.getElementById('img333').style.display='none';
         btn.addEventListener('click', function () {

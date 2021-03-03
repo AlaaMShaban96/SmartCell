@@ -14,7 +14,7 @@
 
 </head>
 
-<body>
+<body style="background-color: #f1f2f7;">
     <!-- Left Panel -->
     <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">

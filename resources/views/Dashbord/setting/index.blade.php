@@ -26,12 +26,13 @@
   @if (isset($data))
     <div class="content">
       <div class="card">
-          <form action="{{url('/setting')}}" method="post">
+          <form action="{{url('/setting')}}" method="post" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="welcomeId" value="{{$data['welcome']['id']}}">
             <input type="hidden" name="infoId" value="{{$data['info']['id']}}">
             <input type="hidden" name="mapId" value="{{$data['map']['id']}}">
             <input type="hidden" name="locationId" value="{{$data['location']['id']}}">
+            <input type="hidden" name="main_imageId" value="{{$data['main_image']['id']}}">
 
             <input type="hidden" name="Auto_moveId" value="{{$data['Auto_move']['id']}}">
             <input type="hidden" name="SystemId" value="{{$data['System']['id']}}">
@@ -137,7 +138,7 @@
                       <td>  صورة الشعار‬  </td>
                       <td>
                         <div class="custom-file">
-                          <input onchange="ValidateSize(this)" type="file" class="custom-file-input" id="validatedCustomFile" >
+                          <input onchange="ValidateSize(this)" name='main_imageValue' type="file" class="custom-file-input" id="validatedCustomFile" >
                           <label class="custom-file-label" for="validatedCustomFile">حمل الشعار...</label>
                           <div class="invalid-feedback"></div>
                         </div>

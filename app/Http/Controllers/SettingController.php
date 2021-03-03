@@ -2,12 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
+use Illuminate\Support\Facades\File;
+
+use Intervention\Image\Facades\Image;
+
+use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
+    protected $db;
+    public function __construct() {
+        try {
+            $this->db = app('firebase.firestore')->database();
+
+        } catch (\Throwable $th) {
+            return view('login');
+        }
+       
+
+
+    }
     public function index()
     {
        
@@ -49,6 +68,9 @@ class SettingController extends Controller
                     case 'delivery':
                         $data['delivery']=$value;
                         break;
+                    case 'main_image':
+                        $data['main_image']=$value;
+                        break;
                     case 'Place':
                         $data['place']=$value;
                         break;
@@ -57,7 +79,7 @@ class SettingController extends Controller
         }else {
             $data=null;
         }
-       
+    //    dd($response['data']);
         return view('Dashbord.setting.index',compact('data'));
     }
     public function update(Request $request)
@@ -112,6 +134,12 @@ class SettingController extends Controller
                     
                                 ],
                                 
+                                [
+                                    'field_id' =>$request->main_imageId,
+                                    'field_value' => (string)$this->compress($request),
+                    
+                                ],
+                                
                             ]       
             ])->json();
             if ($response['status']=='success') {
@@ -124,12 +152,36 @@ class SettingController extends Controller
             
 
         } catch (\Throwable $th) {
+            // dd($th);
             Session::flash('message', 'فشلت عملية التعديل'); 
             Session::flash('alert-class', 'alert-danger'); 
         }
-    //   dd( $response);
          return redirect('/setting');
         
     }
+    private function compress(Request $request)
+    {
+        if (isset($request->main_imageValue)) {
+
+            $photo =  $request->file('main_imageValue');
+
+            $nameFile=Session::get('store_name').(string) Str::uuid().'.png';
+            $img = Image::make($photo->getRealPath())->resize(466, 466)->save('storage/'.$nameFile);
+            $s3 = Storage::disk('s3');
+            $filePath = 'images/' .Session::get('store_name').(string) Str::uuid();
+            $s3->put($filePath, file_get_contents(public_path('storage/'. $nameFile)), 'public');
+            $path='https://smartcellimage.s3.af-south-1.amazonaws.com/'.$filePath;
+            $this->db->collection('Stores')->document(Session::get('store_id'))->update([
+                ['path' => 'icon','value' => $path]
+              ]); 
+              Storage::disk('s3')->delete('images/'.substr(strrchr(Session::get('logo'), "/"), 1));
+              Session::put('logo',$path);
+            return $path;
+
+        }else{
+            return Session::get('logo');
+        }
+        
+    } 
  
 }

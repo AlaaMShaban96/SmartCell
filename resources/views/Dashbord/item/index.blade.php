@@ -82,12 +82,12 @@ Change this to whatever you want and spinner elements will size to match. */
   @endif
 
   @if ($errors->any())
-  @foreach ($errors->all() as $error)
-   <div class="alert alert-danger mt-1 alert-validation-msg" role="alert">
-        <i class="feather icon-info mr-1 align-middle"></i>
-        <span>{{ $error }}</span>
-    </div>
-  @endforeach
+    @foreach ($errors->all() as $error)
+    <div class="alert alert-danger mt-1 alert-validation-msg" role="alert">
+          <i class="feather icon-info mr-1 align-middle"></i>
+          <span>{{ $error }}</span>
+      </div>
+    @endforeach
   @endif
     
 
@@ -268,11 +268,20 @@ Change this to whatever you want and spinner elements will size to match. */
                     رفع الصورة
                   </label>
                   
-                      <input type="file" id="myFile" name="image" >  
+                      <input type="file" onchange="ValidateSize(this)" id="myFile" name="image" required>  
                   
                 <div class="d-flex justify-content-center">
-          
-                  <button type="submit" class="btn btn-info mt-3" style="display: grid;width: 300px; border-radius: 22px;">  حفظ </button>
+                  <button id="button"  onclick='checkInpuCategoryForm()'  class="btn btn-info mt-3" style="display: block ruby;width: 300px; border-radius: 22px;"> حفظ 
+                    <span id="imgCategory" style='display:none;'>
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%; display: block; shape-rendering: auto; animation-play-state: running; animation-delay: 0s;"
+                       width="30px" height="30px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" fill="none" stroke="#93dbe9" stroke-width="10" r="35" stroke-dasharray="164.93361431346415 56.97787143782138" style="animation-play-state: running; animation-delay: 0s;">
+                          <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1" style="animation-play-state: running; animation-delay: 0s;"></animateTransform>
+                        </circle>
+                      </svg>
+                    </span>
+                    </button>
+                  {{-- <button type="submit" checkInpuCategoryForm() class="btn btn-info mt-3" style="display: grid;width: 300px; border-radius: 22px;">  حفظ </button> --}}
                 </div>
           </form>
         </div>
@@ -337,9 +346,8 @@ Change this to whatever you want and spinner elements will size to match. */
                       <input type="file"  onchange="ValidateSize(this)" id="myFile" name="image" >  
                   
                 <div class="d-flex justify-content-center">
-          
                   <button id="button"  onclick='checkInputitemForm()'  class="btn btn-info mt-3" style="display: block ruby;width: 300px; border-radius: 22px;"> حفظ 
-                    <span id="img333" style='display:none;'>
+                    <span id="imgItem" style='display:none;'>
                       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%; display: block; shape-rendering: auto; animation-play-state: running; animation-delay: 0s;"
                        width="30px" height="30px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
                         <circle cx="50" cy="50" fill="none" stroke="#93dbe9" stroke-width="10" r="35" stroke-dasharray="164.93361431346415 56.97787143782138" style="animation-play-state: running; animation-delay: 0s;">
@@ -347,7 +355,8 @@ Change this to whatever you want and spinner elements will size to match. */
                         </circle>
                       </svg>
                     </span>
-                    </button>                </div>
+                    </button>
+                </div>
           </form>
         </div>
 
@@ -375,7 +384,7 @@ Change this to whatever you want and spinner elements will size to match. */
             </svg>
             <h3>اضافة عرض</h3>
             <p>لعرض الخدمات المتوفرة لديك </p>
-            <button onclick='select()'  class='btn btn-success w-50  justify-content-center mr-1' style='height: 40px;border-radius: 85px;' >اضافة تفاصيل</button>
+            <button onclick='selectInformtion()'  class='btn btn-success w-50  justify-content-center mr-1' style='height: 40px;border-radius: 85px;' >اضافة تفاصيل</button>
 
           </div>
           
@@ -447,7 +456,7 @@ Change this to whatever you want and spinner elements will size to match. */
                 <div class="d-flex justify-content-center">
           
                   <button id="button"  onclick='checkInputitemFormInformtion()'  class="btn btn-info mt-3" style="display: block ruby;width: 300px; border-radius: 22px;"> حفظ 
-                  <span id="img333" style='display:none;'>
+                  <span id="imgInformtion" style='display:none;'>
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%; display: block; shape-rendering: auto; animation-play-state: running; animation-delay: 0s;"
                      width="30px" height="30px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
                       <circle cx="50" cy="50" fill="none" stroke="#93dbe9" stroke-width="10" r="35" stroke-dasharray="164.93361431346415 56.97787143782138" style="animation-play-state: running; animation-delay: 0s;">
@@ -632,24 +641,15 @@ Change this to whatever you want and spinner elements will size to match. */
       }
       
     });
-    document.getElemenInformtion
-Informtion
-Informtion
-Informtion
-Informtion
-Informtion
-Informtion
-Informtion
-Informtion
-Informtion
-Informtion
-Informtion
-Informtion
-Informtion
-Informtion
-Informtion
-Informtion
-InformtionById('itemKeywords').value=row[4]; 
+    document.getElementById("showAddItem").click();
+    document.getElementById('itemForm').action=hostName+'/item/'+id;
+    document.getElementById('itemName').value=row[3];
+    document.getElementById('itemPrice').value=row[2];
+    document.getElementById('itemTitel').value=parseInt(row[7].replaceAll(",",""));
+    document.getElementById('itemInfo').value=row[27]; 
+    document.getElementById('itemQyantity').value=row[26]; 
+    document.getElementById('itemSubtitle').value=row[5].split(",").pop(); 
+    document.getElementById('itemKeywords').value=row[4]; 
     document.getElementById('itemShow').checked= (row[0]=='TRUE')?true:false;
 
       document.getElementById('itemFormInformtion').action=hostName+'/item/'+row[1];
@@ -720,7 +720,8 @@ InformtionById('itemKeywords').value=row[4];
       var itemShowInformtion=document.getElementById('itemShowInformtion');
 
       if ( itemNameInformtion!="" && itemTitelInformtion!="" && itemInfoInformtion!="" && itemSubtitleInformtion!=""  && itemKeywordsInformtion!="" ) {
-        loding();
+        
+        loding('imgInformtion');
       }
   }
   function checkInputitemForm() {
@@ -729,11 +730,23 @@ InformtionById('itemKeywords').value=row[4];
       var itemInfo=document.getElementById('itemInfo').value;
       var itemSubtitle=document.getElementById('itemSubtitle').value;
       var itemKeywords=document.getElementById('itemKeywords').value;
-      var itemPrice=document.getElementById('itemPrice').value;
-      var itemQyantity=document.getElementById('itemQyantity').value;
+      var itemShow=document.getElementById('itemShow');
 
-      if ( itemName!="" && itemTitel!="" && itemInfo!="" && itemSubtitle!=""  && itemKeywords!="" &&itemPrice !="" && itemQyantity!="" ) {
-        loding();
+      if ( itemName!="" && itemTitel!="" && itemInfo!="" && itemSubtitle!=""  && itemKeywords!="" ) {
+        
+        loding('imgItem');
+      }
+  }
+  function checkInpuCategoryForm() {
+      var itemName=document.getElementById('categoryName').value;
+      var itemTitel=document.getElementById('categoryTitel').value;
+      var itemInfo=document.getElementById('categoryInfo').value;
+      var itemSubtitle=document.getElementById('categoryShow').value;
+      var myFile=document.getElementById('myFile').value;
+
+      if ( itemName!="" && itemTitel!="" && itemInfo!="" && itemSubtitle!=""  && itemKeywords!="" && myFile !="") {
+        
+        loding('imgCategory');
       }
   }
 

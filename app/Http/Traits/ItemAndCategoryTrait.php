@@ -20,8 +20,8 @@ trait ItemAndCategoryTrait {
         
                 foreach ($ids[0] as $key => $value) {
                 if ($value==$id) {
-                    echo $key;
-                        $batchUpdateRequest = new \Google_Service_Sheets_BatchUpdateSpreadsheetRequest(array(
+                    // Storage::disk('s3')->delete('images/'.substr(strrchr(Session::get('logo'), "/"), 1));// for delete photos
+                    $batchUpdateRequest = new \Google_Service_Sheets_BatchUpdateSpreadsheetRequest(array(
                             'requests' => array(
                             'deleteDimension' => array(
                                 'range' => array(
