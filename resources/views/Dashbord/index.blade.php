@@ -17,31 +17,17 @@
 @section('content')
 <div class="content">
     <!-- Animated -->
+        @if(Session::has('expiringDate'))
+        <div class="alert {{ Session::get('alert-class') }} text-center">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <i class="material-icons">x</i>
+        </button>
+        <p class="h4" >{{ Session::get('expiringDate') }}</p> 
+        </div>
+        @endif
     <div class="animated fadeIn">
         <!-- Widgets  -->
         <div class="row">
-
-
-
-            {{-- @foreach ($orderState as $order)
-                <div class="col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="stat-widget-five">
-                                <div class="stat-icon dib flat-color-1">
-                                    <img style="width: 50%;" src="{{asset($order["icon"])}}">
-                                </div>
-                                <div class="stat-content">
-                                    <div class="text-left dib" >
-                                        <div class="stat-text"><span class="count">{{$order['count']}}</span></div>
-                                        <div class="stat-heading">{{$order['name']}}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach --}}
             <div class="col-lg-12 col-md-12">
                 <h1 class='text-center'>  مرحبا بك في   </h1>
                 <h1 class='text-center'> {{Session::get('store_name')}}  </h1>
@@ -49,7 +35,6 @@
             </div>
             <div class="col-lg-12 col-md-12">
                 <img class='img-fluaid' src='{{Session::get('logo')!=""?Session::get('logo'):asset('images/logo.svg')}}' style='width:22vh;margin-left: 43%;margin-top: 2%;margin-bottom: 1%;border-radius: 89px;'></img>
-                {{-- <img class='img-fluaid' src='{{Session::get('logo')}}' style='width:22vh;margin-left: 43%;margin-top: 2%;margin-bottom: 1%;border-radius: 89px;'></img> --}}
             </div>
     
         </div>

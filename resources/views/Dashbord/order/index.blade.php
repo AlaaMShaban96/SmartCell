@@ -1,29 +1,6 @@
 @extends('Dashbord/layout/master')
 @section('style')
-<style>
-  #modal-content{
-      width: 30%;
-  }
-  @media only screen and (max-width: 600px) {
-
-      #modal-content{
-      width: 90%;
-  }
- }
- .buttonEdit{
-    padding-left: 0px;
-    margin-left: 25%;
-    margin-right: 24%;
-    border-width: 2px;
-    /* background-color: aqua; */
-    border-radius: 20px;
-    width: 90%;
-    margin-bottom: 20px;
-    margin-left: 5%;
-
- }
-</style>
-    
+<link rel="stylesheet" href="{{asset('css/dashbord/order/index.css')}}">
 @endsection
 @section('content')
 
@@ -44,200 +21,6 @@
       <p class="h4" >{{ Session::get('message') }}</p> 
     </div>
     @endif
-{{--
-    <div class="container-fluid " >
-    
-
-      <div class="row">
-        @foreach ($orders as $order)
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-warning card-header-icon">
-                  <div class="card-icon">
-                    {{$order['الاسم']}}
-                  </div>
-                  <p class="card-category">اجمالي الفتورة   {{$order['رقم الطلبية']}}</p>
-                  <h3 class="card-title">{{$order['اجمالي سعر الطلبية']}}
-                    <small>دينار</small>
-                  </h3>
-                </div>
-                <div class="card-footer">
-                    <button type="button" 
-                    data-name="{{$order['الاسم']}}"
-                    data-profile="{{$order['بروفايل']}}"
-                    data-mobile="{{$order['رقم الهاتف']}}"
-                    data-loction="{{$order['المنطقة']}}"
-                    data-note="{{$order['ملاحظة الزبون']}}"
-                    data-delevre="{{$order['المندوب']}}"
-                    data-text="{{$order['ملاحظة المندوب / الادمن']}}"
-
-                    data-product[0]="{{$order['المنتج 1']}}"
-                    data-pisces[0]="{{$order['عدد قطع المنتج 1']}}"
-                    data-price[0]="{{$order['سعر المنتج 1']}}"
-                    
-
-                    data-product[1]="{{$order['المنتج 2']}}"
-                    data-pisces[1]="{{$order['عدد قطع المنتج 2']}}"
-                    data-price[1]="{{$order['سعر المنتج 2']}}"
-                    
-
-                    data-product[2]="{{$order['المنتج 3']}}"
-                    data-pisces[2]="{{$order['عدد قطع المنتج 3']}}"
-                    data-price[2]="{{$order['سعر المنتج 3']}}"
-                    
-
-                    
-
-                    data-product[4]="{{$order['المنتج 5']}}"
-                    data-pisces[4]="{{$order['عدد قطع المنتج 5']}}"
-                    data-price[4]="{{$order['سعر المنتج 5']}}"
-                    
-
-                    data-product[5]="{{$order['المنتج 5']}}"
-                    data-pisces[5]="{{$order['عدد قطع المنتج 5']}}"
-                    data-price[5]="{{$order['سعر المنتج 5']}}"
-                    
-
-                    data-product[6]="{{$order['المنتج 7']}}"
-                    data-pisces[6]="{{$order['عدد قطع المنتج 7']}}"
-                    data-price[6]="{{$order['سعر المنتج 7']}}"
-                    
-
-                    data-product[7]="{{$order['المنتج 8']}}"
-                    data-pisces[7]="{{$order['عدد قطع المنتج 8']}}"
-                    data-price[7]="{{$order['سعر المنتج 8']}}"
-                    
-
-                    data-product[8]="{{$order['المنتج 9']}}"
-                    data-pisces[8]="{{$order['عدد قطع المنتج 9']}}"
-                    data-price[8]="{{$order['سعر المنتج 9']}}"
-                    
-
-                    data-product[9]="{{$order['المنتج 10']}}"
-                    data-pisces[9]="{{$order['عدد قطع المنتج 10']}}"
-                    data-price[9]="{{$order['سعر المنتج 10']}}"
-                    data-price[9]="{{$order['سعر المنتج 10']}}"
-                    data-bill="{{$order['اجمالي سعر الطلبية']}}"
-                    data-delivery="{{$order['سعر التوصيل']}}"
-                    data-total="{{$order['اجمالي الفتورة']}}"
-                    data-number="{{$order['رقم الطلبية']}}"
-                    
-                    class="btn btn-success" data-toggle="modal" data-target="#show-order">
-                     عرض 
-                    </button>
-                    
-                </div>
-              </div>
-            </div>
-          @endforeach
-
-
-
-
-      </div>
-    </div>
-  
-
-    <!-- Modal -->
-    <div class="modal fade" id="show-order" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="show-order" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h5 class="modal-title" id="show-order">بيانات الفاتورة</h5>
-          
-          </div>
-          <div class="modal-body">
-            <div class="container-fluid">
-              <div class="row">
-                
-                <div class="col">
-                  <table>
-                    <tr style="text-align: right; ">
-                      <td>
-                        <img src="{{asset('image/dashbord/logo/logo.jpg')}}" alt="" srcset="">
-                      </td>
-                    </tr>
-                    <tr id="profile-show" style="display: none;">
-                      <td >
-                        <icons-image _ngcontent-hys-c22=""
-                        _nghost-hys-c19="">
-                        <span _ngcontent-hys-c19=""
-                          class="material-icons icon-image-preview">account_circle</span>
-                        </icons-image>
-            
-                      </td>
-                      <td><span id="profile"></span></td>
-                    </tr>
-                    <tr id="mobile-show" style="display: none;">
-                      <td>
-                        <span _ngcontent-xwx-c19="" class="material-icons icon-image-preview">settings_phone</span>  
-                      </td>
-                      <td><span id="mobile"></span></td>
-                    </tr>
-                    <tr id="loction-show" style="display: none;">
-                      <td>
-                        <span _ngcontent-xwx-c19="" class="material-icons icon-image-preview">location_on</span>
-                      </td>
-                      <td><span id="loction"></span></td>
-                    </tr>
-                    <tr id="note-show" style="display: none;">
-                      <td>
-                        <span _ngcontent-xwx-c19="" class="material-icons icon-image-preview">insert_comment</span> 
-                      </td>
-                      <td><span id="note"></span></td>
-                    </tr>
-                    <tr id="delevre-show" style="display: none;">
-                      <td>
-                        <icons-image _ngcontent-xwx-c22="" _nghost-xwx-c19=""><span _ngcontent-xwx-c19="" class="material-icons icon-image-preview">directions_car</span></icons-image>
-                      </td>
-                      <td><span id="delevre"></span></td>
-                    </tr>
-                    <tr id="text-show" style="display: none;">
-                      <td>
-                        <span _ngcontent-xwx-c19="" class="material-icons icon-image-preview">text_snippet</span>
-                      <td><span id="text"></span></td>
-                    </tr>
-            
-                  </table>
-                </div>
-               
-              
-              </div>
-              <div class="row">
-                <table class="table table-bordered"  style="text-align: right;" >
-                      <tr>
-                        <td scope="col"> المنتج </td>
-                        <td scope="col"> القطع </td>
-                        <td scope="col"> السعر </td>
-                      </tr>
-                      <tbody id="table">
-
-                      </tbody>
-                </table>
-              </div>
-              <div class="row">
-                <h3>المجموع :  <span class="badge badge-success" id="bill">New</span></h3>
-              </div>
-              <div class="row">
-                <h3> سعر التوصيل : <span class="badge badge-secondary" id="delivery"></span></h3>
-
-              </div>
-            </div>
-            
-          </div>
-          <div class="modal-footer">
-            
-            <a id="link-edit" href="" class="btn btn-primary">تعديل</a>
-
-            <a id="link-print" href="" class="btn btn-info">طباعة</a>
-          </div>
-        </div>
-      </div>
-    </div> --}}
-
 
 
     <div class="content">
@@ -287,7 +70,7 @@
                           <div class="card-body">
                               <h4 class="box-title">طلبيات   </h4>
                           </div>
-                          <div class="card-body--">
+                          <div class="card-body">
                               <div class="table-stats order-table ov-h">
                                   <table class="table ">
                                       <thead>
@@ -307,10 +90,6 @@
                           </div>
                       </div> <!-- /.card -->
                   </div>  <!-- /.col-lg-8 -->
-  
-                  
-  
-          
       <!-- /#add-category -->
                   </div>
       <!-- .animated -->
@@ -321,7 +100,6 @@
   <div class="header-left">
       <div id="myModal2" class="modal">
           <div class="modal-content" id="modal-content" >
-              {{-- <span class="close">&times;</span> --}}
               <div class="row">
   
                   <div class="col-12 text-center" style="border-bottom-width: 1px;border-bottom-style: solid;padding-bottom: 2%;">
@@ -479,22 +257,13 @@
 <script>
   var app = @json($orders,JSON_PRETTY_PRINT);
 
+  // var modal = document.getElementById("myModal2");
 
   function showOredr(id) {
+    
       var modal = document.getElementById("myModal2");
-      
-      // Get the button that opens the modal
-      var btn = document.getElementById("myBtn"+id);
-      
-      // Get the <span> element that closes the modal
+
       var span = document.getElementsByClassName("close")[3];
-      
-      // When the user clicks the button, open the modal 
-      btn.onclick = function() {
-
-        modal.style.display = "block";
-
-      }
 
       window.onclick = function(event) {
           if (event.target == modal) {
@@ -579,10 +348,14 @@
               var show=document.createElement('button');
               var  txtshow=document.createTextNode("عرض");
               show.addEventListener("click", function() { 
+                var modal = document.getElementById("myModal2");
+
+                modal.style.display = "block";
+
                 showOredr(element[47]);
                 }); 
               show.setAttribute('id','myBtn'+element[47]);
-              show.setAttribute('style','border: none; background-color: white;color: #10858b;');
+              show.setAttribute('style','border: none; background-color: white;color: #10858b; cursor: pointer');
               show.append(txtshow);
               model.append(show);
             

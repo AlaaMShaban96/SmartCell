@@ -123,7 +123,7 @@ class Item extends Model
                     $data[0][2]=(float)isset($request['price'])?$request['price']:'';
                     $data[0][3]=$request['name'];
                     $data[0][4]=isset($request['keywords'])?$request['keywords']: $data[0][4];
-                    $data[0][5]=isset($request['subtitle'])?"السعر".','.$request['subtitle']:""; //بتع 80 حرف
+                    $data[0][5]=isset($request['subtitle'])?','.$request['subtitle']:""; //بتع 80 حرف
                     $data[0][6]=isset($request['image'])?$request['image']:$data[0][6];
                     $data[0][7]=(float)$request['titel'];
                     // $data[0][8]='flow step';

@@ -305,10 +305,10 @@ Change this to whatever you want and spinner elements will size to match. */
                   <label for="#"style="display: flex;">سعر المنتج</label>
                   <input type="text" name="price" class="form-control" id="itemPrice" placeholder="سعر المنتج" required >
                 </div>
-                <div class="form-group col-md-3">
+                {{-- <div class="form-group col-md-3">
                   <label for="#"style="display: flex;"> الكمية</label>
                   <input type="number" name="qyantity" class="form-control" id="itemQyantity" placeholder="كمية المنتج">
-                </div>
+                </div> --}}
               </div>
               <div class="form-group">
                 <label for="#"style="display: flex;"">إضافة وصف قصير</label>

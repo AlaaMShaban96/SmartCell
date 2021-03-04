@@ -94,6 +94,16 @@
               <table dir="rtl" style="margin-left: 10%;" >
               
                   <tbody>
+                    <tr>
+                      <td>  ‫‫ تشغيل ‬النظام‬  </td>
+                       <td>
+                        <label class="form-switch">
+                          <input name="SystemValue" id="locationShow" type="checkbox" {{$data['System']['value']=='Yes'?'checked':''}}><i></i>
+                        </label>
+                      </td>
+                      <td>‫يمكن ايقاف و تشغيل نظام رد التلقائي عن طريق تغير حالة ‬</td>
+
+                    </tr>
                     <tr> 
                       <td> ‫ ‫موافقة‬ الادمن‬  </td>
                       
@@ -105,16 +115,7 @@
                       <td> ارسال الطلبية الى قائمة موافقة الادمن قبل ارسالها الى المندوبين.</td>
 
                     </tr>
-                    <tr>
-                      <td>  ‫‫ تشغيل ‬النظام‬  </td>
-                      <td>
-                        <label class="form-switch">
-                          <input name="SystemValue" id="locationShow" type="checkbox" {{$data['System']['value']=='Yes'?'checked':''}}><i></i>
-                        </label>
-                      </td>
-                      <td>‫يمكن ايقاف و تشغيل نظام رد التلقائي عن طريق تغير حالة ‬</td>
-
-                    </tr>
+              
                     <tr>
                       <td>   ‫‫‫ ‫توفر‬‬ ‬التوصيل‬   </td>
                       <td>
@@ -137,18 +138,26 @@
                     <tr>
                       <td>  صورة الشعار‬  </td>
                       <td>
-                        <div class="custom-file">
-                          <input onchange="ValidateSize(this)" name='main_imageValue' type="file" class="custom-file-input" id="validatedCustomFile" >
+                        <img id="blah"  onclick='selectImage()' src='{{Session::get('logo')!=""?Session::get('logo'):asset('images/logo.svg')}}'  width="100" height="100" />
+
+                        <div class="custom-file" style="display: none;">
+
+                          <input onchange="ValidateSize(this);document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])" name='main_imageValue' type="file" class="custom-file-input" id="validatedCustomFile" >
+                          {{-- <input onchange="ValidateSize(this)" name='main_imageValue' type="file" class="custom-file-input" id="validatedCustomFile" > --}}
+
                           <label class="custom-file-label" for="validatedCustomFile">حمل الشعار...</label>
                           <div class="invalid-feedback"></div>
                         </div>
                       </td>
-                      <td >يتم التحكم في صورة الشعار الخاص بالنشاط ‬</td>
+                      <td >                        
+
+                        يتم التحكم في صورة الشعار الخاص بالنشاط ‬</td>
                     </tr>
                   
                   </tbody>
               </table>
               <div class="row  m-5" dir="rtl">
+
                   <button  type="submit" class="btn btn-success">حفظ </button>
 
               </div>
@@ -162,11 +171,12 @@
       </div>
 
     </div>
+
   @else
   <img src="{{asset('images/icon-404.gif')}}" style="width: 100%" alt="Logo">
   @endif
    
-  
+
 
 
 
@@ -177,6 +187,9 @@
 @section('script')
 
 <script>
+function selectImage() {
+  document.getElementById('validatedCustomFile').click();
+}
 </script>
 
 @endsection

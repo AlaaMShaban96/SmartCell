@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -125,8 +126,20 @@ class HomeController extends Controller
                         Session::put('sheet_id', $store->data()['SA1']['s_id']);
                         Session::put('mc_api', $store->data()['mc_api']);
                         Session::put('logo', $store->data()['icon']);
-                        // Session::put('sheet_id', '1ag225UN7QfaqV-cHbmJPmWssvwso7STmcPBYyW7BMb0');
+                        
+                        $date = Carbon::parse( $store->data()['expiringDate']);
+                        $now  = Carbon::now();
+                        $diff = $date->diffInDays($now);
+                        if ($diff<=10) {
+                            Session::flash('expiringDate',$diff);
+                            Session::flash('expiringDate', ' تبقي علي انتهاء اشتراكك ' . ' '.$diff .' ' .'من الايام '); 
 
+                            if ($diff<=3) {
+                                Session::flash('alert-class', 'alert-danger'); 
+                            } else {
+                                Session::flash('alert-class', 'alert-warning'); 
+                            } 
+                        }
                         $this->setGoogleSheetCredentials($store);
                    
                         return true;

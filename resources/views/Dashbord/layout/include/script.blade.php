@@ -217,6 +217,7 @@
         });
 
         function ValidateSize(file) {
+            // document.getElementById('blah').src = window.URL.createObjectURL(this.files[0]);
         var FileSize = file.files[0].size / 1024 / 1024; // in MiB
             if (FileSize > 2) {
                 alert('File size exceeds 2 MiB');
