@@ -214,7 +214,7 @@ class HomeController extends Controller
         "auth_provider_x509_cert_url" =>$store->data()['SA1']["auth_provider_x509_cert_url"],
         "client_x509_cert_url" =>$store->data()['SA1']["client_x509_cert_url"],
         ];
-        // Write File
+        // Write File  
 
         $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
 

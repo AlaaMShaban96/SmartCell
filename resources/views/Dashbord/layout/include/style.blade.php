@@ -107,4 +107,32 @@
         font-family: cairo;
     }
 
+
+
+/* // loding */
+
+.lds-dual-ring.hidden {
+        display: none;
+    }
+
+    /*Add an overlay to the entire page blocking any further presses to buttons or other elements.*/
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0,0,0,.8);
+        z-index: 999;
+        opacity: 1;
+        transition: all 0.5s;
+    }
+
+    /*Spinner Styles*/
+    .lds-dual-ring {
+        display: inline-block;
+        /* width: 80px;
+        height: 80px; */
+    }
+/* // end loding */
 </style>

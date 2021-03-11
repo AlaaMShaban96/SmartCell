@@ -26,7 +26,26 @@
 
     <!--Local Stuff-->
     <script>
-        jQuery(document).ready(function($) {
+         jQuery(document).ready(function($) {
+            $(document).ajaxSend(function() {
+                $("#overlay").fadeIn(300);
+                $('#loader').removeClass('hidden')　
+            });
+                    
+            $('.button-overlay').click(function(){
+                $.ajax({
+                type: 'GET',
+                success: function(data){
+                    console.log(data);
+                }
+                }).done(function() {
+                setTimeout(function(){
+                    $("#overlay").fadeOut(300);
+                },500);
+                $('#loader').removeClass('hidden')
+                });
+            });
+
             "use strict";
 
             // Pie chart flotPie1
@@ -257,40 +276,39 @@
 
 
     function loding(imgName) {
-        let btn = document.querySelector('#button');
-        document.getElementById(imgName).style.display='block';
+        jQuery(document).ready(function($) {
+            $(document).ajaxSend(function() {
+                $("#overlay").fadeIn(300);
+                $('#loader').removeClass('hidden')　
+            });
+                    
+            // $('.button-overlay').click(function(){
+                $.ajax({
+                type: 'GET',
+                success: function(data){
+                    console.log(data);
+                }
+                }).done(function() {
+                setTimeout(function(){
+                    $("#overlay").fadeOut(300);
+                },500);
+                $('#loader').removeClass('hidden')
+                });
+            // });
+        });
 
-        // document.getElementById('img333').style.display='none';
-        btn.addEventListener('click', function () {
-        // form submission starts
-                // $('form').submit(function(e) {
-                //         e.preventDefault();
-                        // this.submit();
-                        // // $.ajax({
-                        // // url: 't2228.php',
-                        // // data: $(this).serialize(),
-                        // // method: 'post',
-                        // // dataType: 'JSON'
-                        // // }).done(function(resp) {
-                        // // spinner.hide();
-                        // // alert(resp.status);
-                        // });
-        // button is disabled
-        btn.classList.add('spin');
-        btn.disabled = true;
-        // This disables the whole form via the fieldset
-        btn.form.firstElementChild.disabled = true;
-        // $('#img333').show();
-        // this setTimeout call mimics some asyncronous action
-        // you would have something else here
-        // window.setTimeout(function () {
-        //   // when asyncronous action is done, remove the spinner
-        //   // re-enable button/fieldset
-        //   btn.classList.remove('spin');
-        //   btn.disabled = false;
-        //   btn.form.firstElementChild.disabled = false;
-        // }, 4000);
-        }, false);
+        // let btn = document.querySelector('#button');
+        // document.getElementById(imgName).style.display='block';
+
+        // // document.getElementById('img333').style.display='none';
+        // btn.addEventListener('click', function () {
+
+        // btn.classList.add('spin');
+        // btn.disabled = true;
+        // // This disables the whole form via the fieldset
+        // btn.form.firstElementChild.disabled = true;
+      
+        // }, false);
     }       
         // });
 </script>

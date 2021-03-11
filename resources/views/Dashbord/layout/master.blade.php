@@ -15,31 +15,38 @@
 </head>
 
 <body style="background-color: #f1f2f7;">
+    {{-- /loding  after clicked button --}}
+    <div id="richList"></div>
+    <div id="loader" class="lds-dual-ring hidden overlay text-center">
+        <img  src="{{asset('images/logo.gif')}}" style="width: 11%;height: 2;margin-top: 16%;background-color: white;border-radius: 19px;" > 
+
+    </div>
+    {{-- end loging --}}
     <!-- Left Panel -->
     <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="{{ (\Request::route()->getName() == 'index') ? 'active' : '' }}">
-                        <a href="{{url('/')}}"><i class="menu-icon fa fa-laptop"></i>الرئيسية</a>
+                        <a href="{{url('/')}}" class=" button-overlay"><i class="menu-icon fa fa-laptop "></i>الرئيسية</a>
                     </li>
                     <li class="{{ (\Request::route()->getName() == 'order') ? 'active' : '' }}">
-                        <a href="{{url('/order')}}"> <i class="menu-icon fa fa-book"></i>الطلبيات</a>
+                        <a href="{{url('/order')}}" class=" button-overlay"> <i class="menu-icon fa fa-book"></i>الطلبيات</a>
                     </li>
                     <li class="{{ (\Request::route()->getName() == 'item') ? 'active' : '' }}">
-                        <a href="{{url('/item')}}"> <i class="menu-icon fa fa-qrcode"></i>المنتجات</a>
+                        <a href="{{url('/item')}}" class=" button-overlay"> <i class="menu-icon fa fa-qrcode"></i>المنتجات</a>
                     </li>
                     <li class="{{ (\Request::route()->getName() == 'location') ? 'active' : '' }}">
-                        <a href="{{url('/location')}}"> <i class="menu-icon fa fa-map-marker"></i>الأماكن</a>
+                        <a href="{{url('/location')}}" class=" button-overlay"> <i class="menu-icon fa fa-map-marker"></i>الأماكن</a>
                     </li>
                     <li class="{{ (\Request::route()->getName() == 'team') ? 'active' : '' }}">
-                        <a href="{{url('/team')}}"> <i class="menu-icon fa fa-users"></i>الموظفين</a>
+                        <a href="{{url('/team')}}" class=" button-overlay"> <i class="menu-icon fa fa-users"></i>الموظفين</a>
                     </li>
                     <li class="{{ (\Request::route()->getName() == 'setting') ? 'active' : '' }}">
-                        <a href="{{url('/setting')}}"> <i class="menu-icon fa fa-cog"></i>الإعدادات</a>
+                        <a href="{{url('/setting')}}" class=" button-overlay"> <i class="menu-icon fa fa-cog"></i>الإعدادات</a>
                     </li>
                     <li>
-                        <a href="{{url('/logout')}}"> <i class="menu-icon fa fa-sign-out"></i>تسجيل الخروج</a>
+                        <a href="{{url('/logout')}}" class=" button-overlay"> <i class="menu-icon fa fa-sign-out"></i>تسجيل الخروج</a>
                     </li>
                  
                 </ul>
@@ -58,50 +65,7 @@
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>
             </div>
-            {{-- <div class="top-right">
-                <div class="header-menu">
-                    <div class="header-left">
-                        <button id="myBtn" class="fa fa-plus mt-3" style="border: none; background-color: white;color: #10858b;"></button>
 
-                        <div id="myModal" class="modal">
-                            <div class="modal-content">
-                                <span class="close">&times;</span>
-                                <div class="row">
-
-                                    <div class="col-xs-12 col-md-6 col-6 mt-2">
-                                        <a href="#">     <img style="width: 10%;" src="{{asset('images/Component 3 – 1.svg')}}">
-                                            
-                                        تم التوصيل </a>
-                                    </div>
-                                    <div class="col-xs-12 col-md-6 col-6 mt-2">
-                                        <a href="#">    <img style="width: 13%;" src="{{asset('images/Component 2 – 1.svg')}}">
-                                        قيد التوصيل   </a>
-                                    </div>
-                                    <div class="col-xs-12 col-md-6 col-6 mt-4">
-                                        <a href="#">   <img style="width: 10%;" src="{{asset('images/Component 4 – 1.svg')}}">
-                                        تم إلغائها    </a>
-                                    </div>
-                                    <div class="col-xs-12 col-md-6 col-6 mt-4">
-                                        <a href="#">    <img style="width: 7%;" src="{{asset('images/from shop.svg')}}">
-                                        إستلام شخصي   </a>
-                                    </div>
-                                    <div class="col-xs-12 col-md-6 col-6 mt-4">
-                                        <a href="#">   <img style="width: 10%;" src="{{asset('images/recovary icon.svg')}}">
-                                        تم إسترجاعها   </a>
-                                    </div>
-                                    <div class="col-xs-12 col-md-6 col-6 mt-4">
-                                        <a href="#">   <img style="width: 10%;" src="{{asset('images/Mask Group 1.svg')}}">
-                                            مجموع المبيعات 
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                          
-                        </div>
-                    </div>
-                <div class="form-inline">
-                </div>
-            </div> --}}
         </header>
         <!-- /#header -->
         @yield('content')

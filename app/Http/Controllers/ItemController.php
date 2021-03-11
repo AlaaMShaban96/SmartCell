@@ -183,7 +183,7 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-            try {
+            try { 
                 Item::deleteItemOrCategoryOrLocation($id,'Shop Logic','1247890525');
             } catch (\Throwable $th) {
                 

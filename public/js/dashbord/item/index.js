@@ -116,11 +116,11 @@
   }
 
   function category(element) {
-    return "<div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[3]+" </p><div class='row'><div class='col-6'><button onclick='deleteItem("+element[1]+")' class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button></div><div class='col-6'><button  onclick='editCategory("+element[1]+")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button></div></div></div></div>"; 
+    return "<div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[3]+" </p><div class='row'><div class='col-6'><button onclick='deleteItem("+element[1]+")' class='  button-overlay btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button></div><div class='col-6'><button  onclick='editCategory("+element[1]+")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button></div></div></div></div>"; 
     
   }
   function item(element) {
-    return "<div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[3]+" </p><div class='row'><div class='col-6'><button onclick='deleteItem("+element[1]+")' class='btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button></div><div class='col-6'><button  onclick='editItem("+element[1]+")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button></div></div></div></div>"; 
+    return "<div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[3]+" </p><div class='row'><div class='col-6'><button onclick='deleteItem("+element[1]+")' class='  button-overlay btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button></div><div class='col-6'><button  onclick='editItem("+element[1]+")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button></div></div></div></div>"; 
     
   }
   function editCategory(id) {
@@ -192,10 +192,19 @@
     document.getElementById('itemPrice').value="";
     document.getElementById('itemTitel').value="";
     document.getElementById('itemInfo').value="" 
-    // document.getElementById('itemQyantity').value="" 
     document.getElementById('itemSubtitle').value="" 
     document.getElementById('itemKeywords').value="" 
     document.getElementById('itemShow').checked=false;
+
+    document.getElementById('itemFormInformtion').action=hostName+'/item/';
+    document.getElementById('itemNameInformtion').value=""
+    document.getElementById('itemTitelInformtion').value=""
+    document.getElementById('itemInfoInformtion').value=""
+    document.getElementById('itemSubtitleInformtion').value=""
+    document.getElementById('itemKeywordsInformtion').value=""
+    document.getElementById('itemShowInformtion').checked= false
+
+
     resetSelectOption();
   }
   function deleteItem(id) {

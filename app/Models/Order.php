@@ -109,9 +109,10 @@ class Order extends Model
 
     }
     static public function chengeStatusItem($status, $id)
-    {
-        // dd(trim($status, '"'));
+    { 
+        // dd(trim($status, '"'),$status);
         $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('A'.($id).':AV'.($id))->majorDimension('ROWS')->all();
+        // trim($status, '"')=='تم الالغاء'?
         $data[0][42]=trim($status, '"');
         Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->
         range('A'.($id))->update([$data[0]]);

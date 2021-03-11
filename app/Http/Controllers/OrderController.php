@@ -24,9 +24,6 @@ class OrderController extends Controller
         } catch (\Throwable $th) {
             //throw $th;
         }
-       
-
-
     }
     /**
      * Display a listing of the resource.
