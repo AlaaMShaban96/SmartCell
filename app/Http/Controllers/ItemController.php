@@ -103,7 +103,7 @@ class ItemController extends Controller
     public function updateCategory(CategoryRequest $request,$id)
     {   
         $data=$request->all();
-        $data['image']="";
+        $data['image']=null;
         $data['category']="yes";
         if ($request->has('image')) {
             $data['image']=$this->compress($request);

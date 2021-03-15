@@ -23,7 +23,7 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
-        
+         
         $arr = explode('@', $this->route()->getActionName());
         $method = $arr[1];  // The controller method
     
@@ -35,7 +35,7 @@ class CategoryRequest extends FormRequest
                     'name' => 'required',
                     'detals' => 'max:80',
                     // 'show' => 'required',
-                    'image' => 'required',
+                    // 'image' => 'required',
                     // 'keyWords' => 'required',
                 ];
                 break;

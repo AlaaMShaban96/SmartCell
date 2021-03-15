@@ -33,7 +33,7 @@
         <ul class="nav flex-column shadow pb-3" style="background-color: white;border-radius: 25px;">
             <h5 class="mb-4 p-2"  style="color: white;background-color: #10858b;width: 200px;border-radius: 10px 10px 0px 0px;">الأصناف الرئيسية</h5>
           @foreach ($items as $item)
-            @if (isset($item[28])&& ($item[28]=="1"))
+            @if (isset($item[28])&& ($item[28]=="1") && ($item[7]==0.0))
             <li>
               <a class="btn" onclick="show('{{$item[1]}}','0')" data-bs-toggle="collapse" data-bs-target="#collapseExample{{$item[1]}}" aria-expanded="false" aria-controls="collapseExample{{$item[1]}}"style="text-align: center;"> {{$item[3]}}<span class="sign{{$item[1]}}" id="sign"><span id="s1" class="s"></span><span id="s2" class="s"></span></span> </a>
               <div class="collapse" id="collapseExample{{$item[1]}}">
@@ -71,7 +71,7 @@
                               </div>
                               
                               @foreach ($items as $key=> $item)
-                                @if (isset($item[28])&& ($item[28]=="1"))
+                                @if (isset($item[28]) && ($item[28]=="1")&& ($item[7]==0.0))
                                 <div class=' col-4  d-flex justify-content-center'>
                                   <div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'>
                                     <div class='text-center'>
@@ -173,12 +173,13 @@
               <div class="form-row" dir="rtl">
                 <div class="form-group col-md-6">
                   <label for="#" style="display: flex;">إسم الصنف</label>
-                  <input type="text" name="name" class="form-control" id="categoryName" placeholder="أدخل إسم المنتج">
+                  <input type="text" name="name" class="form-control" id="categoryName" placeholder="أدخل إسم الصنف">
                 </div>
                 <div class="form-group col-md-6">
                   <label for="#">تحت تصنيف:</label>
+                 
                   <select name="titel" id="categoryTitel" style="width: 200px;text-align: center;">
-                    <option value="0">ليس تحت تصنيف</option>
+                    <option value="0" selected >ليس تحت تصنيف</option>
 
                     @foreach ($items as $item)
                       @if (isset($item[28])&& ($item[28]=="1"))
@@ -190,8 +191,16 @@
                 </div>
               </div>
               <div class="form-group">
+                <label for="#"style="display: flex;"">  إضافة التفاصيل صغيرة</label>
+                <textarea class="form-control" name="subtitle" id="categorySubtitle" rows="3"></textarea>
+              </div>
+              <div class="form-group">
                 <label for="#"style="display: flex;"">إضافة التفاصيل</label>
                 <textarea class="form-control" name="info" id="categoryInfo" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="#"style="display: flex;"">كلمات مفتاحية</label>
+                <textarea class="form-control" name="keywords" id="categoryKeywords" rows="3"></textarea>
               </div>
               
                   <label>
@@ -204,7 +213,7 @@
                     رفع الصورة
                   </label>
                   
-                      <input type="file" onchange="ValidateSize(this)" id="myFile" name="image" required>  
+                      <input type="file" onchange="ValidateSize(this)" id="myFile" name="image" >  
                   
                 <div class="d-flex justify-content-center">
                   <button id="button"  onclick='checkInpuCategoryForm()'  class="btn btn-info mt-3" style="display: block ruby;width: 300px; border-radius: 22px;"> حفظ 
@@ -241,10 +250,6 @@
                   <label for="#"style="display: flex;">سعر المنتج</label>
                   <input type="text" name="price" class="form-control" id="itemPrice" placeholder="سعر المنتج" required >
                 </div>
-                {{-- <div class="form-group col-md-3">
-                  <label for="#"style="display: flex;"> الكمية</label>
-                  <input type="number" name="qyantity" class="form-control" id="itemQyantity" placeholder="كمية المنتج">
-                </div> --}}
               </div>
               <div class="form-group">
                 <label for="#"style="display: flex;"">إضافة وصف قصير</label>

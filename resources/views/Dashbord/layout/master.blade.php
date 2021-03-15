@@ -7,7 +7,8 @@
     <title>SmartCell</title>
     <meta name="description" content="SmartCell">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+    <link rel="apple-touch-icon" href="{{asset('images/logo.svg')}}">
+    <link rel="shortcut icon" href="{{asset('images/logo.svg')}}">
     @include('Dashbord.layout.include.style')
    @yield('style')
   
@@ -53,8 +54,7 @@
             </div><!-- /.navbar-collapse -->
         </nav>
     </aside>
-    <!-- /#left-panel -->
-    <!-- Right Panel -->
+
     <div id="right-panel" class="right-panel">
         <!-- Header-->
         <header id="header" class="header">

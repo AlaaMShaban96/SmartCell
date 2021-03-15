@@ -72,7 +72,7 @@
                     <tr>
                       <td>  ‫تفاصيل‬ ‫عن‬ ‫مكان‬ ‫الموقع‬    </td>
                       <td>
-                        <textarea placeholder ="بعد المستشفى الكبير ، جمب الجامع" name="mapValue" id="" value="" cols="30" rows="3">{{$data['map']['value']!="No"?$data['map']['value']:""}}</textarea>
+                        <textarea placeholder ="بعد المستشفى الكبير ، جمب الجامع" name="locationValue" id="" value="" cols="30" rows="3">{{$data['location']['value']!="No"?$data['location']['value']:""}}</textarea>
 
                       </td>
                       <td >يتم وضع في هادي الرساله توضيح اكتر عن مكان المتجر / الشركة الخاصه بك‫ ‬</td>
@@ -80,7 +80,7 @@
                     <tr>
                       <td> ‫رابط‬ ‫خريطة‬ ‫غوغل‬  </td>
                       <td>
-                        <textarea placeholder =" ( 21°25′21″N 39°49′34″E )" name="locationValue" id="" value="" cols="30" rows="3">{{$data['location']['value']!="No"?$data['location']['value']:""}}</textarea>
+                        <textarea placeholder =" ( 21°25′21″N 39°49′34″E )" name="mapValue" id="" value="" cols="30" rows="3">{{$data['map']['value']!="No"?$data['map']['value']:""}}</textarea>
 
                       </td>
                       <td >يتم وضع فيها احداثيات Google Maps  للمتجر/للشركة الخاصه بك ، حتى يضهر للزبائن الخاصيآ  بك‬</td>

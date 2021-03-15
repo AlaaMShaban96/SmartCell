@@ -18,6 +18,8 @@
       
       // When the user clicks on <span> (x), close the modal
         closesModelCategory.onclick = function() {
+          console.log('llll');
+          clearInputFormCategory();
           addCategory.style.display = "none";
       }
       
@@ -116,7 +118,7 @@
   }
 
   function category(element) {
-    return "<div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[3]+" </p><div class='row'><div class='col-6'><button onclick='deleteItem("+element[1]+")' class='  button-overlay btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button></div><div class='col-6'><button  onclick='editCategory("+element[1]+")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button></div></div></div></div>"; 
+    return "<div class=' col-4  d-flex justify-content-center'><div class='card ml-4 mr-4 p-4' style='border-radius: 25px;'><div class='text-center'><img class='img-fluaid' src='"+element[6]+"' style='width:12vh;'></img></div><p class='card-title  d-flex justify-content-center mt-2'> "+element[3]+" </p><div class='row'><div class='col-6'><button onclick='deleteItem("+element[1]+")' class=' button-overlay btn btn-danger w-50 d-flexjustify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;text-align: center; '>حذف</button></div><div class='col-6'><button  onclick='editCategory("+element[1]+")' class='btn btn-success w-50 d-flex justify-content-center mr-1' style=' min-width:55px;height: 22px;font-size: 7px;    justify-content: space-between; border-radius: 30px;background-color: #48BEB5;' >تعديل</button></div></div></div></div>"; 
     
   }
   function item(element) {
@@ -132,12 +134,20 @@
       }
       
     });
-    
-    console.log('on function Edit Category and date on row = ', row[29]);
+    var sel = document.getElementById('categoryTitel');
+    for (i = sel.length - 1; i >= 0; i--) {
+      if(sel[i].value==Math.floor(row[1])){
+        sel.remove(i);
+      }
+    }
+
+    console.log('on function Edit Category and date on row = ', row);
     document.getElementById('showAddCategory').click();
     document.getElementById('categoryForm').action=hostName+'/category/'+id;
     document.getElementById('categoryName').value=row[3];
+    document.getElementById('categorySubtitle').value=row[5];
     document.getElementById('categoryTitel').value=Math.floor(row[7]);
+    document.getElementById('categoryKeywords').value=row[4]; 
     document.getElementById('categoryInfo').value=row[27]; 
     document.getElementById('categoryShow').checked= row[0]=='TRUE'?true:false;
   }
@@ -186,6 +196,7 @@
    
   }
   function clearInputItem(){
+
     var hostName = window.location.origin;
     document.getElementById('itemForm').action=hostName+'/item/';
     document.getElementById('itemName').value="";
@@ -204,6 +215,12 @@
     document.getElementById('itemKeywordsInformtion').value=""
     document.getElementById('itemShowInformtion').checked= false
 
+    // document.getElementById('showAddCategory').click();
+    document.getElementById('categoryForm').action=hostName+'/category/';
+    document.getElementById('categoryName').value='';
+    document.getElementById('categoryTitel').value='';
+    document.getElementById('categoryInfo').value=''; 
+    document.getElementById('categoryShow').checked= false;
 
     resetSelectOption();
   }
@@ -267,4 +284,37 @@
         
         loding('imgCategory');
       }
+  }
+  function clearInputFormCategory() {
+    var hostName = window.location.origin;
+    var row=[];
+    items.forEach(element => {
+      if (Math.floor(element[7])==0) {
+        row.push(element);
+      } 
+    });
+    var sel = document.getElementById('categoryTitel');
+
+    for (i = sel.length - 1; i >= 0; i--) {
+        sel.remove(i);
+    }
+
+    var option = document.createElement("option");
+    option.text = 'ليس تحت تصنيف';
+    option.value = 0;
+    sel.add(option);
+
+    row.forEach(element => {
+      var option = document.createElement("option");
+      option.text =element[3];
+      option.value = Math.floor(element[1]);
+      sel.add(option);
+    });
+
+    document.getElementById('categoryForm').action=hostName+'/category/';
+    document.getElementById('categoryName').value="";
+    document.getElementById('categorySubtitle').value="";
+    document.getElementById('categoryTitel').value=0;
+    document.getElementById('categoryInfo').value="" 
+    document.getElementById('categoryShow').checked= false;
   }

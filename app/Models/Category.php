@@ -55,7 +55,7 @@ class Category extends Model
             $request['name'],
             isset($request['keywords'])?$request['keywords']: "",
             isset($request['subtitle'])?$request['subtitle']:"", //بتع 80 حر,
-            isset($request['image'])?$request['image']:"",
+            isset($request['image'])?$request['image']:Session::get('logo'),
             (float)$request['titel'],
             'flow step',
             $request['name'],
@@ -80,6 +80,7 @@ class Category extends Model
             (int)'1',
         ];
         
+        // dd($data,(isset($request['image'])?$request['image']:Session::get('logo')),Session::get('logo'));
 
         Sheets::spreadsheet(Session::get('sheet_id'))
         ->sheet('Shop Logic')->append([$data]);
@@ -87,21 +88,21 @@ class Category extends Model
     }
     static public function updateCategory($request,$id)
     {
-        
+        // dd($request);
         $ids = Sheets::spreadsheet(Session::get('sheet_id'))
         ->sheet('Shop Logic')->majorDimension('COLUMNS')->range('B:B')->all();
         // dd($ids[0]);
         foreach ($ids[0] as $key => $value) {
             
-            if ($value==$id) {
+            if ($value==$id) { 
                 $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Shop Logic')->range('A'.($key+1).':AC'.($key+1))->majorDimension('ROWS')->all();
-                // dd($request->all());
+               
                 $data[0][0]=(boolean)isset($request['show'])?TRUE:FALSE;
                 $data[0][2]="";
                 $data[0][3]=$request['name'];
                 $data[0][4]=isset($request['keywords'])?$request['keywords']: $data[0][4];
-                $data[0][5]=isset($request['subtitle'])?"السعر".$request['price'].','.$request['subtitle']:""; //بتع 80 حرف
-                $data[0][6]=isset($request['image'])?$data[0][6]:$request['image'];
+                $data[0][5]=isset($request['subtitle'])?$request['subtitle']:$data[0][5]; //بتع 80 حرف
+                $data[0][6]=isset($request['image'])?$request['image']:$data[0][6];
                 $data[0][7]=(float)$request['titel'];
                 // $data[0][8]='flow step';
                 // $data[0][9]='شراء المنتج';
