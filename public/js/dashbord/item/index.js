@@ -140,13 +140,13 @@
         sel.remove(i);
       }
     }
-
-    console.log('on function Edit Category and date on row = ', row);
+    var x=row[7].split(',').join('');
+    console.log('on function Edit Category and date on row = ', row[7]);
     document.getElementById('showAddCategory').click();
     document.getElementById('categoryForm').action=hostName+'/category/'+id;
     document.getElementById('categoryName').value=row[3];
     document.getElementById('categorySubtitle').value=row[5];
-    document.getElementById('categoryTitel').value=Math.floor(row[7]);
+    document.getElementById('categoryTitel').value=x.split('.')[0];
     document.getElementById('categoryKeywords').value=row[4]; 
     document.getElementById('categoryInfo').value=row[27]; 
     document.getElementById('categoryShow').checked= row[0]=='TRUE'?true:false;
@@ -289,7 +289,7 @@
     var hostName = window.location.origin;
     var row=[];
     items.forEach(element => {
-      if (Math.floor(element[7])==0) {
+      if (Math.floor(element[28])==1) {
         row.push(element);
       } 
     });
