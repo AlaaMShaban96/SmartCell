@@ -23,14 +23,43 @@ class ItemUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            // 'title' => 'required|unique:posts|max:255',
-            'titel' => 'required',
-            'name' => 'required',
-            // 'price' => 'required',
-            'detals' => 'max:80',
-
-        ];
+        $arr = explode('@', $this->route()->getActionName());
+        $method = $arr[1];  // The controller method
+    
+       
+        switch ($method) {
+            case 'store':
+                return [
+                    // 'title' => 'required|unique:posts|max:255',
+                    // 'title' => 'required',
+                    // 'subtitle' => 'max:80',
+                    // 'show' => 'required',
+                    // 'image' => 'required',
+                    // 'keyWords' => 'required',
+                ];
+                break;
+            case 'storeCategory':
+                return [
+                    // 'title' => 'required|unique:posts|max:255',
+                    'title' => 'required',
+                    'subtitle' => 'max:80',
+                    // 'show' => 'required',
+                    // 'image' => 'required',
+                    // 'keyWords' => 'required',
+                ];
+                break;
+                
+            case 'updateCategory':
+                return [
+                    // 'title' => 'required|unique:posts|max:255',
+                    'title' => 'required',
+                    'subtitle' => 'max:80',
+                    // 'show' => 'required',
+                    // 'image' => 'required',
+                    // 'keyWords' => 'required',
+                ];
+                break;
+         }
     }
     public function messages()
     {

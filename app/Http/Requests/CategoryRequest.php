@@ -32,8 +32,8 @@ class CategoryRequest extends FormRequest
             case 'storeCategory':
                 return [
                     // 'title' => 'required|unique:posts|max:255',
-                    'name' => 'required',
-                    'detals' => 'max:80',
+                    'title' => 'required',
+                    'subtitle' => 'max:80',
                     // 'show' => 'required',
                     // 'image' => 'required',
                     // 'keyWords' => 'required',
@@ -43,8 +43,8 @@ class CategoryRequest extends FormRequest
             case 'updateCategory':
                 return [
                     // 'title' => 'required|unique:posts|max:255',
-                    'name' => 'required',
-                    'detals' => 'max:80',
+                    'title' => 'required',
+                    'subtitle' => 'max:80',
                     // 'show' => 'required',
                     // 'image' => 'required',
                     // 'keyWords' => 'required',

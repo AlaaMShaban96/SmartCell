@@ -54,21 +54,44 @@ class ItemController extends Controller
      */
     public function store(ItemUpdateRequest $request)
     {   
-        $data=$request->all();
-        $data['image']=null;
-        if ($request->has('image')) {
-            $data['image']=$this->compress($request);
+       
+        switch ($request->category) {
+            case '1':
+
+                $this->storeCategory($request);
+
+                break;
+            
+            case '0':
+                // dd($request->all(),$request->category);
+
+                    // try {
+                        $data=$request->all();
+                        $data['image']=null;
+                        if ($request->has('image')) {
+                            $data['image']=$this->compress($request);
+                        }
+                        if ($request->has('button-1-image')) {
+                            $data['button-1-image']=$this->compress($request);
+                        }
+                        Item::createItems( $data);
+                    // } catch (\Throwable $th) {
+                    //     Session::flash('message', 'فشلت عملية الاضافة'); 
+                    //     Session::flash('alert-class', 'alert-danger'); 
+                    //     return redirect()->back();
+                    // }
+                    // dd($request->all());
+
+                break;
+            
+            default:
+                # code...
+                break;
         }
+       
         
         
-        try {
-            Item::createItems( $data);
-            // dd($data);
-        } catch (\Throwable $th) {
-            Session::flash('message', 'فشلت عملية الاضافة'); 
-            Session::flash('alert-class', 'alert-danger'); 
-            return redirect()->back();
-        }
+      
         Session::flash('message', 'تم اضافة المنتج  بنجاح'); 
         Session::flash('alert-class', 'alert-success'); 
         return redirect()->back();
@@ -76,13 +99,17 @@ class ItemController extends Controller
 
         
     }
-    public function storeCategory(CategoryRequest $request)
+    public function storeCategory(ItemUpdateRequest $request)
     {   
         $data=$request->all();
         $data['image']=null;
+        $data['button-1-image']=null;
         $data['category']="yes";
         if ($request->has('image')) {
             $data['image']=$this->compress($request);
+        }
+        if ($request->has('button-1-image')) {
+            $data['button-1-image']=$this->compress($request);
         }
         
 

@@ -1,0 +1,276 @@
+*{
+    padding:0;
+    margin:0;
+
+}
+
+.breadcrumb .breadcrumb-item a {
+    color:white;
+}
+
+.tree,
+.tree ul,
+.tree li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.tree {
+    margin: 0 0 1em;
+    text-align: center;
+}
+
+.tree,
+.tree ul {
+    display: table;
+}
+
+.tree ul {
+    width: 100%;
+}
+
+.tree li {
+    display: table-cell;
+    padding: .5em 0;
+    vertical-align: top;
+}
+
+.tree li:before {
+    outline: solid 1px #666;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.tree li:first-child:before {
+    left: 50%;
+}
+
+.tree li:last-child:before {
+    right: 50%;
+}
+
+.tree code,
+.tree span {
+
+    border-radius: 99px;
+    display: inline-block;
+    margin: 0 .2em .5em;
+    padding: 0 20px 0 0 ;
+    position: relative;
+    background:#4e4f50;
+    color:white;
+}
+.tree span img{
+    border-radius:20px 0  0 20px;
+}
+.tree .category-node  img{
+    border-radius: 0;
+}
+.tree ul:before,
+.tree code:before,
+.tree span:before {
+    outline: solid 1px #666;
+    content: "";
+    height: .5em;
+    left: 50%;
+    position: absolute;
+}
+
+.tree ul:before {
+    top: -.5em;
+}
+
+.tree .highlight {
+    box-shadow: 0 0 5px #4e4f50;
+    border-width: 0;
+    background:transparent;
+    color:#4e4f50;
+    border-radius: .2em;
+
+}
+.highlight {
+    box-shadow: 0 0 5px 6px rgba(0,0,0,0.3);
+    padding:5px;
+    margin:5px;
+}
+.highlight-dark {
+    box-shadow: 0 0 5px 6px rgba(255,255,255,0.6);
+    padding:5px;
+    margin:5px;
+}
+
+.tree code:before,
+.tree span:before {
+    top: -.55em;
+}
+
+.tree>li {
+    margin-top: 0;
+}
+
+.tree>li:before,
+.tree>li:after,
+.tree>li>code:before,
+.tree>li>span:before {
+    outline: none;
+}
+.tree .category-node
+{
+    border-radius: 0;
+}
+.tree .addProductButton , .tree .etc{
+    border: solid .1em #4e4f50;
+    border-radius: .2em;
+    display: inline-block;
+    margin: 0 .2em .5em;
+    padding: .2em .5em;
+    position: relative;
+    background:#4e4f50;
+    color:white;
+}
+
+.createHover{
+    cursor:pointer;
+}
+.createHover:hover{
+    filter:brightness(75%);
+
+}
+
+.popover-header {
+    color: white;
+    text-align: center;
+    background: #3a3b3c;
+}
+.popover-body {
+    color: white;
+    font-size: 10px;
+    background: #4e4f50;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: ">";
+}
+.navigate-card{
+    cursor: pointer;
+    color:white;
+}
+
+/* Slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.hidden-product{
+    opacity:0.6;
+}
+
+.fav-button{
+    background:#4e4f50;
+    border-width: 0;
+    width:50px;
+    height:50px;
+    border-radius: 99px;
+    position: absolute;
+    bottom:-155px;
+    right:-75px;
+}
+.fav-button-digram {
+    bottom:-75px;
+}
+.fav-button-search {
+    bottom:-235px;
+}
+
+.card{
+    width:275px;
+    height:100%;
+    background:#3a3b3c;
+    box-shadow: 0 0 1px 1px rgba(0,0,0,0.1);
+    border-width: 0;
+    color:white;
+    border-radius: 20px;
+
+}
+@media (min-width:801px)  {
+    .card {
+        width:100%;
+    }
+    .modal-dialog{
+        max-width: 90%;
+    }
+}
+@media (min-width : 1000px) {
+    .modal-dialog{
+        max-width: 800px;
+    }
+}
+
+.btn-primary{
+    background:#4e4f50;
+    border-width: 0;
+}
+.btn-primary-active{
+    background:#007bff;
+}

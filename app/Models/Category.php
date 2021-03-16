@@ -44,31 +44,29 @@ class Category extends Model
         }
         $mont=Carbon::now('libya')->format('m');
         $year=Carbon::now('libya')->format('Y')-2000;
-        $type=0;
-        $id=$store_id.$year.$mont.$type.rand(1,50000);
-        
+        $id=$store_id.$year.$mont.date("dhis");
         $data=[
            
-            (boolean)isset($request['show'])?TRUE:FALSE,
+            (boolean)isset($request['product-show'])?TRUE:FALSE,
             (int)$id,
             "",
-            $request['name'],
+            isset($request['title'])?$request['title']:0,
             isset($request['keywords'])?$request['keywords']: "",
             isset($request['subtitle'])?$request['subtitle']:"", //بتع 80 حر,
             isset($request['image'])?$request['image']:Session::get('logo'),
-            (float)$request['titel'],
+            (float)isset($request['parentId'])?$request['parentId']: 0,
             'flow step',
-            $request['name'],
+            $request['button-1-name'],
             'SubCategories',
             'set_field_value, set_field_value',
             'cate1, order id',
             '1||'.$id,            
-            isset($request['info'])?"flow step":"none",
-            isset($request['info'])?"تفاصيل أكثر":"",
-            isset($request['info'])?"details":"",
-            isset($request['info'])?"set_field_value, set_field_value, set_field_value":"",
-            isset($request['info'])?"details, cate1, order id":"",
-            isset($request['info'])?$request['info'].'||1||'.$id :"",
+            isset($request['button-2-type'])?"flow step":"none",
+            isset($request['button-2-type'])?$request['button-2-name']:"",
+            isset($request['button-2-type'])?$request['button-2-details']:"",
+            isset($request['button-2-type'])?"set_field_value, set_field_value, set_field_value":"",
+            isset($request['button-2-type'])?"details, cate1, order id":"",
+            isset($request['button-2-type'])?$request['button-2-details'].'||1||'.$id :"",
             "",
             "",
             "",
@@ -76,11 +74,12 @@ class Category extends Model
             "",
             "",
             "",
-            isset($request['info'])?$request['info']:"",
+            isset($request['button-2-type'])?$request['button-2-details']:"",
             (int)'1',
         ];
         
         // dd($data,(isset($request['image'])?$request['image']:Session::get('logo')),Session::get('logo'));
+        // dd($data);
 
         Sheets::spreadsheet(Session::get('sheet_id'))
         ->sheet('Shop Logic')->append([$data]);

@@ -50,37 +50,53 @@ class Item extends Model
         }
         $mont=Carbon::now('libya')->format('m');
         $year=Carbon::now('libya')->format('Y')-2000;
-        $type=1;
-        $id=$store_id.$year.$mont.$type.rand(1,50000);
+        $id=$store_id.$year.$mont.date("dhis");
         
         // if ($index!=null) {
         //     Item::itemUpdate($index,$request,$id);
         // }else {
             // dd( $id.'||0||'.(isset($request['qyantity'])?"غير محدودة":"محدودة").'||'.$request['qyantity'].'||'.$request['image'].'||'.$request['price'].'||'.$request['name']);
-          
             $data=[
                
-            (boolean)isset($request['show'])?TRUE:FALSE,
+            (boolean)isset($request['product-show'])?TRUE:FALSE,
             (int)$id,
-            (float)isset($request['price'])?$request['price']:'',
-            $request['name'],
+            (float) self::setPrice($request),
+            $request['title'],
             isset($request['keywords'])?$request['keywords']: "",
             isset($request['subtitle'])?$request['subtitle']:'', //بتع 80 حر,
             isset($request['image'])?$request['image']:asset("images/logo.svg"),
-            (float)$request['titel'],
+            (float)isset($request['parentId'])?$request['parentId']: 0,
             'flow step',
-            isset($request['price'])?'شراء المنتج 🛒':'تفاصيل أكثر',
-            isset($request['price'])?'SubCategories':'details',
-            isset($request['price'])?'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value , set_field_value':'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value',
-            isset($request['price'])?'set order, price, photo, set_quantity, quantity_text, cate1, order id':'details, set order, price, photo, set_quantity, quantity_text, cate1, order id',
-            isset($request['price'])?$request['name'].'||'.(isset($request['price'])?$request['price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id :($request['info'].$request['name'].'||'.(isset($request['price'])?$request['price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id),            
            
-            isset($request['price'])?isset($request['info'])?"flow step":"none":'',
-            isset($request['price'])?isset($request['info'])?"تفاصيل أكثر":"":'',
-            isset($request['price'])?isset($request['info'])?"details":"":'',
-            isset($request['price'])?isset($request['info'])?"set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value":"":'',
-            isset($request['price'])?isset($request['info'])?"details, set order, price, photo, set_quantity, quantity_text, cate1, order id":"":'',
-            isset($request['price'])?isset($request['info'])?$request['info'].$request['name'].'||'.(isset($request['price'])?$request['price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id :"":'',
+           
+            isset($request['button-1-type'])?$request['button-1-name']:'',
+            isset($request['button-1-type']) && $request['button-1-type']=='BUY'?'SubCategories':'details',
+            isset($request['button-1-type']) && $request['button-1-type']=='BUY'?'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value , set_field_value':'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value',
+            isset($request['button-1-type']) && $request['button-1-type']=='BUY'?'set order, price, photo, set_quantity, quantity_text, cate1, order id':'details, set order, price, photo, set_quantity, quantity_text, cate1, order id',
+            isset($request['button-1-type']) && $request['button-1-type']=='BUY'?$request['title'].'||'.(isset($request['button-1-price'])?$request['button-1-price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id :($request['button-1-details'].$request['titel'].'||'.(isset($request['button-1-price'])?$request['button-1-price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id),            
+           
+            isset($request['button-2-type']) && $request['button-2-type']=='DATA'?"flow step":"none",
+            isset($request['button-2-type']) && $request['button-2-type']=='DATA'?$request['button-2-name']:"",
+            isset($request['button-2-type']) && $request['button-2-type']=='DATA'?'details':"SubCategories",
+            isset($request['button-2-type']) && $request['button-2-type']=='DATA'?"set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value":"",
+            isset($request['button-2-type']) && $request['button-2-type']=='DATA'?"details, set order, price, photo, set_quantity, quantity_text, cate1, order id":"",
+            isset($request['button-2-type']) && $request['button-2-type']=='DATA'?$request['button-2-details'].$request['button-2-name'].'||'.(isset($request['button-2-price'])?$request['button-2-price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id :"",
+           
+           
+           
+           
+            // isset($request['price'])?'شراء المنتج 🛒':'تفاصيل أكثر',
+            // isset($request['price'])?'SubCategories':'details',
+            // isset($request['price'])?'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value , set_field_value':'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value',
+            // isset($request['price'])?'set order, price, photo, set_quantity, quantity_text, cate1, order id':'details, set order, price, photo, set_quantity, quantity_text, cate1, order id',
+            // isset($request['price'])?$request['name'].'||'.(isset($request['price'])?$request['price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id :($request['info'].$request['name'].'||'.(isset($request['price'])?$request['price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id),            
+           
+            // isset($request['price'])?isset($request['info'])?"flow step":"none":'',
+            // isset($request['price'])?isset($request['info'])?"تفاصيل أكثر":"":'',
+            // isset($request['price'])?isset($request['info'])?"details":"":'',
+            // isset($request['price'])?isset($request['info'])?"set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value":"":'',
+            // isset($request['price'])?isset($request['info'])?"details, set order, price, photo, set_quantity, quantity_text, cate1, order id":"":'',
+            // isset($request['price'])?isset($request['info'])?$request['info'].$request['name'].'||'.(isset($request['price'])?$request['price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id :"":'',
             "",
             "",
             "",
@@ -88,7 +104,7 @@ class Item extends Model
             "",
             "",
             (int)isset($request['qyantity'])?$request['qyantity']:'',
-            isset($request['info'])?$request['info']:"",
+            self::setDetails($request),
             (int)'0',
             ];
             // dd($data);
@@ -174,6 +190,26 @@ class Item extends Model
         range('A'.$id)->update([$data[0]]);
        return true ;
 
+    }
+    static private function setPrice($request)
+    {
+        if (isset($request['button-2-price'])) {
+           return $request['button-2-price'];
+        }
+        if (isset($request['button-1-price'])) {
+           return $request['button-1-price'];
+        }
+        return 0;
+    }
+    static private function setDetails($request)
+    {
+        if (isset($request['button-2-details'])) {
+           return $request['button-2-details'];
+        }
+        if (isset($request['button-1-details'])) {
+           return $request['button-1-details'];
+        }
+        return '';
     }
 
 } 
