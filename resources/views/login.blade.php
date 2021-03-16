@@ -63,7 +63,7 @@
 				<form action="{{url('/login')}}" method="post">
 					@csrf
 					@if (Session::has('message'))
-						<div class="alert alert-danger" role="alert">
+						<div class="alert alert-danger text-center" role="alert">
 							{{ Session::get('message') }}
 						</div>
 				 	@endif
@@ -72,14 +72,23 @@
 				</form>
 				<br>
 				{{-- <div class="row"> --}}
-					<p style="  text-align: center;margin-top: 37%;font-size: 20px;">ليس لديك حساب ؟ <a href="#" style="color:#10858b ;font-size: 20px;">تواصل معنا</a></p>
+					<p style="  text-align: center;margin-top: 37%;font-size: 20px;">ليس لديك حساب ؟ <a href="https://m.me/smartcell.ly" style="color:#10858b ;font-size: 20px;">تواصل معنا</a></p>
 				{{-- </div> --}}
 				
 			</div>
 			
 		</div>
 	</div>
+<!-- ManyChat -->
+{{-- <div class="mcwidget-embed" data-widget-id="14822328"></div> --}}
 
+<script src="//widget.manychat.com/123716295980818.js" defer="defer"></script>
+<script>
+	window.mcAsyncInit = function() {
+	  // MC variable is available now
+	  console.log(MC);
+	};
+  </script>
 	<script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>

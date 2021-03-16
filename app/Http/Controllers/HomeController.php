@@ -94,7 +94,6 @@ class HomeController extends Controller
                             }
                     }else {
                     
-                        Session::flash('message', "البريد غير موجود او لاتملك صلاحية الدخول");
                         return view('login');
                         
                     }
@@ -130,7 +129,12 @@ class HomeController extends Controller
                         $date = Carbon::parse( $store->data()['expiringDate']);
                         $now  = Carbon::now();
                         $diff = $date->diffInDays($now);
+                        if ($diff<=0) {
+                            Session::flash('message', "انتهئ اشتراك  الخاص بك في النظام ");
+                            return false;
+                        }
                         if ($diff<=10) {
+                          
                             Session::flash('expiringDate',$diff);
                             Session::flash('expiringDate', ' تبقي علي انتهاء اشتراكك ' . ' '.$diff .' ' .'من الايام '); 
 
@@ -144,12 +148,13 @@ class HomeController extends Controller
                    
                         return true;
                     }else {
+                        Session::flash('message', "لاتملك صلاحية الدخول");
                         return false;
                     }
                        
 
                 } else {
-
+                    Session::flash('message', "البريد غير موجود ");
                     return false;
                 }
 
