@@ -72,8 +72,6 @@ class Order extends Model
     {
         $column = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->majorDimension('')->range('')->all();
         $data=[];
-       
-       
         foreach ($column as $key => $value) {
             if ($key != 0) {
 
@@ -143,8 +141,12 @@ class Order extends Model
     }
     static public function allOrder()
     {
-        return Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('')->majorDimension('')->get();    
-       
+        
+        $data =Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('')->majorDimension('')->get();    
+        $orders=$data->toArray();
+        rsort($orders);
+        // dd($orders);
+        return $orders;
     }
     static public function SelectRows($search)
     {

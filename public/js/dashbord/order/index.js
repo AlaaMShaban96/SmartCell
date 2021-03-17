@@ -15,6 +15,8 @@
 function order(id) {
   var hostName = window.location.origin;
     var row=[];
+   
+
     app.forEach(element => {
      if (element[47]==id) {
         return row= element;  
@@ -67,7 +69,20 @@ function showOrderStatus(status) {
   document.getElementById('tbodyOrders').innerHTML="";
   var tbodyOrders= document.getElementById('tbodyOrders');
   var state= status;
-   app.forEach(element => {
+  var row=[];
+   
+
+  app.forEach(element => {
+   if (element[42] == state) {
+    row.push(element) ;  
+   }    
+  
+  });
+  // row.sort();
+  // // Then reverse it:
+  // row.reverse();
+  // console.log(row.sort((a,b) => a[48] - b[48]));
+  row.forEach(element => {
       if (element[42] == state) {
             var tr=document.createElement('tr');
 

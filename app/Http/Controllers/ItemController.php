@@ -54,47 +54,53 @@ class ItemController extends Controller
      */
     public function store(ItemUpdateRequest $request)
     {   
-       
-        switch ($request->category) {
-            case '1':
+        switch ($request->create) {
+            case 0:
 
-                $this->storeCategory($request);
-
+               $this->update($request,$request->productId);
                 break;
             
-            case '0':
-                // dd($request->all(),$request->category);
-
-                    // try {
-                        $data=$request->all();
-                        $data['image']=null;
-                        if ($request->has('image')) {
-                            $data['image']=$this->compress($request);
-                        }
-                        if ($request->has('button-1-image')) {
-                            $data['button-1-image']=$this->compress($request);
-                        }
-                        Item::createItems( $data);
-                    // } catch (\Throwable $th) {
-                    //     Session::flash('message', 'فشلت عملية الاضافة'); 
-                    //     Session::flash('alert-class', 'alert-danger'); 
-                    //     return redirect()->back();
-                    // }
-                    // dd($request->all());
-
-                break;
-            
-            default:
-                # code...
-                break;
+            case 1:
+                switch ($request->category) {
+                    case '1':
+                        // dd($request->all());
+        
+                        $this->storeCategory($request);
+        
+                        break;
+                    
+                    case '0':
+        
+                            try {
+                                $data=$request->all();
+                                $data['image']=null;
+                                if ($request->has('image')) {
+                                    $data['image']=$this->compress($request);
+                                }
+                                if ($request->has('button-1-image')) {
+                                    $data['button-1-image']=$this->compress($request);
+                                }
+                                Item::createItems( $data);
+                            } catch (\Throwable $th) {
+                                Session::flash('message', 'فشلت عملية الاضافة'); 
+                                Session::flash('alert-class', 'alert-danger'); 
+                                return redirect()->back();
+                            }
+        
+                        break;
+                    
+                    default:
+                        # code...
+                        break;
+                }
+                Session::flash('message', 'تم اضافة المنتج  بنجاح'); 
+                Session::flash('alert-class', 'alert-success'); 
+                
+                
         }
        
-        
-        
-      
-        Session::flash('message', 'تم اضافة المنتج  بنجاح'); 
-        Session::flash('alert-class', 'alert-success'); 
         return redirect()->back();
+        
        
 
         
@@ -114,11 +120,11 @@ class ItemController extends Controller
         
 
         try {
-            Category::createCategory( $data);
+            Category::createCategory( $data) ;
         } catch (\Throwable $th) {
             Session::flash('message', 'فشلت عملية الاضافة'); 
             Session::flash('alert-class', 'alert-danger'); 
-            return ;
+            return redirect()->back();
         }
         Session::flash('message', 'تم اضافة المنتج  بنجاح'); 
         Session::flash('alert-class', 'alert-success'); 
@@ -127,7 +133,7 @@ class ItemController extends Controller
 
         
     }
-    public function updateCategory(CategoryRequest $request,$id)
+    public function updateCategory(ItemUpdateRequest $request,$id)
     {   
         $data=$request->all();
         $data['image']=null;
@@ -183,19 +189,34 @@ class ItemController extends Controller
      */
     public function update(ItemUpdateRequest $request, $id)
     {
-        // dd($request->all());
-        $data=$request->all();
-        $data['image']=null;
-        if ($request->has('image')) {
-            $data['image']=$this->compress($request);
+              
+
+        switch ($request->category) {
+            case '1':
+                // dd($request, $id);
+                $this->updateCategory($request, $id);
+
+                break;
+            
+            case '0':
+
+                // dd($request->all());
+                        $data=$request->all();
+                        $data['image']=null;
+                        if ($request->has('image')) {
+                            $data['image']=$this->compress($request);
+                        }
+                        try {
+                            Item::itemUpdate($id,$data);
+                        } catch (\Throwable $th) {
+                            Session::flash('message', $th.'فشلت عملية التعديل'); 
+                            Session::flash('alert-class', 'alert-danger'); 
+                            return redirect()->back();
+                        }
+                break;
+
         }
-        try {
-            Item::itemUpdate($id,$data);
-        } catch (\Throwable $th) {
-            Session::flash('message', $th.'فشلت عملية التعديل'); 
-            Session::flash('alert-class', 'alert-danger'); 
-            return redirect()->back();
-        }
+
         Session::flash('message', 'تم التعديل بنجاح'); 
         Session::flash('alert-class', 'alert-success'); 
         return redirect()->back();

@@ -39,8 +39,8 @@ function drawTreeProduct(productId = null,product ,parentElement=null){
     {
 
         var template = `<li class="treeNodeHover">
-<span data-product-id="${product.category ? product.productId : null }" class="${product.category ? "navigate-card category-node" : null } 
-${selectedId == product.productId ? "highlight" : "" }">
+<span data-product-id="${product.category ? product.productId : null }" class="animate__animated animate__zoomIn ${product.category ? "category-node" : "" } 
+${product.category && product.productId != productId ? "navigate-card" : ""} ${selectedId == product.productId ? "highlight" : "" }">
 <img width="64" height="64" src="${product.image ?? "https://via.placeholder.com/150"}" />
 ${product.title}
 ${product.category ? `<div data-parent-id="${product.productId}" style="position: absolute; left:100%; cursor: pointer; " class="addProductButton ">+</div>` : ""}

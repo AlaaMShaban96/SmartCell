@@ -254,7 +254,10 @@
 @endsection
 @section('script')
   <script src="{{asset('assets/js/date.js')}}"></script>
-  <script>var app = @json($orders,JSON_PRETTY_PRINT);</script>
+  <script>var app = @json($orders,JSON_PRETTY_PRINT);
+  app.sort();
+  app.reverse();
+  </script>
   <script src="{{asset('js/dashbord/order/index.js')}}"></script>
 
 @endsection

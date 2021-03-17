@@ -33,26 +33,37 @@ $(function(){
     $("#button-2-name").keyup(function(){
         $("#button-2").html($(this).val());
     });
-    $(".select-button-type").change(function(){
+    $("#button-1-type").change(function(){
         var value = $(this).val();
-        var dataForm = $(this).parent().find(".data-button-form");
-        var buyForm = $(this).parent().find(".buy-button-form");
+        var otherValue ;
+        $("#button-1-type option").each(function()
+        {
+            if($(this).val() != value)
+            {
+                otherValue = $(this).val();
+            }
+        });
 
-        if(value == "BUY")
+        $("#button-2-type").val(otherValue);
+        ButtionFormHandler($(this));
+        ButtionFormHandler($("#button-2-type"));
+
+    });
+    $("#button-2-type").change(function(){
+        var value = $(this).val();
+        var otherValue ;
+        $("#button-2-type option").each(function()
         {
-            dataForm.hide(100);
-            buyForm.show(100);
-        }
-        else if(value == "DATA")
-        {
-            dataForm.show(100);
-            buyForm.hide(100);
-        }
-        else
-        {
-            dataForm.hide(100);
-            buyForm.hide(100);
-        }
+            if($(this).val() != value)
+            {
+                otherValue = $(this).val();
+            }
+        });
+
+        $("#button-1-type").val(otherValue);
+        ButtionFormHandler($(this));
+        ButtionFormHandler($("#button-1-type"));
+
     });
     //Button functionalty end
     $("#product-category").change(function(){
@@ -60,14 +71,15 @@ $(function(){
         var isCategory = $(this).val() == 1;
         if(isCategory){
             $("#productForm").hide(100);
-            $(".buyOption").hide(100);
+            $(".buyOption").html("Show products").val('SHOW');
             $(".showOption").show(100);
+            $(".select-button-type").trigger('change');
         }
         else
         {
             $("#productForm").show(100);
-            $(".buyOption").show(100);
-            $(".showOption").hide(100);
+            $(".buyOption").html("BUY NOW").val('BUY');
+            $(".select-button-type").trigger('change');
         }
 
     });
@@ -86,14 +98,6 @@ $(function(){
         $("#button-2-form").addClass('highlight');
         $("#button-2").addClass('highlight-dark');
     });
-    $("#card-form").on("focus","input , select",function(){
-        $(".highlight").removeClass("highlight");
-        $(".highlight-dark").removeClass("highlight-dark");
-
-        $("#card-form").addClass('highlight');
-        $("#card-preview").addClass('highlight-dark');
-    });
-
     $(document).on("click",'.addButton2',function(){
         $("#button-2").html("زر #2");
         $("#button-2").removeClass("addButton2");
@@ -116,7 +120,14 @@ $(function(){
 
     $("#product-image").change(function(){
        $("#imagePreview").attr('src',window.URL.createObjectURL(this.files[0]));
-    })
+    });
+    $("#button-1-image").change(function(){
+        $("#Button-1-imagePreview").attr('src',window.URL.createObjectURL(this.files[0]));
+    });
+    $("#button-2-image").change(function(){
+        $("#Button-2-imagePreview").attr('src',window.URL.createObjectURL(this.files[0]));
+    });
+
 
     $("#product-show").change(function(){
         console.log(this.checked);
@@ -125,3 +136,26 @@ $(function(){
         console.log(this.checked);
     })
 });
+
+
+function ButtionFormHandler(me)
+{
+    var value = me.val();
+    var dataForm = me.parent().find(".data-button-form");
+    var buyForm = me.parent().find(".buy-button-form");
+
+    if(value == "BUY"){
+        dataForm.hide(100);
+        buyForm.show(100);
+    }
+    else if(value == "DATA")
+    {
+        dataForm.show(100);
+        buyForm.hide(100);
+    }
+    else if(value == "SHOW")
+    {
+        dataForm.hide(100);
+        buyForm.hide(100);
+    }
+}

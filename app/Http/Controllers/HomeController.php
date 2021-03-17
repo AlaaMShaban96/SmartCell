@@ -30,16 +30,16 @@ class HomeController extends Controller
     }
     public function index()
     {
-        try {
+        // try {
             $orderState=Order::orderState();
             $todayOrder=Order::todayOrder();
-        } catch (\Throwable $th) {
-            dd('index function on file HomeController error',$th);
-        }
-        $link="";
+        // } catch (\Throwable $th) {
+        //     dd('index function on file HomeController error',$th);
+        // }
+        // $link="";
     
 
-        return view('Dashbord.index',compact('orderState','link','todayOrder'));
+        return view('Dashbord.index',compact('orderState','todayOrder'));
     }
 
     /**

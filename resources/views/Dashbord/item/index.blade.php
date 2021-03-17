@@ -457,34 +457,37 @@
     <div class="row " id="searchContainer" style="display:none;">
 
     </div>
-    <div class="row animate__animated animate__zoomIn" id="treeContainer" style="display:none;">
+    <div class="row" id="treeContainer" style="display:none; overflow-x: auto;">
         <ul class="tree col-md-12"></ul>
     </div>
     <div id="editFormModal" style="z-index:1050;" class="modal" role="dialog">
         <div class="modal-dialog modal-lg"  role="document">
             <div class="modal-content">
                 <form action="{{url('/item')}}" method='post' enctype="multipart/form-data">
-                  @csrf
-                  <input type="hidden" name="crate" value="1">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
+                    @csrf
 
-                    <input type="hidden" name="productId" value="" />
-                    <input type="hidden" name="parentId" id="parentId" value="" />
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <input type="hidden" name="create" id="product-create" value="1" />
+                        <input type="hidden" name="productId" id="product-productId" value="" />
+                        <input type="hidden" name="parentId" id="product-parentId" value="" />
                         <div class="container row">
                             <div class="col-md-6 rounded-top" >
                                 <div class="card" id="card-preview"  style="max-height: 600px;background:#3a3b3c; border-width: 0; color:white;border-radius: 20px;">
                                     <img id="imagePreview" src="https://via.placeholder.com/150" style="height:350px;border-radius: 20px 20px 0 0 ;" class="card-img-top">
-                                    <button class="btn btn-primary" style="background:#4e4f50;border-width: 0;width:50px;height:50px;border-radius: 99px;position: absolute; top:20px;right:20px;">
+                                    <input type="file" id="product-image" name="image" class="form-control" style="visibility:hidden;" />
+
+                                    <label  for="product-image" class="btn btn-primary d-flex justify-content-center align-items-center" style="background:#4e4f50;border-width: 0;width:50px;height:50px;border-radius: 99px;position: absolute; top:20px;right:20px;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
                                             <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
                                             <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
                                         </svg>
-                                    </button>
+                                    </label>
                                     <div class="card-body">
                                         <input id="product-title" name="title" placeholder="Enter item title" style="color:white;background:transparent; border-width: 0; border-bottom-width: 1px; margin:10px 0;" />
                                         <input id="product-subtitle" name="subtitle" placeholder="Enter item Subtitle" style="color:white;background:transparent; border-width: 0; border-bottom-width: 1px; margin:10px 0;" />
@@ -499,11 +502,8 @@
                                     <h5>Button #1</h5>
                                     <label>Type :</label>
                                     <select id="button-1-type" name="button-1-type" class="form-control select-button-type">
-                                        <option value="">Select a type</option>
                                         <option class="buyOption" value="BUY">Buy now Button</option>
                                         <option value="DATA">Details Button</option>
-                                        <option class="showOption" value="SHOW">Show Products</option>
-
                                     </select>
                                     <label>button name</label>
                                     <input class="form-control" id="button-1-name" name="button-1-name" placeholder="اسم الزر"  />
@@ -514,8 +514,8 @@
                                     <div class="data-button-form">
                                         <label>Details</label>
                                         <input class="form-control" id="button-1-details" name="button-1-details" placeholder="..." />
-                                        <label>image</label>
-                                        <input type="file" id="button-1-image" class="form-control" name="button-1-image"  />
+                                        <label for="button-1-image">Image : <br/><img id="Button-1-imagePreview" width="200" height="200" src="https://via.placeholder.com/150" alt="" style="cursor:pointer;width:200px;height:200px;" class="img-thumbnail"></label>
+                                        <input style="visibility: hidden;" type="file" id="button-1-image" class="form-control" name="button-1-image"  />
                                     </div>
                                     <hr/>
 
@@ -525,10 +525,8 @@
                                         <a id="deleteButton" href="#" class="btn btn-danger">x</a></div>
                                     <label>Type :</label>
                                     <select id="button-2-type" name="button-2-type" class="form-control select-button-type">
-                                        <option value="">Select a type</option>
                                         <option class="buyOption" value="BUY">Buy now Button</option>
                                         <option value="DATA">Details Button</option>
-                                        <option class="showOption" value="SHOW"  >Show Products</option>
                                     </select>
                                     <label>button name</label>
                                     <input class="form-control" id="button-2-name" name="button-2-name" value="زر 2" placeholder="اسم الزر"  />
@@ -539,8 +537,8 @@
                                     <div class="data-button-form">
                                         <label>Details</label>
                                         <input class="form-control" id="button-2-details" name="button-2-details" placeholder="..." />
-                                        <label>image</label>
-                                        <input type="file" id="button-2-image" class="form-control" name="button-2-image"  />
+                                        <label for="button-2-image">Image : <br/><img id="Button-2-imagePreview" width="200" height="200" src="https://via.placeholder.com/150" alt="" style="cursor:pointer;width:200px;height:200px;" class="img-thumbnail"></label>
+                                        <input style="visibility: hidden;" type="file" id="button-2-image" class="form-control" name="button-1-image"  />
                                     </div>
                                     <hr/>
 
@@ -550,8 +548,6 @@
                                 <div id="card-form">
                                     <label>Keywords</label>
                                     <input class="form-control" id="product-keywords" name="keywords" placeholder="keywords" />
-                                    <label>image</label>
-                                    <input type="file" id="product-image" name="image" class="form-control" placeholder="keywords" />
                                     <label>Type</label>
                                     <select class="form-control" id="product-category" name="category">
                                         <option value="0">Product</option>
@@ -581,11 +577,11 @@
                             </div>
                         </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Save changes</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Save changes</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -651,6 +647,7 @@
 
 @endsection
 @section('script')  
+{{-- var products = formatProducts(items).splice(1); --}}
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 
@@ -659,323 +656,339 @@
   <script src="{{asset('js/dashbord/item/events.js')}}"></script>
   <script src="{{asset('js/dashbord/item/tree.js')}}"></script>
   <script>
-        var products = formatProducts(items).splice(1);
-      
+    var products = formatProducts(items).splice(1);
+    // var products = [
+    //     {productId:"1",showProduct:false,parent:null,title:"product 1",subtitle:"subtitle",category:false,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"2",showProduct:true,parent:null,title:"category 2",subtitle:"subtitle",category:true,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"3",showProduct:true,parent:"2",order:2,title:"category 3",subtitle:"subtitle",category:true,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"4",showProduct:true,parent:"3",order:1,title:"category 4",subtitle:"subtitle",category:true,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"5",showProduct:true,parent:"2",order:1,title:"product 5",subtitle:"subtitle",category:false,button1:{type:"DATA",name:"Test",details:"test"},button2:{type:"BUY",name:"شراء",price:200}},
+    //     {productId:"6",showProduct:true,parent:"3",order:2,title:"product 6",subtitle:"subtitle",category:false,button1:{type:"DATA",name:"data",details:"test"},button2:{type:"DATA",name:"asd",details:"asd"}},
+    //     {productId:"7",showProduct:true,parent:"4",order:1,title:"product 7",subtitle:"subtitle",category:false,button1:{type:"BUY",name:"Buy now",price:100}},
+    // ];
     var productsById = {};
     for (var i = 0; i < products.length; i += 1){
         productsById[products[i].productId] = i;
     }
     var productsTree = makeTree(products,productsById);
-        $(function() {
-            var $editFormModal = $("#editFormModal");
-            var updateUrl = "";
-            var createUrl = "";
-            gotoProduct();
-            $(document).on("click", ".navigate-card", function (){
-                var productId = $(this).attr("data-product-id");
-                gotoProduct(productId);
-            });
-            $(document).on("click",'.editProductButton',function(){
-                var productId = $(this).parent().parent().attr('data-product-id');
-                $editFormModal.modal('show');
-                $editFormModal.find("form").attr("action",updateUrl);
-
-                addDataToFields(productId);
-            });
-            $(document).on("click",'.addProductButton',function()
-            {
-                $("#createModal").modal('show');
-            })
-
-            $(".createHover").popover({ trigger: "hover" });
-
-            $("#createCategory").click(function(){
-                var parentId = $(this).attr('data-parent-id');
-                $editFormModal.find("#parentId").val(parentId);
-                $("#createModal").modal('hide');
-                $editFormModal.modal('show');
-                ResetFields();
-                $editFormModal.find("form").attr("action",createUrl);
-                $editFormModal.find("#product-category").val(1).trigger("change");
-
-                var numberOfSiblings = products.filter(item => item.parent == product.parent).length;
-                $("#product-order").html('');
-                for(var i=1;i<=numberOfSiblings;i++){
-                    $("#product-order").append(`<option value="${i}">${i}</option>`);
-                }
-
-            });
-            $("#createProduct").click(function(){
-                var parentId = $(this).attr('data-parent-id');
-                $("#createModal").modal('hide');
-                $editFormModal.modal('show');
-                ResetFields();
-                $editFormModal.find("form").attr("action",createUrl);
-                $editFormModal.find("#product-category").val(0).trigger("change");
-                $editFormModal.find("#parentId").val(parentId);
-
-                var numberOfSiblings = products.filter(item => item.parent == product.parent).length;
-                $("#product-order").html('');
-                for(var i=1;i<=numberOfSiblings;i++){
-                    $("#product-order").append(`<option value="${i}">${i}</option>`);
-                }
-
-            });
-            MakeSearch(products);
-
-            $(document).on('keyup','#searchBox input',function(){
-                MakeSearch(products,$(this).val());
-            });
-
+    $(function() {
+        var $editFormModal = $("#editFormModal");
+        var updateUrl = "";
+        var createUrl = "";
+        gotoProduct();
+        $(document).on("click", ".navigate-card", function (){
+            var productId = $(this).attr("data-product-id");
+            gotoProduct(productId);
         });
-        function MakeSearch(products,search='')
+        $(document).on("click",'.editProductButton',function(){
+            var productId = $(this).parent().parent().attr('data-product-id');
+            $editFormModal.modal('show');
+            $editFormModal.find("form").attr("action",updateUrl);
+
+            addDataToFields(productId);
+        });
+        $(document).on("click",'.addProductButton',function()
         {
-            $searchContainer = $("#searchContainer");
-            $searchContainer.html("");
-            products.filter(item => item.title.includes(search)).forEach(item => {
-                $searchContainer.append(`
-                    <div class=" col-md-4 col-lg-3 col-12 col-sm-6" style="border-radius: 20px; margin-top:20px;">
-                    <div data-product-id="${item.productId}"  data-placement="top" data-title="مخفي" data-content="هذا المنتج لا يظهر للمستخدمين"  class="${item.showProduct == false ? 'hidden-product' : ''}" style="height:100%; ">
-                    <div class="card animate__animated animate__zoomIn"  >
-                        <img src="${item.image ?? "https://via.placeholder.com/150"}" style="border-radius: 20px 20px 0 0 ;" class="card-img-top">
-                        <button class="btn btn-primary editProductButton" style="background:#4e4f50;border-width: 0;width:50px;height:50px;border-radius: 99px;position: absolute; top:20px;right:20px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                              <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-                            </svg>
-                        </button>
-                        <form method='post' action='{{url('/item')}}/${item.productId}'>
-                          @csrf
-                          @method('delete')
-                        <button type="submit"  class="btn btn-danger" style="border-width: 0;width:50px;height:50px;border-radius: 99px;position: absolute; top:20px;left:20px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                              <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                            </svg>
-                        </button>
-                        </form>
-                        <div class="card-body">
-                            <h5  class="card-title">${item.title}</h5>
-                            <p  class="card-text" style="color:silver;">${item.subtitle}</p>
-                              <a href="#" style="background:#4e4f50;border-width: 0;" class="btn btn-primary">${item.button1.name ?? ((item.category) ? "عرض المنتجات" : "شراء المنتج" )}</a>
-                                ${(item.button2) ? `<a href="#" style="background:#4e4f50;border-width: 0;" class="btn btn-primary">${item.button2.name }</a>` : ""}
+            $("#createModal").modal('show');
+        })
 
-                        </div>
-                    </div>
-                    </div>
-                    </div>
-                `);
-            });
-            $searchContainer.find('.hidden-product').popover({trigger:"hover"});
-        }
+        $(".createHover").popover({ trigger: "hover" });
 
-        function addDataToFields(productId)
-        {
-            var $editFormModal = $("#editFormModal");
-            var product = products[productsById[productId]];
+        $("#createCategory").click(function(){
+            var parentId = $(this).attr('data-parent-id');
+            $editFormModal.find("#parentId").val(parentId);
+            $("#createModal").modal('hide');
+            $editFormModal.modal('show');
+            ResetFields();
+            $editFormModal.find("form").attr("action",createUrl);
+            $editFormModal.find("#product-category").val(1).trigger("change");
 
-            $editFormModal.find('#product-title').val(product.title);
-            $editFormModal.find('#product-subtitle').val(product.subtitle);
-
-            $editFormModal.find('#button-1-type').val(product.button1.type ?? "");
-            var $button1Form = $editFormModal.find('#button-1-form');
-            var $button2Form = $editFormModal.find('#button-2-form');
-            var $button1 =  $("#button-1");
-            var $button2 =  $("#button-2");
-
-            if(product.button1.type == "BUY")
-            {
-                $button1Form.find('.data-button-form').hide();
-                $button1Form.find('.buy-button-form').show();
-            }
-            else if(product.button1.type == "DATA")
-            {
-                $button1Form.find('.data-button-form').show();
-                $button1Form.find('.buy-button-form').hide();
-            }
-            else
-            {
-                $button1Form.find('.data-button-form').hide();
-                $button1Form.find('.buy-button-form').hide();
-            }
-            $button1Form.find('#button-1-name').val(product.button1.name ?? "");
-            $button1Form.find('#button-1-price').val(product.button1.price ?? "");
-            $button1Form.find('#button-1-details').val(product.button1.details ?? "");
-
-            $button1.html(product.button1.name ?? "");
-
-            if(product.button2){
-                $button2Form.show();
-                $editFormModal.find('#button-2-type').val(product.button2.type ?? "");
-
-                if(product.button2.type == "BUY")
-                {
-                    $button2Form.find('.data-button-form').hide();
-                    $button2Form.find('.buy-button-form').show();
-                }
-                else if(product.button2.type == "DATA")
-                {
-                    $button2Form.find('.data-button-form').show();
-                    $button2Form.find('.buy-button-form').hide();
-                }
-                else
-                {
-                    $button2Form.find('.data-button-form').hide();
-                    $button2Form.find('.buy-button-form').hide();
-                }
-                $button2Form.find('#button-2-name').val(product.button2.name ?? "");
-                $button2Form.find('#button-2-price').val(product.button2.price ?? "");
-                $button2Form.find('#button-2-details').val(product.button2.details ?? "");
-
-                $button2.html(product.button2.name ?? "");
-                $button2.removeClass("addButton2");
-
-              
-            }
-            else
-            {
-                $button2.html("+");
-                $button2.addClass("addButton2");
-                $button2Form.hide();
-            }
-            $("#imagePreview").attr('src',product.image ?? "");
-            $editFormModal.find("#product-category").val(product.category ? 1 : 0).trigger("change");
-
-            var numberOfSiblings = products.filter(item => item.parent == product.parent).length;
+            var numberOfSiblings = products.filter(item => item.parent == parentId).length;
             $("#product-order").html('');
             for(var i=1;i<=numberOfSiblings;i++){
                 $("#product-order").append(`<option value="${i}">${i}</option>`);
             }
-            $editFormModal.find('#product-order').val(product.order);
 
-            $("#product-show").prop('checked',product.showProduct);
-            $("#product-avalible").prop('checked',product.showProduct);
-        }
-        function ResetFields()
+        });
+        $("#createProduct").click(function(){
+            var parentId = $(this).attr('data-parent-id');
+            $("#createModal").modal('hide');
+            $editFormModal.modal('show');
+            ResetFields();
+            $editFormModal.find("form").attr("action",createUrl);
+            $editFormModal.find("#product-category").val(0).trigger("change");
+            $editFormModal.find("#parentId").val(parentId);
+
+            var numberOfSiblings = products.filter(item => item.parent == parentId).length;
+            $("#product-order").html('');
+            for(var i=1;i<=numberOfSiblings;i++){
+                $("#product-order").append(`<option value="${i}">${i}</option>`);
+            }
+
+        });
+        MakeSearch(products);
+
+        $(document).on('keyup','#searchBox input',function(){
+            MakeSearch(products,$(this).val());
+        });
+
+    });
+    function MakeSearch(products,search=''){
+        $searchContainer = $("#searchContainer");
+        $searchContainer.html("");
+        products.filter(item => item.title.includes(search)).forEach(item => {
+            $searchContainer.append(`
+                <div class=" col-md-4 col-lg-3 col-12 col-sm-6" style="border-radius: 20px; margin-top:20px;">
+                <div data-product-id="${item.productId}"  data-placement="top" data-title="مخفي" data-content="هذا المنتج لا يظهر للمستخدمين"  class="${item.showProduct == false ? 'hidden-product' : ''}" style="height:100%; ">
+                <div class="card animate__animated animate__fadeIn"  >
+                    <img src="${item.image ?? "https://via.placeholder.com/150"}" style="border-radius: 20px 20px 0 0 ;" class="card-img-top">
+                    <button class="btn btn-primary editProductButton" style="background:#4e4f50;border-width: 0;width:50px;height:50px;border-radius: 99px;position: absolute; top:20px;right:20px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                          <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                        </svg>
+                    </button>
+                    <form method='post' action='{{url('/item')}}/${item.productId}'>
+                      @csrf
+                      @method('delete')
+                    <button type="submit"  class="btn btn-danger" style="border-width: 0;width:50px;height:50px;border-radius: 99px;position: absolute; top:20px;left:20px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg>
+                    </button>
+                    </form>
+                    <div class="card-body">
+                        <h5  class="card-title">${item.title}</h5>
+                        <p  class="card-text" style="color:silver;">${item.subtitle}</p>
+                          <a href="#" style="background:#4e4f50;border-width: 0;" class="btn btn-primary">${item.button1.name ?? ((item.category) ? "عرض المنتجات" : "شراء المنتج" )}</a>
+                            ${(item.button2) ? `<a href="#" style="background:#4e4f50;border-width: 0;" class="btn btn-primary">${item.button2.name }</a>` : ""}
+
+                    </div>
+                </div>
+                </div>
+                </div>
+            `);
+        });
+        $searchContainer.find('.hidden-product').popover({trigger:"hover"});
+    }
+
+    function addDataToFields(productId){
+        var $editFormModal = $("#editFormModal");
+        var product = products[productsById[productId]];
+
+        $editFormModal.find('#product-title').val(product.title);
+        $editFormModal.find('#product-productId').val(product.productId);
+        $editFormModal.find('#product-create').val("0");
+
+        $editFormModal.find('#product-subtitle').val(product.subtitle);
+
+        $editFormModal.find('#button-1-type').val(product.button1.type ?? "");
+        var $button1Form = $editFormModal.find('#button-1-form');
+        var $button2Form = $editFormModal.find('#button-2-form');
+        var $button1 =  $("#button-1");
+        var $button2 =  $("#button-2");
+
+        if(product.button1.type == "BUY")
         {
-            var $editFormModal = $("#editFormModal");
-
-            $editFormModal.find('#product-title').val("");
-            $editFormModal.find('#product-subtitle').val("");
-
-            $editFormModal.find('#button-1-type').val("");
-            var $button1Form = $editFormModal.find('#button-1-form');
-            var $button2Form = $editFormModal.find('#button-2-form');
-            var $button1 =  $("#button-1");
-            var $button2 =  $("#button-2");
-
+            $button1Form.find('.data-button-form').hide();
+            $button1Form.find('.buy-button-form').show();
+        }
+        else if(product.button1.type == "DATA")
+        {
+            $button1Form.find('.data-button-form').show();
+            $button1Form.find('.buy-button-form').hide();
+        }
+        else
+        {
             $button1Form.find('.data-button-form').hide();
             $button1Form.find('.buy-button-form').hide();
+        }
+        $button1Form.find('#button-1-name').val(product.button1.name ?? "");
+        $button1Form.find('#button-1-price').val(product.button1.price ?? "");
+        $button1Form.find('#button-1-details').val(product.button1.details ?? "");
 
-            $button1Form.find('#button-1-name').val("عرض");
-            $button1Form.find('#button-1-price').val("0");
-            $button1Form.find('#button-1-details').val("");
-            $button1.html("عرض");
+        $button1.html(product.button1.name ?? "");
 
-            $editFormModal.find('#button-2-type').val("");
+        if(product.button2){
+            $button2Form.show();
+            $editFormModal.find('#button-2-type').val(product.button2.type ?? "");
 
-            $button2Form.find('.data-button-form').hide();
-            $button2Form.find('.buy-button-form').hide();
+            if(product.button2.type == "BUY")
+            {
+                $button2Form.find('.data-button-form').hide();
+                $button2Form.find('.buy-button-form').show();
+            }
+            else if(product.button2.type == "DATA")
+            {
+                $button2Form.find('.data-button-form').show();
+                $button2Form.find('.buy-button-form').hide();
+            }
+            else
+            {
+                $button2Form.find('.data-button-form').hide();
+                $button2Form.find('.buy-button-form').hide();
+            }
+            $button2Form.find('#button-2-name').val(product.button2.name ?? "");
+            $button2Form.find('#button-2-price').val(product.button2.price ?? "");
+            $button2Form.find('#button-2-details').val(product.button2.details ?? "");
 
-            $button2Form.find('#button-2-name').val("");
-            $button2Form.find('#button-2-price').val("");
-            $button2Form.find('#button-2-details').val("");
+            $button2.html(product.button2.name ?? "");
+            $button2.removeClass("addButton2");
 
+
+        }
+        else
+        {
             $button2.html("+");
             $button2.addClass("addButton2");
             $button2Form.hide();
-
-
-            $("#productForm").show(100);
-
-            $button1.show(100);
-            $button2.show(100);
         }
-        function makeBreadCrumbs(categoryId,productsById,products)
-        {
-            var $breadcrumbsContainer = $("#breadcrumbsContainer");
-            var nextParent = categoryId;
-            $breadcrumbsContainer.html("");
-            while(nextParent && nextParent !== 0){
-                var product = products[productsById[nextParent]];              
+        $("#imagePreview").attr('src',product.image ?? "https://via.placeholder.com/150");
+        $editFormModal.find("#product-category").val(product.category ? 1 : 0).trigger("change");
 
-                var template = `<li class="breadcrumb-item" ><span class="navigate-card" data-product-id="${product.productId}" >${product.title}</span></li>`;
-                var html = $breadcrumbsContainer.html();
-                if(product.productId == categoryId)
-                {
-                    template = `<li class="breadcrumb-item active">${product.title}</li>`;
-                }
-                $breadcrumbsContainer.html(template + html);
-                nextParent = product.parent;
-            }
+        var numberOfSiblings = products.filter(item => item.parent == product.parent).length;
+        $("#product-order").html('');
+        for(var i=1;i<=numberOfSiblings;i++){
+            $("#product-order").append(`<option value="${i}">${i}</option>`);
+        }
+        $editFormModal.find('#product-order').val(product.order);
+
+        $("#product-show").prop('checked',product.showProduct);
+        $("#product-avalible").prop('checked',product.showProduct);
+    }
+    function ResetFields()
+    {
+        var $editFormModal = $("#editFormModal");
+
+        $editFormModal.find('#product-title').val("");
+        $editFormModal.find('#product-subtitle').val("");
+
+        $editFormModal.find('#product-productId').val("");
+        $editFormModal.find('#product-create').val("1");
+
+        $editFormModal.find('#button-1-type').val("");
+        var $button1Form = $editFormModal.find('#button-1-form');
+        var $button2Form = $editFormModal.find('#button-2-form');
+        var $button1 =  $("#button-1");
+        var $button2 =  $("#button-2");
+
+        $button1Form.find('.data-button-form').hide();
+        $button1Form.find('.buy-button-form').hide();
+
+        $button1Form.find('#button-1-name').val("زر #1");
+        $button1Form.find('#button-1-price').val("");
+        $button1Form.find('#button-1-details').val("");
+        $button1.html("زر #1");
+
+        $editFormModal.find('#button-2-type').val("");
+
+        $button2Form.find('.data-button-form').hide();
+        $button2Form.find('.buy-button-form').hide();
+
+        $button2Form.find('#button-2-name').val("");
+        $button2Form.find('#button-2-price').val("");
+        $button2Form.find('#button-2-details').val("");
+
+        $button2.html("+");
+        $button2.addClass("addButton2");
+        $button2Form.hide();
+        $("#imagePreview").attr('src',"https://via.placeholder.com/150");
+        $button1Form.find('#button-1-image').val("");
+
+
+        $("#productForm").show(100);
+
+        $button1.show(100);
+        $button2.show(100);
+    }
+    function makeBreadCrumbs(categoryId,productsById,products)
+    {
+        var $breadcrumbsContainer = $("#breadcrumbsContainer");
+        var nextParent = categoryId;
+        $breadcrumbsContainer.html("");
+        while(nextParent && nextParent !== 0){
+            var product = products[productsById[nextParent]];
+
+            var template = `<li class="breadcrumb-item" ><span class="navigate-card" data-product-id="${product.productId}" >${product.title}</span></li>`;
             var html = $breadcrumbsContainer.html();
-            $breadcrumbsContainer.html(`<li class="breadcrumb-item ${ !categoryId ? "active" : ""}"><span class="${ !!categoryId ? "navigate-card" : ""} "  href="#">الكل</span></li>` + html);
-            $breadcrumbsContainer.append(`<div id="searchBox" style="display:none;">
-            <div class="input-group rounded">
-                <input type="search"  class="form-control rounded" placeholder="Search" aria-label="Search"
-                      aria-describedby="search-addon" />
-
-            </div>
-        </div>`);
+            if(product.productId == categoryId)
+            {
+                template = `<li class="breadcrumb-item active">${product.title}</li>`;
+            }
+            $breadcrumbsContainer.html(template + html);
+            nextParent = product.parent;
         }
-        function makeProducts(products,categoryId=null)
-        {
-            var $productsContainer = $("#productsContainer");
-            $productsContainer.html("");
-            products.filter(item => item.parent == categoryId ).sort((a,b) => a.order-b.order).forEach(item => {
-                var i = $productsContainer.append(`
-                    <div class="col-md-4 col-lg-3 col-12 col-sm-6" style="border-radius: 20px;">
-                    <div data-product-id="${item.productId}"  data-placement="top" data-title="مخفي" data-content="هذا المنتج لا يظهر للمستخدمين"  class="${item.category ? "navigate-card" : null } ${item.showProduct == false ? 'hidden-product' : ''}" style="height:100%; ">
-                    <div class="card animate__animated animate__zoomIn " >
-                        <img src="${item.image ?? "https://via.placeholder.com/150"}" style="border-radius: 20px 20px 0 0 ;" class="card-img-top">
-                        <button class="btn btn-primary editProductButton" style="background:#4e4f50;border-width: 0;width:50px;height:50px;border-radius: 99px;position: absolute; top:20px;right:20px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                              <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-                            </svg>
-                        </button>
-                        <form method='post' action='{{url('/item')}}/${item.productId}'>
-                          @csrf
-                          @method('delete')
-                        <button type="submit"  class="btn btn-danger" style="border-width: 0;width:50px;height:50px;border-radius: 99px;position: absolute; top:20px;left:20px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                              <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                            </svg>
-                        </button>
-                        </form>
-                        <div class="card-body">
-                            <h5  class="card-title">${item.title}</h5>
-                            <p  class="card-text" style="color:silver;">${item.subtitle}</p>
-                              <a href="#" style="background:#4e4f50;border-width: 0;" class="btn btn-primary">${item.button1.name ?? ((item.category) ? "عرض المنتجات" : "شراء المنتج" )}</a>
-                                ${(item.button2) ? `<a href="#" style="background:#4e4f50;border-width: 0;" class="btn btn-primary">${item.button2.name }</a>` : ""}
+        var html = $breadcrumbsContainer.html();
+        $breadcrumbsContainer.html(`<li class="breadcrumb-item ${ !categoryId ? "active" : ""}"><span class="${ !!categoryId ? "navigate-card" : ""} "  href="#">الكل</span></li>` + html);
+        $breadcrumbsContainer.append(`<div id="searchBox" style="display:none;">
+        <div class="input-group rounded">
+            <input type="search"  class="form-control rounded" placeholder="Search" aria-label="Search"
+                  aria-describedby="search-addon" />
 
-                        </div>
-                    </div>
-                    </div>
-                    </div>
-                `);
+        </div>
+    </div>`);
+    }
+    function makeProducts(products,categoryId=null)
+    {
+        var $productsContainer = $("#productsContainer");
+        $productsContainer.html("");
+        $productsContainer.append(`
+                <div data-parent-id="${categoryId}" class= " animate__animated animate__fadeIn col-md-3 d-flex justify-content-center align-items-center addProductButton"  style="margin-left: 20px;cursor:pointer;border-radius: 20px; border-style: dashed; border-color:#ccc; flex-direction: column;">
+                    <h1 style="color:#ccc;">
+                    +
+                    </h1>
+                  <br/><div style="color:#ccc;"> <small>اضافة منتج او تصنيف</small></div>
+                </div>
+            `);
+        products.filter(item => item.parent == categoryId ).sort((a,b) => a.order-b.order).forEach(item => {
+            var i = $productsContainer.append(`
+                <div class="col-md-4 col-lg-3 col-12 col-sm-6" style="border-radius: 20px;">
+                <div data-product-id="${item.productId}"  data-placement="top" data-title="مخفي" data-content="هذا المنتج لا يظهر للمستخدمين"  class="${item.category ? "navigate-card" : null } ${item.showProduct == false ? 'hidden-product' : ''}" style="height:100%; ">
+                <div class="card animate__animated  animate__fadeIn " >
+                    <img src="${item.image ?? "https://via.placeholder.com/150"}" style="border-radius: 20px 20px 0 0 ;" class="card-img-top">
+                    <button class="btn btn-primary editProductButton" style="background:#4e4f50;border-width: 0;width:50px;height:50px;border-radius: 99px;position: absolute; top:20px;right:20px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                          <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                        </svg>
+                    </button>
+                    <form method='post' action='{{url('/item')}}/${item.productId}'>
+                      @csrf
+                      @method('delete')
+                    <button type="submit"  class="btn btn-danger" style="border-width: 0;width:50px;height:50px;border-radius: 99px;position: absolute; top:20px;left:20px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg>
+                    </button>
+                    </form>
+                    <div class="card-body">
+                        <h5  class="card-title">${item.title}</h5>
+                        <p  class="card-text" style="color:silver;">${item.subtitle}</p>
+                          <a href="#" style="background:#4e4f50;border-width: 0;" class="btn btn-primary">${item.button1.name ?? ((item.category) ? "عرض المنتجات" : "شراء المنتج" )}</a>
+                            ${(item.button2) ? `<a href="#" style="background:#4e4f50;border-width: 0;" class="btn btn-primary">${item.button2.name }</a>` : ""}
 
-            });
-            $productsContainer.find('.hidden-product').popover({trigger:"hover"});
-            $productsContainer.append(`
-                    <div data-parent-id="${categoryId}" class= " animate__animated animate__zoomIn col-md-3 d-flex justify-content-center align-items-center addProductButton"  style="margin-left: 20px;cursor:pointer;border-radius: 20px; border-style: dashed; border-color:#ccc; flex-direction: column;">
-                        <h1 style="color:#ccc;">
-                        +
-                        </h1>
-                      <br/><div style="color:#ccc;"> <small>اضافة منتج او تصنيف</small></div>
                     </div>
-                `);
-        }
+                </div>
+                </div>
+                </div>
+            `);
+
+        });
+        $productsContainer.find('.hidden-product').popover({trigger:"hover"});
+
+    }
     function gotoProduct(productId)
     {
-      console.log(productId)
         makeProducts(products,productId);
         makeBreadCrumbs(productId,productsById,products);
         productsTree = makeTree(products,productsById);
         drawTree(productsTree,productId);
+        $("#editFormModal").find('#product-parentId').val(productId);
     }
-        
+
     function formatProducts(products)
     {
+     
         var formattedProducts = [];
 
         products.forEach(item => {
@@ -1002,6 +1015,9 @@
                         break;
                     case 6:
                         product.image = ele;
+                        break;
+                    case 7:
+                        product.parent  = (ele != 0) ?ele :null;
                         break;
 
                 }
