@@ -81,7 +81,7 @@ class Category extends Model
         ];
         // dd(!(isset($request['button-2-type'])) ?'fff':$request['button-2-details'],$request);
         // dd($data,(isset($request['image'])?$request['image']:Session::get('logo')),Session::get('logo'));
-        dd($data ,$request);
+        // dd($data ,$request);
 
         Sheets::spreadsheet(Session::get('sheet_id'))
         ->sheet('Shop Logic')->append([$data]);

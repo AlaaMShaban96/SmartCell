@@ -250,10 +250,15 @@
           </div>
       </div>
   </div>
- 
+  <div id="richList"></div>
+  <div id="loader" class="lds-dual-ring hidden overlay text-center">
+      <img  src="{{asset('images/logo.gif')}}" style="width: 11%;height: 2;margin-top: 16%;background-color: white;border-radius: 19px;" > 
+  
+  </div>
+  
 @endsection
 @section('script')
-  <script src="{{asset('assets/js/date.js')}}"></script>
+  {{-- <script src="{{asset('assets/js/date.js')}}"></script> --}}
   <script>var app = @json($orders,JSON_PRETTY_PRINT);
   app.sort();
   app.reverse();

@@ -57,7 +57,7 @@ Route::group(['middleware' => ['isLogin']], function () {
     Route::get('/logout', [HomeController::class,'logout']);
 
 }); 
-
+ 
 
 Route::get('/login', [HomeController::class,'loginShow'])->name('login');
 Route::post('/login', [HomeController::class,'login']);

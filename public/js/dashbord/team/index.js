@@ -1,6 +1,6 @@
 function showOredr(key,id) {
 
-    console.log(id);
+    console.log(id);  
 
     var modal = document.getElementById("myModal2");
     

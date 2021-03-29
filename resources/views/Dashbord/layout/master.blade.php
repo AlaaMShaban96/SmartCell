@@ -17,11 +17,7 @@
 
 <body style="background-color: #f1f2f7;">
     {{-- /loding  after clicked button --}}
-    <div id="richList"></div>
-    <div id="loader" class="lds-dual-ring hidden overlay text-center">
-        <img  src="{{asset('images/logo.gif')}}" style="width: 11%;height: 2;margin-top: 16%;background-color: white;border-radius: 19px;" > 
-
-    </div>
+  
     {{-- end loging --}}
     <!-- Left Panel -->
     <aside id="left-panel" class="left-panel">
@@ -76,11 +72,11 @@
       
     </div>
   
-    <div id="loader">
+    {{-- <div id="loader">
         <div class="loadingio-spinner-rolling-meno62sw6a"><div class="ldio-iv6kxree6la">
             <div></div>
             </div></div>
-    </div>
+    </div> --}}
     @include('Dashbord.layout.include.script')
     @yield('script')
 

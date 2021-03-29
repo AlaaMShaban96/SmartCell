@@ -27,6 +27,7 @@ class Item extends Model
     }
     static public function createItems($request)
     {
+        
 
         $store_id=Session::get('store_id');
         
@@ -51,7 +52,7 @@ class Item extends Model
         $mont=Carbon::now('libya')->format('m');
         $year=Carbon::now('libya')->format('Y')-2000;
         $id=$store_id.$year.$mont.date("dhis");
-        
+        // dd( $request['title'] ,$request);
             $data=[
                
             (boolean)isset($request['product-show'])?TRUE:FALSE,
@@ -68,7 +69,7 @@ class Item extends Model
             isset($request['button-1-type']) && $request['button-1-type']=='BUY'?'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value , set_field_value':'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value',
             isset($request['button-1-type']) && $request['button-1-type']=='BUY'?'set order, price, photo, set_quantity, quantity_text, cate1, order id':'details, set order, price, photo, set_quantity, quantity_text, cate1, order id',
             
-            isset($request['button-1-type']) && $request['button-1-type']=='BUY'?$request['title'].'||'.(isset($request['button-1-price'])?$request['button-1-price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id :($request['button-1-details'].$request['titel'].'||'.(isset($request['button-1-price'])?$request['button-1-price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id),            
+            isset($request['button-1-type']) && $request['button-1-type']=='BUY'? $request['title'].'||'.(isset($request['button-1-price'])?$request['button-1-price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id :($request['button-1-details'].$request['title'].'||'.(isset($request['button-1-price'])?$request['button-1-price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id),            
            
             isset($request['button-2-type']) && $request['button-2-type']=='DATA'?"flow step":"none",
             !isset($request['button-2-type']) && $request['button-2-type']=='DATA'?$request['button-2-name']:"",
@@ -82,11 +83,13 @@ class Item extends Model
             "",
             "",
             "",
-            "",
+            self::setImage($request),
             (int)isset($request['qyantity'])?$request['qyantity']:'',
             self::setDetails($request),
             (int)'0',
             ];
+            
+            // dd($data ,$request);
            Sheets::spreadsheet(Session::get('sheet_id'))
             ->sheet('Shop Logic')->append([$data]);
            
@@ -98,7 +101,7 @@ class Item extends Model
     }
     static public function itemUpdate($id,$request)
     { 
-        // dd($request,isset($request['image']));
+        // dd($request)/;
             $ids = Sheets::spreadsheet(Session::get('sheet_id'))
                             ->sheet('Shop Logic')
                             ->majorDimension('COLUMNS')
@@ -123,18 +126,22 @@ class Item extends Model
                     $data[0][7]=(float)isset($request['parentId'])?$request['parentId']:$data[0][7];
                     // $data[0][8]='flow step';
                     $data[0][9]= isset($request['button-1-type'])?$request['button-1-name']:$data[0][9];
-                    // $data[0][10]='SubCategories';
-                    // $data[0][11]='set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value , set_field_value';
-                    // $data[0][12]='set order, price, photo, set_quantity, quantity_text, cate1, order id';
+
+
+                    $data[0][10]=isset($request['button-1-type']) && $request['button-1-type']=='BUY'?'SubCategories':'details';
+                    $data[0][11]= isset($request['button-1-type']) && $request['button-1-type']=='BUY'?'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value , set_field_value':'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value';
+                    $data[0][12]=isset($request['button-1-type']) && $request['button-1-type']=='BUY'?'set order, price, photo, set_quantity, quantity_text, cate1, order id':'details, set order, price, photo, set_quantity, quantity_text, cate1, order id';
+                    
                     $data[0][13]=isset($request['button-1-price'])?(isset($request['title'])?$request['title']: $data[0][3]).'||'.(isset($request['button-1-price'])?$request['button-1-price']:'').'||'.(isset($request['image'])?$request['image']:$data[0][6]).'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id :(self::setDetails($request).'||'.(isset($request['title'])?$request['title']: $data[0][3] ).(isset($request['button-1-price'])?'||'.$request['button-1-price']:'').'||'.(isset($request['image'])?$request['image']:$data[0][6]).'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id);
                     
-                    $data[0][14]=isset($request['button-2-price'])?isset($request['button-2-details'])?"flow step":"none":'';
-                    $data[0][15]=isset($request['button-2-price'])?isset($request['button-2-details'])?$request['button-2-name']:$data[0][15]:'';
-                    $data[0][16]=isset($request['button-2-price'])?isset($request['button-2-details'])? $data[0][16]:"":'';
-                    $data[0][17]=isset($request['button-2-price'])?isset($request['button-2-details'])?"set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value":"":'';
-                    $data[0][18]=isset($request['button-2-price'])?isset($request['button-2-details'])?"details, set order, price, photo, set_quantity, quantity_text, cate1, order id":"":'';
-                    $data[0][19]=isset($request['button-2-price'])?$request['button-2-details'].'||'.$request['title'].'||'.$data[0][2].'||'.$data[0][6].'||'.(isset($request['qyantity'])?$request['qyantity']:$data[0][26]).'||'.(isset($request['qyantity'])?$request['qyantity']:"غير محدودة").'||0||'.$id:'';
-                 
+                    $data[0][14]=isset($request['button-2-type']) && $request['button-2-type']=='DATA'?"flow step":"none";
+                    $data[0][15]=!isset($request['button-2-type']) && $request['button-2-details']=='DATA'?$request['button-2-name']:"";
+                    $data[0][16]=isset($request['button-2-type']) && $request['button-2-details']=='DATA'?'details':$request['button-2-details']=='BUY'?"SubCategories":'';
+                    $data[0][17]=isset($request['button-2-type']) && $request['button-2-details']=='DATA'?'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value , set_field_value':'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value';
+                    $data[0][18]=isset($request['button-2-type']) && $request['button-2-details']=='DATA'?"details, set order, price, photo, set_quantity, quantity_text, cate1, order id":"";
+                    $data[0][19]=isset($request['button-2-type']) && $request['button-2-details']=='DATA'?$request['button-2-details'].$request['button-2-name'].'||'.(isset($request['button-2-price'])?$request['button-2-price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id :"";
+                    
+                    $data[0][25]=self::setImage($request);
                     $data[0][26]=isset($request['price'])?(float)isset($request['qyantity'])?$request['qyantity']:'0':'';
                     $data[0][27]=self::setDetails($request);
                     // $data[0][28]=(float)'0';
@@ -195,6 +202,19 @@ class Item extends Model
         }
         if (isset($oldDetails)) {
             return $oldDetails;
+         }
+        return '';
+    }
+    static private function setImage($request,$oldImage=null)
+    {
+        if (isset($request['button-1-image'])) {
+           return $request['button-1-image'];
+        }
+        if (isset($request['button-2-image'])) {
+           return $request['button-2-image'];
+        }
+        if (isset($oldImage)) {
+            return $oldImage;
          }
         return '';
     }

@@ -106,7 +106,7 @@ $(function(){
         $('#button-2-form').find('input[name=button-2-name]').val("زر #2");
 
     });
-    $(document).on("click",'#deleteButton',function(){
+    $('#deleteButton').click(function(){
         $("#button-2").html("+");
         $("#button-2").addClass("addButton2");
         $('#button-2-form').hide();
@@ -122,10 +122,10 @@ $(function(){
        $("#imagePreview").attr('src',window.URL.createObjectURL(this.files[0]));
     });
     $("#button-1-image").change(function(){
-        $("#Button-1-imagePreview").attr('src',window.URL.createObjectURL(this.files[0]));
+        $("#button-1-imagePreview").attr('src',window.URL.createObjectURL(this.files[0]));
     });
     $("#button-2-image").change(function(){
-        $("#Button-2-imagePreview").attr('src',window.URL.createObjectURL(this.files[0]));
+        $("#button-2-imagePreview").attr('src',window.URL.createObjectURL(this.files[0]));
     });
 
 
@@ -147,15 +147,27 @@ function ButtionFormHandler(me)
     if(value == "BUY"){
         dataForm.hide(100);
         buyForm.show(100);
+        dataForm.find('input').val("");
+        dataForm.find('input').attr('disabled','disabled');
+        buyForm.find('input').removeAttr('disabled');
+
     }
     else if(value == "DATA")
     {
         dataForm.show(100);
         buyForm.hide(100);
+        buyForm.find('input').val("");
+        buyForm.find('input').attr('disabled','disabled');
+        dataForm.find('input').removeAttr('disabled');
+
     }
     else if(value == "SHOW")
     {
         dataForm.hide(100);
         buyForm.hide(100);
+
+        buyForm.find('input').val("");
+        dataForm.find('input').val("");
+
     }
 }

@@ -32,8 +32,43 @@ class ItemController extends Controller
         $items=Item::allItems();
         // dd($categories);
         // dd($items);
+        $object=[]; 
+        foreach ($items as $value) {
+            $object[] = [
+                'active'=>$value[0],
+                'product_id'=>$value[1],
+                'price'=>$value[2],
+                'title'=>$value[3],
+                'keywords'=>$value[4],
+                'subtitle'=>$value[5],
+                'image'=>$value[6],
+                'Category'=>$value[7],
+                'addButton1'=>$value[8],
+                'button1Caption'=>$value[9],
+                'button1Target'=>$value[10],
+                'button1Action'=>$value[11],
+                'button1ActionName'=>$value[12],
+                'button1ActionValue'=>$value[13],
+                'addButton2'=>$value[14],
+                'button2Caption'=>$value[15],
+                'button2Target'=>$value[16],
+                'button2Action'=>$value[17],
+                'button2ActionName'=>$value[18],
+                'button2ActionValue'=>$value[19],
+                'addButton3'=>$value[20],
+                'button3Caption'=>$value[21],
+                'button3Target'=>$value[22],
+                'button3Action'=>$value[23],
+                'button3ActionName'=>$value[24],
+                'detail_image'=>$value[25],
+                'Quantity'=>$value[26],
+                'details'=>$value[27],
+                'category_or_not'=>$value[28],
+            ];
+        }
+        // dd( $object);
         $link="/منتجات";
-        return view('Dashbord.item.index',compact('items','link'));
+        return view('Dashbord.item.index',compact('object','link'));
     }
 
     /**
@@ -70,15 +105,21 @@ class ItemController extends Controller
                         break;
                     
                     case '0':
-        
+                        // dd( $request->all());
+
                             try {
                                 $data=$request->all();
-                                $data['image']=null;
-                                if ($request->has('image')) {
-                                    $data['image']=$this->compress($request);
+                                $data['image'] = null;
+                                 $data['button-1-image'] = null;
+                                 $data['button-2-image'] =null;
+                                 if ($request->has('image')) {
+                                    $data['image']=$this->compress($request,'image');
                                 }
                                 if ($request->has('button-1-image')) {
-                                    $data['button-1-image']=$this->compress($request);
+                                    $data['button-1-image']=$this->compress($request,'button-1-image');
+                                }
+                                if ($request->has('button-2-image')) {
+                                    $data['button-2-image']=$this->compress($request,'button-2-image');
                                 }
                                 Item::createItems( $data);
                             } catch (\Throwable $th) {
@@ -112,12 +153,14 @@ class ItemController extends Controller
         $data['button-1-image']=null;
         $data['category']="yes";
         if ($request->has('image')) {
-            $data['image']=$this->compress($request);
+            $data['image']=$this->compress($request,'image');
         }
         if ($request->has('button-1-image')) {
-            $data['button-1-image']=$this->compress($request);
+            $data['button-1-image']=$this->compress($request,'button-1-image');
         }
-        
+        if ($request->has('button-2-image')) {
+            $data['button-2-image']=$this->compress($request,'button-2-image');
+        }
 
         try {
             Category::createCategory( $data) ;
@@ -148,7 +191,6 @@ class ItemController extends Controller
         } catch (\Throwable $th) {
             Session::flash('message', 'فشلت عملية التعديل'); 
             Session::flash('alert-class', 'alert-danger'); 
-            dd($th) ;
         }
         Session::flash('message', 'تم تعديل الصنف  بنجاح'); 
         Session::flash('alert-class', 'alert-success'); 
@@ -203,9 +245,21 @@ class ItemController extends Controller
                 // dd($request->all());
                         $data=$request->all();
                         $data['image']=null;
+                        $data['image']=null;
+                        $data['button-1-image']=null;
+                        $data['button-2-image']=null;
+                        $data['category']="yes";
+
                         if ($request->has('image')) {
-                            $data['image']=$this->compress($request);
+                            $data['image']=$this->compress($request,'image');
                         }
+                        if ($request->has('button-1-image')) {
+                            $data['button-1-image']=$this->compress($request,'button-1-image');
+                        }
+                        if ($request->has('button-2-image')) {
+                            $data['button-2-image']=$this->compress($request,'button-2-image');
+                        }
+                        
                         try {
                             Item::itemUpdate($id,$data);
                         } catch (\Throwable $th) {
@@ -242,9 +296,19 @@ class ItemController extends Controller
             return redirect()->back();  
     }
   
-    private function compress(Request $request)
+    private function compress(Request $request,$name=null)
     {
-        $photo =  $request->file('image');
+
+        if ($request->has('image') && $name=='image') {
+            $photo =  $request->file('image');
+        }
+        if ($request->has('button-1-image') && $name=='button-1-image') {
+            $photo =  $request->file('button-1-image');
+        }
+        if ($request->has('button-2-image') && $name=='button-2-image') {
+            $photo =  $request->file('button-2-image');
+        }
+
         $nameFile=Session::get('store_name').(string) Str::uuid().'.png';
         $img = Image::make($photo->getRealPath())->resize(466, 466)->save('storage/'.$nameFile);
         $s3 = Storage::disk('s3');

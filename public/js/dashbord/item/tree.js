@@ -15,6 +15,7 @@ function makeTree(products,productsById,productId){
             tree.push(node);
         }
     }
+
     return tree;
 }
 function drawTree(tree,productId){
