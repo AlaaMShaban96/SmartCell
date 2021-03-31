@@ -22,7 +22,8 @@
           <span>{{ $error }}</span>
       </div>
     @endforeach
-  @endif
+  @endif 
+
   <div class="content">
     <div class="col-3 na-v mt-4  d-flex justify-content-center" style="text-align:center; ">
 
@@ -31,7 +32,7 @@
           @foreach ($loctions as $loction)
             @if ($loction[24]=="0")
             <li>
-              <a class="btn" onclick="show('{{$loction[11]}}','0','{{$loction[11]}}')" data-bs-toggle="collapse" data-bs-target="#collapseExample{{$loction[11]}}" aria-expanded="false" aria-controls="collapseExample{{$loction[11]}}"style="text-align: center;"> {{$loction[1]}}<span class="sign{{$loction[11]}}" id="sign"><span id="s1" class="s"></span><span id="s2" class="s"></span></span> </a>
+              <a class="btn"onclick="show('{{$loction[11]}}','0','{{$loction[11]}}')" data-toggle="collapse" href="#collapseExample{{$loction[11]}}" aria-expanded="false" aria-controls="collapseExample{{$loction[11]}}"style="text-align: center;"> {{$loction[1]}}<span class="sign{{$loction[11]}}" id="sign"><span id="s1" class="s"></span><span id="s2" class="s"></span></span> </a>
               <div class="collapse" id="collapseExample{{$loction[11]}}">
                 <div id="sub{{$loction[11]}}">   
                 </div>

@@ -33,21 +33,20 @@
   }
 
   showLocationModel(); 
-
+ 
   function show(id,index,name) { 
     $('.sign'+id+' #s1').toggleClass('close1');
     $('.sign'+id+' #s2').toggleClass('close2');
-      //  console.log(name);
-       console.log('sub'+id);
+    
     document.getElementById('sub'+id).innerHTML="";
     document.getElementById('category').innerHTML="<div class='col-4  d-flex justify-content-center pl-4 pr-4'><div class='card ml-4 mr-4 pl-4 pr-4 d-flex justify-content-center' style='min-width: 130px; border-radius: 25px;'><button  id='showAddCategory' class='btn btn-success fa fa-plus pt-3 d-flex justify-content-center mx-auto' style='border-radius: 8vh;width: 50px;height: 50px;'></button></div></div>";
 
     var sub=document.getElementById('sub'+id);
     loctions.forEach(element => {
      
-
       if (Math.floor(element[24]) == name ) {
-       
+        console.log(element[2]=='');
+
           if (element[2]=='') {
               sub.innerHTML += '<div><a class="btn" onclick="show('+element[11]+','+(index+1)+','+element[11]+')" data-bs-toggle="collapse" data-bs-target="#collapseExample'+element[11]+'" aria-expanded="false" aria-controls="collapseExample'+element[11]+'" style="text-align: center;"> '+element[1]+' <span class="sign'+element[11]+'" id="sign"><span id="s1" class="s"></span><span id="s2" class="s"></span></span>  </a><div class="collapse" id="collapseExample'+element[11]+'"><div id="sub'+element[11]+'"></div></div>';
             }
