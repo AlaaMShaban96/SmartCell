@@ -38,26 +38,6 @@ class OrderController extends Controller
         return view('Dashbord.order.index',compact('orders','orderState','todayOrder'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-       
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-     
-    }
 
     /**
      * Display the specified resource.
@@ -117,16 +97,6 @@ class OrderController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
     public function printPDF($id)
     {
        
@@ -152,9 +122,10 @@ class OrderController extends Controller
         $pdf = PDF::loadView('pdf.test' ,compact('order'));
 		return $pdf->stream('document.pdf');
     }
-    public function chengeStatusItem( $status, $id)
+    public function chengeStatusItem(Request $request, $status, $id)
     {
-        if(Order::chengeStatusItem($status, $id)){
+        // dd($request->all());
+        if(Order::chengeStatusItem($status, $id,$request->all())){
 
             Session::flash('message', 'تم التعديل بنجاح'); 
             Session::flash('alert-class', 'alert-success'); 

@@ -20,7 +20,7 @@ class Item extends Model
     {
 
 
-        $data = Sheets::spreadsheet(Session::get('sheet_id'))
+        $data = Sheets::spreadsheet(Session::get('id_system'))
         ->sheet('Shop Logic')->majorDimension('')->range('')->all();
         
         return $data;
@@ -72,7 +72,7 @@ class Item extends Model
             isset($request['button-1-type']) && $request['button-1-type']=='BUY'? $request['title'].'||'.(isset($request['button-1-price'])?$request['button-1-price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id :($request['button-1-details'].$request['title'].'||'.(isset($request['button-1-price'])?$request['button-1-price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id),            
            
             isset($request['button-2-type']) && $request['button-2-type']=='DATA'?"flow step":"none",
-            !isset($request['button-2-type']) && $request['button-2-type']=='DATA'?$request['button-2-name']:"",
+            isset($request['button-2-type']) && $request['button-2-type']=='DATA'?$request['button-2-name']:"",
             isset($request['button-2-type']) && $request['button-2-type']=='DATA'?'details':"SubCategories",
             isset($request['button-2-type']) && $request['button-2-type']=='DATA'?"set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value":"",
             isset($request['button-2-type']) && $request['button-2-type']=='DATA'?"details, set order, price, photo, set_quantity, quantity_text, cate1, order id":"",
@@ -90,7 +90,7 @@ class Item extends Model
             ];
             
             // dd($data ,$request);
-           Sheets::spreadsheet(Session::get('sheet_id'))
+           Sheets::spreadsheet(Session::get('id_system'))
             ->sheet('Shop Logic')->append([$data]);
            
 
@@ -101,8 +101,8 @@ class Item extends Model
     }
     static public function itemUpdate($id,$request)
     { 
-        // dd($request)/;
-            $ids = Sheets::spreadsheet(Session::get('sheet_id'))
+        // dd($request);
+            $ids = Sheets::spreadsheet(Session::get('id_system'))
                             ->sheet('Shop Logic')
                             ->majorDimension('COLUMNS')
                             ->range('B:B')
@@ -110,7 +110,7 @@ class Item extends Model
 
             foreach ($ids[0] as $key => $value) {
                 if ($value==$id) {
-                    $data = Sheets::spreadsheet(Session::get('sheet_id'))
+                    $data = Sheets::spreadsheet(Session::get('id_system'))
                     ->sheet('Shop Logic')
                     ->range('A'.($key+1).':AC'.($key+1))
                     ->majorDimension('ROWS')
@@ -134,19 +134,18 @@ class Item extends Model
                     
                     $data[0][13]=isset($request['button-1-price'])?(isset($request['title'])?$request['title']: $data[0][3]).'||'.(isset($request['button-1-price'])?$request['button-1-price']:'').'||'.(isset($request['image'])?$request['image']:$data[0][6]).'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id :(self::setDetails($request).'||'.(isset($request['title'])?$request['title']: $data[0][3] ).(isset($request['button-1-price'])?'||'.$request['button-1-price']:'').'||'.(isset($request['image'])?$request['image']:$data[0][6]).'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id);
                     
-                    $data[0][14]=isset($request['button-2-type']) && $request['button-2-type']=='DATA'?"flow step":"none";
-                    $data[0][15]=!isset($request['button-2-type']) && $request['button-2-details']=='DATA'?$request['button-2-name']:"";
-                    $data[0][16]=isset($request['button-2-type']) && $request['button-2-details']=='DATA'?'details':$request['button-2-details']=='BUY'?"SubCategories":'';
-                    $data[0][17]=isset($request['button-2-type']) && $request['button-2-details']=='DATA'?'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value , set_field_value':'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value';
-                    $data[0][18]=isset($request['button-2-type']) && $request['button-2-details']=='DATA'?"details, set order, price, photo, set_quantity, quantity_text, cate1, order id":"";
-                    $data[0][19]=isset($request['button-2-type']) && $request['button-2-details']=='DATA'?$request['button-2-details'].$request['button-2-name'].'||'.(isset($request['button-2-price'])?$request['button-2-price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id :"";
+                    $data[0][14]=isset($request['button-2-name']) && $request['button-2-type']=='DATA'? "flow step":"none";
+                    $data[0][15]=isset($request['button-2-name']) && $request['button-2-type']=='DATA' || $request['button-2-type']=='BUY'?$request['button-2-name']:'';
+                    $data[0][16]=isset($request['button-2-name']) && $request['button-2-type']=='DATA'? 'details':(($request['button-2-type']=='BUY')?"SubCategories":'');
+                    $data[0][17]=isset($request['button-2-name']) && $request['button-2-type']=='DATA'?'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value , set_field_value':'set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value';
+                    $data[0][18]=isset($request['button-2-name']) && $request['button-2-type']=='DATA'?"details, set order, price, photo, set_quantity, quantity_text, cate1, order id":"";
+                    $data[0][19]=isset($request['button-2-name']) && $request['button-2-type']=='DATA'?$request['button-2-details'].$request['button-2-name'].'||'.(isset($request['button-2-price'])?$request['button-2-price']:'').'||'.$request['image'].'||'.(isset($request['qyantity'])?$request['qyantity']:"-1").'||'.(isset($request['qyantity'])?"محدودة":"غير محدودة").'||0||'.$id :"";
                     
                     $data[0][25]=self::setImage($request);
                     $data[0][26]=isset($request['price'])?(float)isset($request['qyantity'])?$request['qyantity']:'0':'';
                     $data[0][27]=self::setDetails($request);
-                    // $data[0][28]=(float)'0';
-                    // dd($data);
-                    Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Shop Logic')->
+                    $data[0][28]=(float)'0';
+                    Sheets::spreadsheet(Session::get('id_system'))->sheet('Shop Logic')->
                     range('A'.($key+1))->update([$data[0]]);
                     break;
                 }
@@ -164,7 +163,7 @@ class Item extends Model
     static public function chengeStatusItem($status, $id)
     {
   
-        $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Shop')->range('A'.$id.':k'.$id)->majorDimension('ROWS')->all();       
+        $data = Sheets::spreadsheet(Session::get('id_system'))->sheet('Shop')->range('A'.$id.':k'.$id)->majorDimension('ROWS')->all();       
         $data[0][0]=$request['titel'];
         $data[0][2]=$data[0][3]=='yes'?"":$request['price'];
         $data[0][4]=$request['detals'];
@@ -174,7 +173,7 @@ class Item extends Model
         $data[0][8]=isset($request['qyantity'])?(FLOAT)$request['qyantity']:(FLOAT)$data[0][8];
         $data[0][9]=$data[0][9];
         $data[0][10]=$request['info'];
-        Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Shop')->
+        Sheets::spreadsheet(Session::get('id_system'))->sheet('Shop')->
         range('A'.$id)->update([$data[0]]);
        return true ;
 

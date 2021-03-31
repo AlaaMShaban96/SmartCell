@@ -63,14 +63,14 @@ class Order extends Model
     static public function find($id)
     {
        
-        $rows = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('A'.($id-1).':AV'.($id-1))->majorDimension('ROWS')->get();
+        $rows = Sheets::spreadsheet(Session::get('id_data'))->sheet('Orders')->range('A'.($id-1).':AV'.($id-1))->majorDimension('ROWS')->get();
         $header = Sheets::range('A1:AV1')->get();
         $row= Sheets::collection($header->toArray()[0],$rows)->all();
         return  $row[0]->toArray() ;
     }
     static public function todayOrder()
     {
-        $column = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->majorDimension('')->range('')->all();
+        $column = Sheets::spreadsheet(Session::get('id_data'))->sheet('Orders')->majorDimension('')->range('')->all();
         $data=[];
         foreach ($column as $key => $value) {
             if ($key != 0) {
@@ -97,40 +97,41 @@ class Order extends Model
     static public function orederUpdate($id,$request)
     {
 
-        $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('A'.$id.':AV'.$id)->majorDimension('ROWS')->all();
+        $data = Sheets::spreadsheet(Session::get('id_data'))->sheet('Orders')->range('A'.$id.':AV'.$id)->majorDimension('ROWS')->all();
         $data[0][44]=$request->userEmail;
         $data[0][42]=$request->orderStatus;
         $data[0][39]=$request->userName;
-        Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->
+        Sheets::spreadsheet(Session::get('id_data'))->sheet('Orders')->
         range('A'.$id)->update([$data[0]]);
        return true ;
 
     }
-    static public function chengeStatusItem($status, $id)
+    static public function chengeStatusItem($status, $id,$request)
     { 
-        // dd(trim($status, '"'),$status);
-        $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('A'.($id).':AV'.($id))->majorDimension('ROWS')->all();
+        dd($request['note']);
+        $data = Sheets::spreadsheet(Session::get('id_data'))->sheet('Orders')->range('A'.($id).':AV'.($id))->majorDimension('ROWS')->all();
         // trim($status, '"')=='تم الالغاء'?
         $data[0][42]=trim($status, '"');
-        Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->
+        $data[0][43]=isset($request['note'])?$request['note']:$data[0][43];
+        Sheets::spreadsheet(Session::get('id_data'))->sheet('Orders')->
         range('A'.($id))->update([$data[0]]);
        return true ;
 
     }
     static public function sendToUser($id,$name,$email)
     {
-        $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('A'.$id.':AV'.$id)->majorDimension('ROWS')->all();
+        $data = Sheets::spreadsheet(Session::get('id_data'))->sheet('Orders')->range('A'.$id.':AV'.$id)->majorDimension('ROWS')->all();
         $data[0][39]=trim($name, '"');
         $data[0][44]=trim($email, '"');
         $data[0][42]='قيد التوصيل';
-        Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->
+        Sheets::spreadsheet(Session::get('id_data'))->sheet('Orders')->
         range('A'.$id)->update([$data[0]]);
        return true ;
 
     }
     static public function Search($search)
     {
-        $column = Sheets::spreadsheet(Session::get('sheet_id'))
+        $column = Sheets::spreadsheet(Session::get('id_data'))
         ->sheet('Orders')->majorDimension('COLUMNS')->range('AQ1:AQ')->all();
         
         $filtered = array_filter(  $column[0], function ($value) use($search) {
@@ -142,7 +143,7 @@ class Order extends Model
     static public function allOrder()
     {
         
-        $data =Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->range('')->majorDimension('')->get();    
+        $data =Sheets::spreadsheet(Session::get('id_data'))->sheet('Orders')->range('')->majorDimension('')->get();    
         $orders=$data->toArray();
         rsort($orders);
         // dd($orders);
@@ -169,8 +170,8 @@ class Order extends Model
     {
         try {
             dd($order->toArray());
-            // Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->append($order->toArray());
-            Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Orders')->append([['الاسم'=>'3', 'رقم الهاتف'=>'name3']]);
+            // Sheets::spreadsheet(Session::get('id_data'))->sheet('Orders')->append($order->toArray());
+            Sheets::spreadsheet(Session::get('id_data'))->sheet('Orders')->append([['الاسم'=>'3', 'رقم الهاتف'=>'name3']]);
             return true;
         } catch (\Throwable $th) {
             return $th;
@@ -182,7 +183,7 @@ class Order extends Model
     {
         try {
             $data=array_values($order->toArray());
-            Sheets::spreadsheet(Session::get('sheet_id'))
+            Sheets::spreadsheet(Session::get('id_data'))
             ->sheet('Orders')
             ->range('A'.$order['رقم الطلبية'])
             ->update([$data]);
@@ -197,9 +198,9 @@ class Order extends Model
     {
        
         $orderState= array();
-        // dd(Session::get('sheet_id'));
-        // $column = Sheets::spreadsheet(Session::get('sheet_id'))
-        $column = Sheets::spreadsheet(Session::get('sheet_id'))
+        // dd(Session::get('id_data'));
+        // $column = Sheets::spreadsheet(Session::get('id_data'))
+        $column = Sheets::spreadsheet(Session::get('id_data'))
         ->sheet('Orders')->majorDimension('COLUMNS')->range('AQ1:AQ')->all();
         
        $delivered = array_filter( $column[0], function ($value)  {

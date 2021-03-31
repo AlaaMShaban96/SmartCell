@@ -260,13 +260,13 @@ class ItemController extends Controller
                             $data['button-2-image']=$this->compress($request,'button-2-image');
                         }
                         
-                        try {
+                        // try {
                             Item::itemUpdate($id,$data);
-                        } catch (\Throwable $th) {
-                            Session::flash('message', $th.'فشلت عملية التعديل'); 
-                            Session::flash('alert-class', 'alert-danger'); 
-                            return redirect()->back();
-                        }
+                        // } catch (\Throwable $th) {
+                        //     Session::flash('message', $th.'فشلت عملية التعديل'); 
+                        //     Session::flash('alert-class', 'alert-danger'); 
+                        //     return redirect()->back();
+                        // }
                 break;
 
         }
@@ -288,8 +288,10 @@ class ItemController extends Controller
             try { 
                 Item::deleteItemOrCategoryOrLocation($id,'Shop Logic','1247890525');
             } catch (\Throwable $th) {
-                
-                return view('errors.404');
+                Session::flash('message', 'فشلت عملية الحدف'); 
+                Session::flash('alert-class', 'alert-danger'); 
+                return redirect()->back();
+                // return view('errors.404');
             }
             Session::flash('message', 'تم الحدف بنجاح'); 
             Session::flash('alert-class', 'alert-success'); 

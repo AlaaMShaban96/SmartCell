@@ -25,7 +25,7 @@ function order(id) {
     });
     document.getElementById('printId1').href =hostName+'/order/"قيد التوصيل"/'+id;
     document.getElementById('printId2').href =hostName+'/order/"تم التوصيل"/'+id;
-    document.getElementById('printId3').href =hostName+'/order/"تم الالغاء"/'+id;
+    // document.getElementById('printId3').href =hostName+'/order/"تم الالغاء"/'+id;
     document.getElementById('printId4').href =hostName+'/order/"استرجاع"/'+id;
     document.getElementById('printId5').href =hostName+'/order/"استلام شخصي"/'+id;
     document.getElementById('tname').innerHTML=row[0];

@@ -18,18 +18,18 @@ class Loction extends Model
     
     static public function getLoctions()
     {
-        return Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Cities info Logic')->range('')->majorDimension('')->get();    
+        return Sheets::spreadsheet(Session::get('id_system'))->sheet('Cities info Logic')->range('')->majorDimension('')->get();    
        
     }
     static public function updateLoctions( $request)
     {
-        // $loaction = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Cities info Logic')->range('A'.($request->id).':Z'.($request->id))->majorDimension('ROWS')->all();
+        // $loaction = Sheets::spreadsheet(Session::get('id_system'))->sheet('Cities info Logic')->range('A'.($request->id).':Z'.($request->id))->majorDimension('ROWS')->all();
         self::updateed($request,'Cities info Logic', $request['name']);
 
         // $loaction[0][2]=(boolean)$request->show=='on'?TRUE:FALSE;
         // $loaction[0][3]=(FLOAT)$request->price;
         // $loaction[0][5]=(FLOAT)$loaction[0][5];
-        // Sheets::spreadsheet(Session::get('sheet_id'))
+        // Sheets::spreadsheet(Session::get('id_system'))
         //     ->sheet('Manage Cities')
         //     ->range('A'.$request->id)
         //     ->update([$loaction[0]]);
@@ -54,7 +54,7 @@ class Loction extends Model
         $titelID=self::before('#', $request['titel']);
          //    dd($titelID);
         // dd(self::before('#', $request['titel']));
-        $ids = Sheets::spreadsheet(Session::get('sheet_id'))
+        $ids = Sheets::spreadsheet(Session::get('id_system'))
         ->sheet($sheetName)
         ->majorDimension('COLUMNS')
         ->range('Z:Z')
@@ -89,11 +89,11 @@ class Loction extends Model
             (FLOAT)(count($ids[0])+1),
         ];
         // dd($data,$request);
-        Sheets::spreadsheet(Session::get('sheet_id'))
+        Sheets::spreadsheet(Session::get('id_system'))
         ->sheet($sheetName)->append([$data]);
         if ($request['type']==1) {
 
-            $loaction = Sheets::spreadsheet(Session::get('sheet_id'))->sheet($sheetName)->range('A'.($titelID).':Z'.($titelID))->majorDimension('ROWS')->all();
+            $loaction = Sheets::spreadsheet(Session::get('id_system'))->sheet($sheetName)->range('A'.($titelID).':Z'.($titelID))->majorDimension('ROWS')->all();
             $loaction[0][0]=(boolean)$loaction[0][0];
             $loaction[0][3]='اضغظ '. $loaction[0][1].' لرؤية المناطق';
             $loaction[0][2]="";
@@ -101,7 +101,7 @@ class Loction extends Model
             $loaction[0][11]=$loaction[0][11];
             $loaction[0][24]=(FLOAT)$loaction[0][24];
             $loaction[0][25]=(FLOAT)$loaction[0][25];
-            Sheets::spreadsheet(Session::get('sheet_id'))
+            Sheets::spreadsheet(Session::get('id_system'))
                 ->sheet($sheetName)
                 ->range('A'.$titelID)
                 ->update([$loaction[0]]);
@@ -116,7 +116,7 @@ class Loction extends Model
     {
         // dd($request);
         $titelID=self::before('#', $request['titel']);
-        $loaction = Sheets::spreadsheet(Session::get('sheet_id'))->sheet($sheetName)->range('A'.($request['id']).':Z'.($request['id']))->majorDimension('ROWS')->all();
+        $loaction = Sheets::spreadsheet(Session::get('id_system'))->sheet($sheetName)->range('A'.($request['id']).':Z'.($request['id']))->majorDimension('ROWS')->all();
         // $titelID=$loaction[0][24];
 
         $loaction[0][0]= (boolean) $request['show']=='on'?TRUE:FALSE;
@@ -128,7 +128,7 @@ class Loction extends Model
         $loaction[0][9]=$sheetName=='Cities info Logic'?('set_field_value'):'set_field_value, set_field_value, set_field_value';
         $loaction[0][10]=$sheetName=='Cities info Logic'?'order id':'Delivery price, Get City, order id';
         $loaction[0][11]=$sheetName=='Cities info Logic'?$loaction[0][11]:$request['price'].'||'.$titelName.'||'.$loaction[0][11];
-        Sheets::spreadsheet(Session::get('sheet_id'))
+        Sheets::spreadsheet(Session::get('id_system'))
             ->sheet($sheetName)
             ->range('A'.$request['id'])
             ->update([$loaction[0]]);
@@ -165,11 +165,11 @@ class Loction extends Model
         //     (FLOAT)(count($ids[0])+1),
         // ];
         // // dd($data,$request);
-        // Sheets::spreadsheet(Session::get('sheet_id'))
+        // Sheets::spreadsheet(Session::get('id_system'))
         // ->sheet($sheetName)->append([$data]);
         if ($request['type']==1) {
 
-            $loaction = Sheets::spreadsheet(Session::get('sheet_id'))->sheet($sheetName)->range('A'.($titelID).':Z'.($titelID))->majorDimension('ROWS')->all();
+            $loaction = Sheets::spreadsheet(Session::get('id_system'))->sheet($sheetName)->range('A'.($titelID).':Z'.($titelID))->majorDimension('ROWS')->all();
             $loaction[0][0]=(boolean)$loaction[0][0];
             $loaction[0][3]='اضغظ '. $loaction[0][1].' لرؤية المناطق';
             $loaction[0][2]="";
@@ -177,7 +177,7 @@ class Loction extends Model
             $loaction[0][11]=$loaction[0][11];
             $loaction[0][24]=(FLOAT)$loaction[0][24];
             $loaction[0][25]=(FLOAT)$loaction[0][25];
-            Sheets::spreadsheet(Session::get('sheet_id'))
+            Sheets::spreadsheet(Session::get('id_system'))
                 ->sheet($sheetName)
                 ->range('A'.$titelID)
                 ->update([$loaction[0]]);

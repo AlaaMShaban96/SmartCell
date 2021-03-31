@@ -32,7 +32,7 @@
       }
   }
 
-  showLocationModel();
+  showLocationModel(); 
 
   function show(id,index,name) { 
     $('.sign'+id+' #s1').toggleClass('close1');

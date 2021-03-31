@@ -17,7 +17,7 @@ class Category extends Model
     {
 
 
-        $data = Sheets::spreadsheet(Session::get('sheet_id'))
+        $data = Sheets::spreadsheet(Session::get('id_system'))
         ->sheet('Category')->majorDimension('')->range('')->all();
         
         return $data;
@@ -83,20 +83,20 @@ class Category extends Model
         // dd($data,(isset($request['image'])?$request['image']:Session::get('logo')),Session::get('logo'));
         // dd($data ,$request);
 
-        Sheets::spreadsheet(Session::get('sheet_id'))
+        Sheets::spreadsheet(Session::get('id_system'))
         ->sheet('Shop Logic')->append([$data]);
         return true;
     }
     static public function updateCategory($request,$id)
     {
         // dd($request);
-        $ids = Sheets::spreadsheet(Session::get('sheet_id'))
+        $ids = Sheets::spreadsheet(Session::get('id_system'))
         ->sheet('Shop Logic')->majorDimension('COLUMNS')->range('B:B')->all();
         // dd($request);
         foreach ($ids[0] as $key => $value) {
             
             if ($value==$id) { 
-                $data = Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Shop Logic')->range('A'.($key+1).':AC'.($key+1))->majorDimension('ROWS')->all();
+                $data = Sheets::spreadsheet(Session::get('id_system'))->sheet('Shop Logic')->range('A'.($key+1).':AC'.($key+1))->majorDimension('ROWS')->all();
                
                 $data[0][0]=(boolean)isset($request['product-show'])?TRUE:FALSE;
                 $data[0][2]="";
@@ -122,7 +122,7 @@ class Category extends Model
                 $data[0][27]= (isset($request['button-2-type'])) ?$data[0][27]:$request['button-2-details'];
                 $data[0][28]=(float)'1';
                 // dd( $data);
-                Sheets::spreadsheet(Session::get('sheet_id'))->sheet('Shop Logic')->
+                Sheets::spreadsheet(Session::get('id_system'))->sheet('Shop Logic')->
                 range('A'.($key+1))->update([$data[0]]);
 
                 break;

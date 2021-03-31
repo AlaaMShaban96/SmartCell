@@ -12,7 +12,7 @@ trait ItemAndCategoryTrait {
     static public function deleteItemOrCategoryOrLocation($id,$sheetName,$sheetId)
     {
         if ($sheetName=='Shop Logic') {
-                $ids = Sheets::spreadsheet(Session::get('sheet_id'))
+                $ids = Sheets::spreadsheet(Session::get('id_system'))
                 ->sheet($sheetName)
                 ->majorDimension('COLUMNS')
                 ->range('B:B')
@@ -33,12 +33,12 @@ trait ItemAndCategoryTrait {
                             )    
                             )
                         ));
-                        Sheets::getService()->spreadsheets->batchUpdate(Session::get('sheet_id'), $batchUpdateRequest);
+                        Sheets::getService()->spreadsheets->batchUpdate(Session::get('id_system'), $batchUpdateRequest);
                         break;
                     }
                 }
         }else{
-            $ids = Sheets::spreadsheet(Session::get('sheet_id'))
+            $ids = Sheets::spreadsheet(Session::get('id_system'))
             ->sheet($sheetName)
             ->majorDimension('COLUMNS')
             ->range('Z:Z')
@@ -57,7 +57,7 @@ trait ItemAndCategoryTrait {
                 )
             ));
             
-            Sheets::getService()->spreadsheets->batchUpdate(Session::get('sheet_id'), $batchUpdateRequest);
+            Sheets::getService()->spreadsheets->batchUpdate(Session::get('id_system'), $batchUpdateRequest);
             // dd($sheetId,$id,count($ids[0]));
         }
         

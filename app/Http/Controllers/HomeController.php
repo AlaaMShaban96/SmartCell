@@ -122,14 +122,16 @@ class HomeController extends Controller
                         Session::put('store_id', $snapshot->data()['store_id']);
                         Session::put('store_name', $store->data()['name']);
                         Session::put('store_users', $store->data()['users']);
-                        Session::put('sheet_id', $store->data()['SA1']['s_id']);
+                        // Session::put('sheet_id', $store->data()['SA1']['s_id']);
+                        Session::put('id_data', $store->data()['id_data']);
+                        Session::put('id_system', $store->data()['id_system']);
                         Session::put('mc_api', $store->data()['mc_api']);
                         Session::put('logo', $store->data()['icon']);
-                        
+                         
                         $date = Carbon::parse( $store->data()['expiringDate']);
                         $now  = Carbon::now();
                         $diff = $date->diffInDays($now);
-                        if ($diff<=0) {
+                        if ($diff<0) {
                             Session::flash('message', "انتهئ اشتراك  الخاص بك في النظام ");
                             return false;
                         }
@@ -161,26 +163,6 @@ class HomeController extends Controller
         }else {
             return false;
         }
-
-        
-            
-
-        //     dd(config('google.service'));
-
-        //     $filtered = Order::Search('تم التوصيل');
-
-        //     $values = Order::SelectRows($filtered);
-
-        //     $orders= array();
-        //     foreach ($values as $key => $value) {
-        //         $order=$this->getOrderCollection($value);
-        //         array_push($orders,$order);
-        //     }
-
-        // $orders[0]['الاسم']="شمشش";
-        // $orders[0]['بروفايل']="Alaa M Shaban 22";
-        // dd(  Order::updateOrder($orders[0]));
-
         
     }
 
@@ -205,19 +187,19 @@ class HomeController extends Controller
             
         $data = json_decode($jsonString, true);
 
-
-
+        $sanumber=$store->data()['SA']%2;
+        // dd($sanumber ,$store->data()['SA']%2);
         $data= [
-        "type" =>$store->data()['SA1']["type"],
-        "project_id" =>$store->data()['SA1']["project_id"],
-        "private_key_id" =>$store->data()['SA1']["private_key_id"],
-        "private_key" =>$store->data()['SA1']["private_key"],
-        "client_email" =>$store->data()['SA1']["client_email"],
-        "client_id" =>$store->data()['SA1']["client_id"],
-        "auth_uri" =>$store->data()['SA1']["auth_uri"],
-        "token_uri" =>$store->data()['SA1']["token_uri"],
-        "auth_provider_x509_cert_url" =>$store->data()['SA1']["auth_provider_x509_cert_url"],
-        "client_x509_cert_url" =>$store->data()['SA1']["client_x509_cert_url"],
+        "type" =>$store->data()['SA'.$sanumber]["type"],
+        "project_id" =>$store->data()['SA'.$sanumber]["project_id"],
+        "private_key_id" =>$store->data()['SA'.$sanumber]["private_key_id"],
+        "private_key" =>$store->data()['SA'.$sanumber]["private_key"],
+        "client_email" =>$store->data()['SA'.$sanumber]["client_email"],
+        "client_id" =>$store->data()['SA'.$sanumber]["client_id"],
+        "auth_uri" =>$store->data()['SA'.$sanumber]["auth_uri"],
+        "token_uri" =>$store->data()['SA'.$sanumber]["token_uri"],
+        "auth_provider_x509_cert_url" =>$store->data()['SA'.$sanumber]["auth_provider_x509_cert_url"],
+        "client_x509_cert_url" =>$store->data()['SA'.$sanumber]["client_x509_cert_url"],
         ];
         // Write File  
 

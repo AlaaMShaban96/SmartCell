@@ -204,13 +204,22 @@
                           </div>
                         </a>
                       </div>           
-                      <div class="col-4 text-center  " >
+                      <div class="col-4 text-center " >
+                        {{-- <a id="printId6" href="{{url('/status/"الي المندوبين"')}}"> --}}
+                          <div onclick="setFormUrl()" class="buttonEdit badge-danger" data-toggle="collapse" data-target="#note">
+                            الغاء
+                          </div>
+                        {{-- </a> --}}
+                      </div>   
+
+      
+                      {{-- <div class="col-4 text-center  " >
                         <a id="printId3" href="{{url('/status/"الغاء"')}}">
                           <div class="buttonEdit badge-danger" >
                           الغاء 
                           </div>
                         </a>
-                      </div>           
+                      </div>            --}}
                       <div class="col-4 text-center " >
                         <a id="printId4" href="{{url('/status/"استرجاع"')}}">
                           <div class="buttonEdit badge-warning">
@@ -241,6 +250,14 @@
                                      <option value="{{$user}}">{{$user}}</option>
                                  @endforeach
                                 </select>
+                                <button type="submit" type="button" class="btn btn-success">ارسال</button>
+                            </form>
+                        </div>  
+                      </div>  
+                      <div class="col-12 text-center " >
+                        <div id="note" class="collapse"  >
+                            <form  action="{{url('/order/status/"الغاء"')}}" method="get">
+                              <input type="text" name="note" placeholder="لمذا تم الغاء الطلبية ؟">
                                 <button type="submit" type="button" class="btn btn-success">ارسال</button>
                             </form>
                         </div>  

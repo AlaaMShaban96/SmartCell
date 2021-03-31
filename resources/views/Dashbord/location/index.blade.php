@@ -156,7 +156,7 @@
   <form style="display: none" id="deleteLocationForm" action="" method="post">
     @method('delete')
     @csrf
-
+ 
   </form>
   <div id="richList"></div>
   <div id="loader" class="lds-dual-ring hidden overlay text-center">
