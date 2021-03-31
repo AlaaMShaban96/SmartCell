@@ -148,6 +148,10 @@ class HomeController extends Controller
                                 Session::flash('alert-class', 'alert-warning'); 
                             } 
                         }
+
+                        $this->db->collection('Stores')->document($snapshot->data()['store_id'])->update([
+                            ['path' => 'SA','value' => $store->data()['SA']+1]
+                          ]); 
                         $this->setGoogleSheetCredentials($store);
                    
                         return true;
