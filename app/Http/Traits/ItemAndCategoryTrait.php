@@ -58,7 +58,6 @@ trait ItemAndCategoryTrait {
             ));
             
             Sheets::getService()->spreadsheets->batchUpdate(Session::get('id_system'), $batchUpdateRequest);
-            // dd($sheetId,$id,count($ids[0]));
         }
         
     

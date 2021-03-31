@@ -34,6 +34,7 @@ class ItemController extends Controller
         // dd($items);
         $object=[]; 
         foreach ($items as $value) {
+            
             $object[] = [
                 'active'=>$value[0],
                 'product_id'=>$value[1],
@@ -61,8 +62,8 @@ class ItemController extends Controller
                 'button3Action'=>$value[23],
                 'button3ActionName'=>$value[24],
                 'detail_image'=>$value[25],
-                'Quantity'=>$value[26],
-                'details'=>$value[27],
+                'avalible-product'=>$value[26],
+                'details'=> $value[27],
                 'category_or_not'=>$value[28],
             ];
         }
@@ -173,16 +174,21 @@ class ItemController extends Controller
         if ($request->has('image')) {
             $data['image']=$this->compress($request);
         }
-        
-
-        try {
-            Category::updateCategory( $data,$id);
-        } catch (\Throwable $th) {
-            Session::flash('message', 'فشلت عملية التعديل'); 
-            Session::flash('alert-class', 'alert-danger'); 
+        if ($request->has('button-1-image')) {
+            $data['button-1-image']=$this->compress($request,'button-1-image');
         }
-        Session::flash('message', 'تم تعديل الصنف  بنجاح'); 
-        Session::flash('alert-class', 'alert-success'); 
+        if ($request->has('button-2-image')) {
+            $data['button-2-image']=$this->compress($request,'button-2-image');
+        }
+
+        // try {
+            Category::updateCategory( $data,$id);
+        // } catch (\Throwable $th) {
+        //     Session::flash('message', 'فشلت عملية التعديل'); 
+        //     Session::flash('alert-class', 'alert-danger'); 
+        // }
+        // Session::flash('message', 'تم تعديل الصنف  بنجاح'); 
+        // Session::flash('alert-class', 'alert-success'); 
         return redirect()->back();
        
 
@@ -230,13 +236,13 @@ class ItemController extends Controller
                             $data['button-2-image']=$this->compress($request,'button-2-image');
                         }
                         
-                        try {
+                        // try {
                             Item::itemUpdate($id,$data);
-                        } catch (\Throwable $th) {
-                            Session::flash('message', 'فشلت عملية التعديل'); 
-                            Session::flash('alert-class', 'alert-danger'); 
-                            return redirect()->back();
-                        }
+                        // } catch (\Throwable $th) {
+                        //     Session::flash('message', 'فشلت عملية التعديل'); 
+                        //     Session::flash('alert-class', 'alert-danger'); 
+                        //     return redirect()->back();
+                        // }
                 break;
 
         }

@@ -23,6 +23,8 @@ class HomeController extends Controller
             // config(['sheet.sheet_id'=>'13yIzeYkaacCdcFICbPGWlf3jVH1-aoWeG-9rdr70FMA']);
         } catch (\Throwable $th) {
             //throw $th;
+            dd('index function on file HomeController error');
+
         }
        
 
@@ -30,12 +32,12 @@ class HomeController extends Controller
     }
     public function index()
     {
-        // try {
+        try {
             $orderState=Order::orderState();
             $todayOrder=Order::todayOrder();
-        // } catch (\Throwable $th) {
-        //     dd('index function on file HomeController error',$th);
-        // }
+        } catch (\Throwable $th) {
+            dd('index function on file HomeController error',$th);
+        }
         // $link="";
     
 

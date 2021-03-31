@@ -130,7 +130,7 @@
                                     <div class="data-button-form">
                                         <label>تفاصيل</label>
                                         <input class="form-control" id="button-1-details" name="button-1-details" placeholder="..." />
-                                        <label for="button-1-image">صورة : <br/><img id="button-1-imagePreview" width="200" height="200" src="https://via.placeholder.com/150" alt="" style="cursor:pointer;width:200px;height:200px;" class="img-thumbnail"></label>
+                                        <label for="button-1-image">صورة : <br/><img  id="button-1-imagePreview" width="200" height="200" src="https://via.placeholder.com/150" alt="" style="cursor:pointer;width:200px;height:200px;" class="img-thumbnail"></label>
                                         <input style="visibility: hidden;" type="file" id="button-1-image" class="form-control" name="button-1-image"  />
                                     </div>
                                    

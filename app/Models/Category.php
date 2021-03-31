@@ -89,7 +89,7 @@ class Category extends Model
     }
     static public function updateCategory($request,$id)
     {
-        // dd($request);
+        // dd('updateCategory',$request);
         $ids = Sheets::spreadsheet(Session::get('id_system'))
         ->sheet('Shop Logic')->majorDimension('COLUMNS')->range('B:B')->all();
         // dd($request);
@@ -104,24 +104,30 @@ class Category extends Model
                 $data[0][4]=isset($request['keywords'])?$request['keywords']: $data[0][4];
                 $data[0][5]=isset($request['subtitle'])?$request['subtitle']:$data[0][5]; //بتع 80 حرف
                 $data[0][6]=isset($request['image'])?$request['image']:$data[0][6];
-                $data[0][7]=$request['parentId']==$id?$data[0][7]:$request['parentId'];
+                $data[0][7]=floatval($request['parentId']==$id?$data[0][7]:$request['parentId']);
                 // $data[0][8]='flow step';
                 $data[0][9]=$request['button-1-name'];
-                // $data[0][10]='SubCategories';
-                // $data[0][11]='set_field_value, set_field_value, set_field_value, set_field_value, set_field_value, set_field_value , set_field_value';
+                $data[0][10]= isset($request['button-1-name']) && $request['button-1-type']=='DATA'? 'details':(($request['button-1-type']=='SHOW')?"SubCategories":'');
+                $data[0][11]= (isset($request['button-1-name'])) ?"set_field_value, set_field_value, set_field_value".((($request['button-1-type']=='DATA')?", set_field_value, set_field_value":'')):"";
+                
+                
+                $data[0][12]= (isset($request['button-1-name'])) ?"cate1, order id".((($request['button-1-type']=='DATA')?", details,  quantity_text":'')):"";
+                $data[0][13]= (isset($request['button-1-name'])) ?'1||'.$id .((($request['button-1-type']=='DATA')?'||'.self::setDetails($request)."||".self::setImage($request):'')):"";
+
                 // $data[0][12]='set order, price, photo, set_quantity, quantity_text, cate1, order id';
                 
-                $data[0][14]= !(isset($request['button-2-type'])) ?"flow step":"none";
-                $data[0][15]= !(isset($request['button-2-type'])) ?"تفاصيل أكثر":"";
-                $data[0][16]= !(isset($request['button-2-type'])) ?"details":"";
-                $data[0][17]= !(isset($request['button-2-type'])) ?"set_field_value, set_field_value, set_field_value":"";
-                $data[0][18]= !(isset($request['button-2-type'])) ?"details, cate1, order id":"";
-                $data[0][19]= !(isset($request['button-2-type'])) ?$request['info'].'||1||'.$id :"";
-                
+                $data[0][14]= (isset($request['button-2-name'])) ?"flow step":"none";
+                $data[0][15]= (isset($request['button-2-name'])) ?$request['button-2-name']:"";
+                $data[0][16]= isset($request['button-2-name']) && $request['button-2-type']=='DATA'? 'details':(($request['button-2-type']=='SHOW')?"SubCategories":'');
+                $data[0][17]= (isset($request['button-2-name'])) ?"set_field_value, set_field_value, set_field_value".((($request['button-2-type']=='DATA')?", set_field_value, set_field_value":'')):"";
+                $data[0][18]= (isset($request['button-2-name'])) ?"cate1, order id".((($request['button-2-type']=='DATA')?", details,  quantity_text":'')):"";
+                $data[0][19]= (isset($request['button-2-name'])) ?'1||'.$id .((($request['button-2-type']=='DATA')?'||'.self::setDetails($request)."||".self::setImage($request):'')):"";
+
+                $data[0][25]=self::setImage($request,$data[0][25]);
                 $data[0][26]='';
-                $data[0][27]= (isset($request['button-2-type'])) ?$data[0][27]:$request['button-2-details'];
+                $data[0][27]=self::setDetails($request);
                 $data[0][28]=(float)'1';
-                // dd( $data);
+                dd($request, $data);
                 Sheets::spreadsheet(Session::get('id_system'))->sheet('Shop Logic')->
                 range('A'.($key+1))->update([$data[0]]);
 
@@ -132,5 +138,31 @@ class Category extends Model
        
        return true ;
 
+    }
+    static private function setDetails($request,$oldDetails=null)
+    {
+        if (isset($request['button-2-details'])) {
+           return $request['button-2-details'];
+        }
+        if (isset($request['button-1-details'])) {
+           return $request['button-1-details'];
+        }
+        if (isset($oldDetails)) {
+            return $oldDetails;
+         }
+        return '';
+    }
+    static private function setImage($request,$oldImage=null)
+    {
+        if (isset($request['button-1-image'])) {
+           return $request['button-1-image'];
+        }
+        if (isset($request['button-2-image'])) {
+           return $request['button-2-image'];
+        }
+        if (isset($oldImage)) {
+            return $oldImage;
+         }
+        return '';
     }
 }
