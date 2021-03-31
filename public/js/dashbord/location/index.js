@@ -165,6 +165,7 @@
     // document.getElementById('subTitelLocation').innerHTML="";
   }
   function onchangeCitiecs() {
+
     var subTitelDiv=document.getElementById('subTitelLocation');
     subTitelDiv.innerHTML="";
     var titelLocation=document.getElementById('titelLocation').value;
@@ -177,11 +178,14 @@
         });
       document.getElementById('subTitelLocationDiv').style.display = 'block';
       document.getElementById('subTitelLocation').disabled = false;
+      document.getElementById('price-form').style.display = 'block';
+
 
     }else{
       document.getElementById('subTitelLocationDiv').style.display = 'none';
 
       document.getElementById('subTitelLocation').disabled = true;
+      document.getElementById('price-form').style.display = 'none';
     }
   }
   function deleteItem(id) {

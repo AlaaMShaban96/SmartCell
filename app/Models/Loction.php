@@ -118,20 +118,46 @@ class Loction extends Model
         $titelID=self::before('#', $request['titel']);
         $loaction = Sheets::spreadsheet(Session::get('id_system'))->sheet($sheetName)->range('A'.($request['id']).':Z'.($request['id']))->majorDimension('ROWS')->all();
         // $titelID=$loaction[0][24];
+        
+        switch ($request['type']) {
+            case 1:
 
-        $loaction[0][0]= (boolean) $request['show']=='on'?TRUE:FALSE;
-        $loaction[0][1]=$titelName;
-        $loaction[0][2]=(FLOAT)$request['price'];
-        $loaction[0][3]=("السعر".$request['price']."دينار ");
-        $loaction[0][4]=isset($request['image'])?$request['image']:$loaction[0][4];
-        $loaction[0][7]=$sheetName=='Cities info Logic'?('تصفح العروض😎'):'اختيار';
-        $loaction[0][9]=$sheetName=='Cities info Logic'?('set_field_value'):'set_field_value, set_field_value, set_field_value';
-        $loaction[0][10]=$sheetName=='Cities info Logic'?'order id':'Delivery price, Get City, order id';
-        $loaction[0][11]=$sheetName=='Cities info Logic'?$loaction[0][11]:$request['price'].'||'.$titelName.'||'.$loaction[0][11];
-        Sheets::spreadsheet(Session::get('id_system'))
-            ->sheet($sheetName)
-            ->range('A'.$request['id'])
-            ->update([$loaction[0]]);
+                $loaction[0][0]= (boolean) isset($request['show']) && $request['show']=='on'?TRUE:FALSE;
+                $loaction[0][1]=$titelName;
+                $loaction[0][2]=(FLOAT)$request['price'];
+                $loaction[0][3]=("السعر".$request['price']."دينار ");
+                $loaction[0][4]=$request['image']!=''?$request['image']:$loaction[0][4];
+                $loaction[0][7]=$sheetName=='Cities info Logic'?('تصفح العروض😎'):'اختيار';
+                $loaction[0][9]=$sheetName=='Cities info Logic'?('set_field_value'):'set_field_value, set_field_value, set_field_value';
+                $loaction[0][10]=$sheetName=='Cities info Logic'?'order id':'Delivery price, Get City, order id';
+                $loaction[0][11]=$sheetName=='Cities info Logic'?$loaction[0][11]:$request['price'].'||'.$titelName.'||'.$loaction[0][11];
+                Sheets::spreadsheet(Session::get('id_system'))
+                    ->sheet($sheetName)
+                    ->range('A'.$request['id'])
+                    ->update([$loaction[0]]);
+
+                break;
+            
+            case 2:
+
+                $loaction[0][0]= (boolean) isset($request['show']) && $request['show']=='on'?TRUE:FALSE;
+                $loaction[0][1]=$titelName;
+                $loaction[0][2]='';
+                $loaction[0][3]='اضغظ '. $loaction[0][1].' لرؤية المناطق';
+                $loaction[0][4]=$request['image']!=''?$request['image']:$loaction[0][4];
+                $loaction[0][7]=$sheetName=='Cities info Logic'?('تصفح العروض😎'):'اختيار';
+                $loaction[0][9]='set_field_value';
+                $loaction[0][10]='order id';
+                $loaction[0][11]=$loaction[0][11];
+                Sheets::spreadsheet(Session::get('id_system'))
+                    ->sheet($sheetName)
+                    ->range('A'.$request['id'])
+                    ->update([$loaction[0]]);
+                    
+                break;
+
+        }
+   
             
          //    dd($$request['id']);
         // dd(self::before('#', $request['titel']));

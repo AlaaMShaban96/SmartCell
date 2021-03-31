@@ -9,7 +9,7 @@
   @if(Session::has('message'))
       <div class="alert {{ Session::get('alert-class') }} text-center">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <i class="material-icons">close</i>
+          <i class="material-icons">X</i>
         </button>
         <p class="h4" >{{ Session::get('message') }}</p> 
       </div>
@@ -111,9 +111,9 @@
                     <label for="#" style="display: flex;">اسم </label>
                     <input type="text" id="nameLocation" name="name" class="form-control"  required placeholder="اسم المنطقة او المدينة">
                   </div>
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-6" id='price-form'>
                     <label for="#" style="display: flex;">سعر التوصيل</label>
-                    <input type="number" id="priceLocation" name="price" class="form-control"  required placeholder="سعر التوصيل">
+                    <input type="number" id="priceLocation" name="price" class="form-control"   placeholder="سعر التوصيل">
                   </div>
                   <div class="form-group col-md-3" style="text-align: right;">
                     <label for="#" > المنطقة</label>
