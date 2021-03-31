@@ -22,7 +22,7 @@ class OrderController extends Controller
             $this->db = app('firebase.firestore')->database();
      
         } catch (\Throwable $th) {
-            //throw $th;
+                return view('errors.404');
         }
     }
     /**
@@ -32,9 +32,14 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders=Order::allOrder();
-        $orderState=Order::orderState();
-        $todayOrder=Order::todayOrder();
+        try {
+            $orders=Order::allOrder();
+            $orderState=Order::orderState();
+            $todayOrder=Order::todayOrder();
+        } catch (\Throwable $th) {
+                return view('errors.404');
+        }
+      
         return view('Dashbord.order.index',compact('orders','orderState','todayOrder'));
     }
 
@@ -50,9 +55,8 @@ class OrderController extends Controller
        $data= Order::Search($search);
       
        $orders= Order::SelectRows($data);
-        //    $orders= $this->paginate($order);
-        //    $orders->setPath($request->url());
         $link="/".$search;
+
        return view('Dashbord.order.index',compact('orders','link'));
      
     }
@@ -74,22 +78,27 @@ class OrderController extends Controller
     }
     public function update($id,Request $request)
     {
-        $request->userEmail=$request->userEmail==''?Session::get('email'):$request->userEmail;
-        $request->userName=$request->userName==''?Session::get('name'):$request->userName;
-        $db=app('firebase.firestore')->database();
-
-        $request->userName= $db->collection('users')->document($request->userEmail)->snapshot()->data()['name'];
-        
-        if(Order::orederUpdate($id,$request)){
-
-            Session::flash('message', 'تم التعديل بنجاح'); 
-            Session::flash('alert-class', 'alert-success'); 
-
-        }else {
+        try {
+            $request->userEmail=$request->userEmail==''?Session::get('email'):$request->userEmail;
+            $request->userName=$request->userName==''?Session::get('name'):$request->userName;
+            $db=app('firebase.firestore')->database();
+    
+            $request->userName= $db->collection('users')->document($request->userEmail)->snapshot()->data()['name'];
+            
+            if(Order::orederUpdate($id,$request)){
+    
+                Session::flash('message', 'تم التعديل بنجاح'); 
+                Session::flash('alert-class', 'alert-success'); 
+    
+            }else {
+                Session::flash('message', 'فشلت عملية التعديل'); 
+                Session::flash('alert-class', 'alert-danger'); 
+            }
+        } catch (\Throwable $th) {
             Session::flash('message', 'فشلت عملية التعديل'); 
             Session::flash('alert-class', 'alert-danger'); 
         }
-        // dd($request->state);
+       
        
         return redirect('/order/'.$request->state);
         return redirect()->back();
@@ -124,30 +133,42 @@ class OrderController extends Controller
     }
     public function chengeStatusItem(Request $request, $status, $id)
     {
-        // dd($request->all());
-        if(Order::chengeStatusItem($status, $id,$request->all())){
+        try {
+            if(Order::chengeStatusItem($status, $id,$request->all())){
 
-            Session::flash('message', 'تم التعديل بنجاح'); 
-            Session::flash('alert-class', 'alert-success'); 
-
-        }else {
+                Session::flash('message', 'تم التعديل بنجاح'); 
+                Session::flash('alert-class', 'alert-success'); 
+    
+            }else {
+                Session::flash('message', 'فشلت عملية التعديل'); 
+                Session::flash('alert-class', 'alert-danger'); 
+            }
+        } catch (\Throwable $th) {
             Session::flash('message', 'فشلت عملية التعديل'); 
             Session::flash('alert-class', 'alert-danger'); 
         }
+       
         return redirect()->back();
     }
     public function sendToUser(Request $request,  $id)
     {
-        $name = $this->db->collection('users')->document($request->email)->snapshot()['name'];
-        if(Order::sendToUser($id,$name,$request->email)){
-
-            Session::flash('message', 'تم التعديل بنجاح'); 
-            Session::flash('alert-class', 'alert-success'); 
-
-        }else {
+        try {
+            $name = $this->db->collection('users')->document($request->email)->snapshot()['name'];
+            if(Order::sendToUser($id,$name,$request->email)){
+    
+                Session::flash('message', 'تم التعديل بنجاح'); 
+                Session::flash('alert-class', 'alert-success'); 
+    
+            }else {
+                Session::flash('message', 'فشلت عملية التعديل'); 
+                Session::flash('alert-class', 'alert-danger'); 
+            }
+        } catch (\Throwable $th) {
+            
             Session::flash('message', 'فشلت عملية التعديل'); 
             Session::flash('alert-class', 'alert-danger'); 
         }
+        
         return redirect()->back();
     }
     public function paginate($items, $perPage = 10, $page = null, $options = [])

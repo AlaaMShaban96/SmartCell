@@ -71,15 +71,6 @@ class ItemController extends Controller
         return view('Dashbord.item.index',compact('object','link'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -98,14 +89,12 @@ class ItemController extends Controller
             case 1:
                 switch ($request->category) {
                     case '1':
-                        // dd($request->all());
         
                         $this->storeCategory($request);
         
                         break;
                     
                     case '0':
-                        // dd( $request->all());
 
                             try {
                                 $data=$request->all();
@@ -200,27 +189,8 @@ class ItemController extends Controller
         
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -260,13 +230,13 @@ class ItemController extends Controller
                             $data['button-2-image']=$this->compress($request,'button-2-image');
                         }
                         
-                        // try {
+                        try {
                             Item::itemUpdate($id,$data);
-                        // } catch (\Throwable $th) {
-                        //     Session::flash('message', $th.'فشلت عملية التعديل'); 
-                        //     Session::flash('alert-class', 'alert-danger'); 
-                        //     return redirect()->back();
-                        // }
+                        } catch (\Throwable $th) {
+                            Session::flash('message', 'فشلت عملية التعديل'); 
+                            Session::flash('alert-class', 'alert-danger'); 
+                            return redirect()->back();
+                        }
                 break;
 
         }

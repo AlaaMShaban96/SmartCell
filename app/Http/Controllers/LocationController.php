@@ -19,8 +19,8 @@ class LocationController extends Controller
         try {
             $loctions =Loction::getLoctions();
         } catch (\Throwable $th) {
-            dd($th);
-        }
+                return view('errors.404');
+            }
         
         return view('Dashbord.location.index',compact('loctions'));
     }
@@ -52,7 +52,6 @@ class LocationController extends Controller
             if ($request->has('image')) {
                 $data['image']=$this->compress($request);
             }
-            // dd($data['image']);
             Loction::createLoctions($data);
 
         } catch (\Throwable $th) {
@@ -72,7 +71,6 @@ class LocationController extends Controller
             } catch (\Throwable $th) {
                 Session::flash('message', ' فشلت عملية الحدف '); 
                 Session::flash('alert-class', 'alert-danger'); 
-                // return view('errors.404');
             }
             Session::flash('message', 'تم الحدف بنجاح'); 
             Session::flash('alert-class', 'alert-success'); 
