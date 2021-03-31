@@ -89,7 +89,7 @@
                 <label>الصلاحيات</label>
                     <select name="rule" id="userRule">
                         <option value="admin">مدير </option>
-                        <option value="Editor">معدل بيانات </option>
+                        <option value="user">مندوب توصيل </option>
                     </select>
                 </div>
                 {{-- <div class="form-group col-md-6">
