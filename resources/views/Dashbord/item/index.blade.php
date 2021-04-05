@@ -32,7 +32,7 @@
 
 
 
-<div class="container">
+  <div class="container">
 
     <nav aria-label="breadcrumb" class="position-relative">
         <div class="breadcrumb bg-dark" id="breadcrumbsContainer" >
@@ -70,7 +70,7 @@
     <div id="editFormModal" style="z-index:1050;" class="modal" role="dialog">
         <div class="modal-dialog modal-lg"  role="document">
             <div class="modal-content">
-                <form action="{{url('/item')}}" method='post' enctype="multipart/form-data">
+                <form action="{{url('/item')}}" method='get' enctype="multipart/form-data">
                     @csrf
 
                     <div class="modal-header">
@@ -96,8 +96,8 @@
                                         </svg>
                                     </label>
                                     <div class="card-body">
-                                        <input id="product-title" name="title" placeholder="Enter item title" style="color:white;background:transparent; border-width: 0; border-bottom-width: 1px; margin:10px 0;" />
-                                        <input id="product-subtitle" name="subtitle" placeholder="Enter item Subtitle" style="color:white;background:transparent; border-width: 0; border-bottom-width: 1px; margin:10px 0;" />
+                                        <input id="product-title" required name="title" placeholder="ادخل العنوان" style="color:white;background:transparent; border-width: 0; border-bottom-width: 1px; margin:10px 0;" />
+                                        <input id="product-subtitle" name="subtitle" placeholder="ادخل وصف قصير" style="color:white;background:transparent; border-width: 0; border-bottom-width: 1px; margin:10px 0;" />
                                         <div></div>
                                         <a href="#" id="button-1" style="background:#4e4f50;border-width: 0;" class="btn btn-primary highlight-dark">شراء المنتج</a>
                                         <a href="#" id="button-2"  style="background:#4e4f50;border-width: 0;" class="btn btn-primary addButton2">+</a>
@@ -105,62 +105,53 @@
                                 </div>
                             </div>
                             <div class="col-md-6 " style="overflow-y:auto;">
-                 
+
                                 <div id="button-1-form" style="margin:10px 0;">
-                                    
-                                    <h5>الزر 1</h5>
+                                    <div id="productForm">
+                                        <label>توافر المنتج</label>
+                                        <label class="switch">
+                                            <input id="product-avalible" name="avalible-product" type="checkbox" checked>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                    <h5>زر 1</h5>
                                     <label>نوع الزر :</label>
                                     <select id="button-1-type" name="button-1-type" class="form-control select-button-type">
                                         <option class="buyOption" value="BUY">زر شراء</option>
                                         <option value="DATA">زر تفاصيل</option>
                                     </select>
                                     <label>اسم الزر</label>
-                                    <input class="form-control" id="button-1-name" name="button-1-name" placeholder="اسم الزر"  />
+                                    <input class="form-control" required id="button-1-name" name="button-1-name" placeholder="اسم الزر"  />
                                     <div class="buy-button-form">
                                         <label>السعر</label>
-                                        <input class="form-control" id="button-1-price" name="button-1-price" type="number" placeholder="10 , 20 ,30 .." />
-                                        <div id="productForm">
-                                            <label>توافر المنتج</label>
-                                            <label class="switch">
-                                                <input id="product-avalible" name="avalible-product" type="checkbox" checked>
-                                                <span class="slider round"></span>
-                                            </label>
-                                        </div>
+                                        <input class="form-control" required id="button-1-price" name="button-1-price" type="number" placeholder="10 , 20 ,30 .." />
                                     </div>
                                     <div class="data-button-form">
                                         <label>تفاصيل</label>
                                         <input class="form-control" id="button-1-details" name="button-1-details" placeholder="..." />
-                                        <label for="button-1-image">صورة : <br/><img  id="button-1-imagePreview" width="200" height="200" src="https://via.placeholder.com/150" alt="" style="cursor:pointer;width:200px;height:200px;" class="img-thumbnail"></label>
+                                        <label for="button-1-image">Image : <br/><img id="button-1-imagePreview" width="200" height="200" src="https://via.placeholder.com/150" alt="" style="cursor:pointer;width:200px;height:200px;" class="img-thumbnail"></label>
                                         <input style="visibility: hidden;" type="file" id="button-1-image" class="form-control" name="button-1-image"  />
                                     </div>
-                                   
                                     <hr/>
                                 </div>
                                 <div id="button-2-form" style="display:none; margin:10px 0;" >
                                     <div class="d-flex justify-content-between" ><h5>زر 2</h5>
                                         <a id="deleteButton" href="#" class="btn btn-danger">x</a></div>
-                                    <label>نوع :</label>
+                                    <label>نوع الزر :</label>
                                     <select id="button-2-type" name="button-2-type" class="form-control select-button-type">
-                                        <option class="buyOption" value="BUY">زر شراء</option>
-                                        <option value="DATA">زر تفاصيل</option>
+                                        <option class="buyOption" value="BUY">زر الشراء</option>
+                                        <option value="DATA">زر التفاصيل</option>
                                     </select>
-                                    <label>اسم الزر</label>
-                                    <input class="form-control" id="button-2-name" name="button-2-name" value="زر 2" placeholder="اسم الزر"  />
+                                    <label>اسم الزر </label>
+                                    <input class="form-control" required id="button-2-name" name="button-2-name" value="زر 2" placeholder="اسم الزر"  />
                                     <div class="buy-button-form">
                                         <label>السعر</label>
-                                        <input class="form-control" id="button-2-price" name="button-2-price" type="number" placeholder="10 , 20 ,30 .." />
-                                        <div id="productForm">
-                                            <label>توافر المنتج</label>
-                                            <label class="switch">
-                                                <input id="product-avalible" name="avalible-product" type="checkbox" checked>
-                                                <span class="slider round"></span>
-                                            </label>
-                                        </div>
+                                        <input required class="form-control" id="button-2-price" name="button-2-price" type="number" placeholder="10 , 20 ,30 .." />
                                     </div>
                                     <div class="data-button-form">
-                                        <label>تفاصيل</label>
+                                        <label>التفاصيل</label>
                                         <input class="form-control" id="button-2-details" name="button-2-details" placeholder="..." />
-                                        <label for="button-2-image">صورة : <br/><img id="button-2-imagePreview" width="200" height="200" src="https://via.placeholder.com/150" alt="" style="cursor:pointer;width:200px;height:200px;" class="img-thumbnail"></label>
+                                        <label for="button-2-image">الصورة : <br/><img id="button-2-imagePreview" width="200" height="200" src="https://via.placeholder.com/150" alt="" style="cursor:pointer;width:200px;height:200px;" class="img-thumbnail"></label>
                                         <input style="visibility: hidden;" type="file" id="button-2-image" class="form-control" name="button-1-image"  />
                                     </div>
                                     <hr/>
@@ -171,19 +162,19 @@
                                 <div id="card-form">
                                     <label>كلمات مفتاحية</label>
                                     <input class="form-control" id="product-keywords" name="keywords" placeholder="كلمات مفتاحية" />
-                                    <label>النوع</label>
+                                    <label>نوع المنتج</label>
                                     <select class="form-control" id="product-category" name="category">
                                         <option value="0">منتج</option>
-                                        <option value="1">صنف</option>
+                                        <option value="1">تصنيف</option>
                                     </select>
 
                                     <label style="display:none;">order</label>
                                     <select style="display:none;" id="product-order" class="form-control" name="order">
-                                        <option value="0">منتج</option>
+                                        <option value="0">Product</option>
                                     </select>
 
-                                    <label>Parent</label>
-                                    <select id="product-parent" class="form-control" name="parentId">
+                                    <label>التصنيف</label>
+                                    <select id="product-parent" class="form-control" name="parent">
                                         <option value="0">رئيسي</option>
                                     </select>
                                     <div>
@@ -201,8 +192,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                        <button type="submit" class="btn btn-success">حفظ</button>
                     </div>
                 </form>
             </div>
@@ -280,20 +271,33 @@
   <script src="{{asset('js/dashbord/item/events.js')}}"></script>
   <script src="{{asset('js/dashbord/item/tree.js')}}"></script>
   <script src="{{asset('js/dashbord/item/canvas.js')}}"></script>
- <script>
+  <script>
      var products = formatProducts(items).splice(1);
 
-    var products2 = [
-        {productId:"1",showProduct:false,quantity:0,parent:null,title:"product 1",subtitle:"subtitle",category:false,button1:{type:"BUY",name:"Buy now",price:100}},
-        {productId:"2",showProduct:true,quantity:0,parent:null,keywords:"keyfuckingwords",title:"category 2",subtitle:"",category:true,button1:{type:"BUY",name:"Buy now",price:100}},
-        {productId:"3",showProduct:true,quantity:1,parent:"2",order:2,title:"category 3",subtitle:"subtitle",category:true,button1:{type:"BUY",name:"Buy now",price:100}},
-        {productId:"4",showProduct:true,quantity:0,parent:"3",order:1,title:"category 4",subtitle:"subtitle",category:true,button1:{type:"BUY",name:"Buy now",price:100}},
-        {productId:"5",showProduct:true,quantity:1,parent:"2",order:1,title:"product 5",subtitle:"subtitle",category:false,button1:{type:"DATA",name:"Test",details:"test"},button2:{type:"BUY",name:"شراء",price:200}},
-        {productId:"6",showProduct:true,quantity:0,parent:"3",order:2,title:"product 6",subtitle:"subtitle",category:false,button1:{type:"DATA",name:"data",details:"test"},button2:{type:"DATA",name:"asd",details:"asd"}},
-        {productId:"7",showProduct:true,quantity:1,parent:"4",order:1,title:"product 7",subtitle:"subtitle",category:false,button1:{type:"BUY",name:"Buy now",price:100}},
-    ];
-     console.log(products,products2);
+    // var products = [
+    //     {productId:"1",showProduct:false,quantity:0,parent:null,title:"product 1",subtitle:"subtitle",category:false,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"2",showProduct:true,quantity:0,parent:null,keywords:"keyfuckingwords",title:"category 2",subtitle:"",category:true,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"3",showProduct:true,quantity:1,parent:"2",order:2,title:"category 3",subtitle:"subtitle",category:true,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"4",showProduct:true,quantity:0,parent:"3",order:1,title:"category 4",subtitle:"subtitle",category:true,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"5",showProduct:true,quantity:1,parent:"2",order:1,title:"product 5",subtitle:"subtitle",category:false,button1:{type:"DATA",name:"Test",details:"test"},button2:{type:"BUY",name:"شراء",price:200}},
+    //     {productId:"6",showProduct:true,quantity:0,parent:"3",order:2,title:"product 6",subtitle:"subtitle",category:false,button1:{type:"DATA",name:"data",details:"test"},button2:{type:"DATA",name:"asd",details:"asd"}},
+    //     {productId:"7",showProduct:true,quantity:1,parent:"4",order:1,title:"product 7",subtitle:"subtitle",category:false,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"7",showProduct:true,quantity:1,parent:"4",order:1,title:"product 7",subtitle:"subtitle",category:false,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"7",showProduct:true,quantity:1,parent:"4",order:1,title:"product 7",subtitle:"subtitle",category:false,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"7",showProduct:true,quantity:1,parent:"4",order:1,title:"product 7",subtitle:"subtitle",category:false,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"7",showProduct:true,quantity:1,parent:"4",order:1,title:"product 7",subtitle:"subtitle",category:false,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"7",showProduct:true,quantity:1,parent:"4",order:1,title:"product 7",subtitle:"subtitle",category:false,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"7",showProduct:true,quantity:1,parent:"4",order:1,title:"product 7",subtitle:"subtitle",category:false,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"7",showProduct:true,quantity:1,parent:"4",order:1,title:"product 7",subtitle:"subtitle",category:false,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"7",showProduct:true,quantity:1,parent:"4",order:1,title:"product 7",subtitle:"subtitle",category:false,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"7",showProduct:true,quantity:1,parent:"4",order:1,title:"product 7",subtitle:"subtitle",category:false,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"7",showProduct:true,quantity:1,parent:"4",order:1,title:"product 7",subtitle:"subtitle",category:false,button1:{type:"BUY",name:"Buy now",price:100}},
+    //     {productId:"7",showProduct:true,quantity:1,parent:"4",order:1,title:"product 7",subtitle:"subtitle",category:false,button1:{type:"BUY",name:"Buy now",price:100}},
+    // ];
 
+    // var jsonTest = [
+    //     {product_id:"1",active:false,quantity:0,category:null,title:"product 1",subtitle:"subtitle",category_or_not:false,button1Target:"Details",button1Caption:"اسم تجريب" , button1ActionValue:"تفاصيل تجريب وجو"}
+    // ];
 
     var productsById = {};
     for (var i = 0; i < products.length; i += 1){
@@ -301,6 +305,7 @@
     }
     var productsTree = makeTree(products,productsById);
     $(function(){
+
 
         var $editFormModal = $("#editFormModal");
         var updateUrl = "";
@@ -323,7 +328,10 @@
         });
         $(document).on("click",'.addProductButton',function()
         {
+            var parentId = $(this).attr('data-parent-id');
             $("#createModal").modal('show');
+            $("#createCategory").attr('data-parent-id',parentId);
+            $("#createProduct").attr('data-parent-id',parentId);
         })
 
         $(".createHover").popover({ trigger: "hover" });
@@ -342,6 +350,7 @@
             for(var i=1;i<=numberOfSiblings;i++){
                 $("#product-order").append(`<option value="${i}">${i}</option>`);
             }
+            console.log(parentId);
             $editFormModal.find("#product-parent").val(parentId ?? 0);
 
         });
@@ -359,8 +368,8 @@
             for(var i=1;i<=numberOfSiblings;i++){
                 $("#product-order").append(`<option value="${i}">${i}</option>`);
             }
+            console.log(parentId);
             $editFormModal.find("#product-parent").val(parentId ?? 0);
-
 
         });
         MakeSearch(products);
@@ -567,7 +576,6 @@
         $button1.show(100);
         $button2.show(100);
     }
-
     function makeBreadCrumbs(categoryId,productsById,products)
     {
         var $breadcrumbsContainer = $("#breadcrumbsContainer");
@@ -597,7 +605,7 @@
     }
     function makeProducts(products,categoryId=null)
     {
-       var $productsContainer = $("#productsContainer");
+        var $productsContainer = $("#productsContainer");
         $productsContainer.html("");
         $productsContainer.append(`
                 <div data-parent-id="${categoryId}" class= " animate__animated animate__fadeIn col-md-4 col-lg-3 col-12 col-sm-6 d-flex justify-content-center align-items-center addProductButton"  style="margin-top:20px;cursor:pointer;border-radius: 20px; border-style: dashed; border-color:#ccc; flex-direction: column;">
@@ -643,6 +651,7 @@
 
         });
         $productsContainer.find('.hidden-product').popover({trigger:"hover"});
+
     }
     function gotoProduct(productId)
     {
@@ -675,9 +684,10 @@
                         product.keywords = item.keywords;
 
                         product.category = (item.category_or_not == 1) ? true : false;
-                            product.image = item.image;
-                        product.parent = (!!item.Category  ) ? parseInt(item.Category.replaceAll(",","")) : null;
-                        product.parent = (product.parent == 0) ? null : product.parent;
+
+                        product.image = item.image;
+                        product.parent = (!!item.Category ) ? parseInt(item.Category.replaceAll(",","")) : null;
+
 
                         Button1.type = (item.button1Target == "SubCategories")? "BUY" : (!item.button1Target )? undefined : "DATA";
                         Button1.name = item.button1Caption;
@@ -686,6 +696,11 @@
                             Button1.details = item.details;
                             Button1.image = item.detail_image;
                         }
+                        else if(Button1.type == "BUY")
+                        {
+                            Button1.price = item.price;
+                        }
+
 
 
                         Button2.type = (item.button2Target == "SubCategories")? "BUY" : (!item.button2Target )? undefined : "DATA";
@@ -697,6 +712,10 @@
                         if(Button2.type == "DATA"){
                             Button2.details = item.details;
                             Button2.image = item.detail_image;
+                        }
+                        else if(Button2.type == "BUY")
+                        {
+                            Button2.price = item.price;
                         }
 
 
